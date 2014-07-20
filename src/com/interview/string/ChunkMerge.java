@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.interview.graph.MinHeap;
-import com.interview.graph.MinHeap.Node;
+import com.interview.graph.BinaryMinHeap;
+import com.interview.graph.BinaryMinHeap.Node;
 
 public class ChunkMerge {
 	
@@ -76,12 +76,12 @@ public class ChunkMerge {
 		List<Integer> result = new ArrayList<Integer>();
 		
 		int index[] = new int[chunks.size()];
-		MinHeap<Integer> heap = new MinHeap<Integer>();
+		BinaryMinHeap<Integer> heap = new BinaryMinHeap<Integer>();
 		for(int i=0; i < index.length ; i++){
 			heap.add(i, chunks.get(i).get(0));
 		}
-		while(!heap.isEmpty()){
-			Node<Integer> node = heap.extractMinNode();
+		while(!heap.empty()){
+			Node<Integer> node = heap.extractMin();
 			result.add(node.weight);
 			index[node.data]++;
 			if(index[node.data] < chunks.get(node.data).size()){
