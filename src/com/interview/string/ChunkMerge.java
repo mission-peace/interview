@@ -72,25 +72,6 @@ public class ChunkMerge {
 			index++;
 		}
 	}
-	public List<Integer> mergeChunksUsingHeap(List<List<Integer>> chunks){
-		List<Integer> result = new ArrayList<Integer>();
-		
-		int index[] = new int[chunks.size()];
-		BinaryMinHeap<Integer> heap = new BinaryMinHeap<Integer>();
-		for(int i=0; i < index.length ; i++){
-			heap.add(i, chunks.get(i).get(0));
-		}
-		while(!heap.empty()){
-			Node<Integer> node = heap.extractMin();
-			result.add(node.weight);
-			index[node.data]++;
-			if(index[node.data] < chunks.get(node.data).size()){
-				heap.add(node.data, chunks.get(node.data).get(index[node.data]));
-			}
-		}
-		return result;
-	}
-	
 	public static void main(String args[]){
 		Integer arr1[] = {1,5,6,9,21};
 		Integer arr2[] = {4,6,11,14};
