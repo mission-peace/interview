@@ -3,7 +3,7 @@ package com.interview.array;
 /**
  * http://www.geeksforgeeks.org/given-an-array-of-of-size-n-finds-all-the-elements-that-appear-more-than-nk-times/
  */
-public class FindElementsOccurringKTimesTetris {
+public class FindElementsOccurringNByKTimesTetris {
 
 	public static class Pair{
 		public int element;
@@ -59,7 +59,7 @@ public class FindElementsOccurringKTimesTetris {
 	
 	public static void main(String args[]){
 		int arr[] = {3,2,2,1,1,2,3,3,4,5,3,1};
-		FindElementsOccurringKTimesTetris fe = new FindElementsOccurringKTimesTetris();
+		FindElementsOccurringNByKTimesTetris fe = new FindElementsOccurringNByKTimesTetris();
 		fe.printElementsOccurringKTimes(arr, 3);
 	}
 
