@@ -6,7 +6,7 @@ import java.util.LinkedList;
 /**
  * http://www.geeksforgeeks.org/given-an-array-arr-find-the-maximum-j-i-such-that-arrj-arri/
  */
-public class MaximumiminusjSuchThatAiGTAj {
+public class MaximumIminusJSuchThatAiGTAj {
 
 	class Node{
 		int index;
@@ -84,7 +84,7 @@ public class MaximumiminusjSuchThatAiGTAj {
 	}
 	
 	public static void main(String args[]){
-		MaximumiminusjSuchThatAiGTAj mj = new MaximumiminusjSuchThatAiGTAj();
+		MaximumIminusJSuchThatAiGTAj mj = new MaximumIminusJSuchThatAiGTAj();
 		int input[] = {11,14,13,1,4,13,1,10};
 		System.out.println(mj.maximum(input));
 		System.out.println(mj.maximumGeeks(input));
