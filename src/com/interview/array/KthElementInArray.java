@@ -1,7 +1,6 @@
 package com.interview.array;
 
-public class kthElementInArray {
-
+public class KthElementInArray {
 	
 	public int kthElement(int arr[],int k){
 		int low = 0;
@@ -49,7 +48,7 @@ public class kthElementInArray {
 	
 	public static void main(String args[]){
 		int arr[] = {3,6,9,1,2};
-		kthElementInArray kthElement = new kthElementInArray();
+		KthElementInArray kthElement = new KthElementInArray();
 		System.out.print(kthElement.kthElement(arr, 0));
 	}
 	

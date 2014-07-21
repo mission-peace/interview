@@ -1,6 +1,6 @@
 package com.interview.misc;
 
-import com.interview.array.kthElementInArray;
+import com.interview.array.KthElementInArray;
 
 /**
  * Convert an unsorted array into an array such that
@@ -15,7 +15,7 @@ public class ConvertAnArrayIntoDecreaseIncreaseFashion {
 		}else{
 			k = arr.length/2+1;
 		}
-		kthElementInArray kthElement = new kthElementInArray();
+		KthElementInArray kthElement = new KthElementInArray();
 		kthElement.kthElement(arr, k);
 		
 		int high = k;
