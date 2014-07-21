@@ -1,4 +1,4 @@
-package com.interview.array;
+package com.interview.stackqueue;
 
 public class CircularQueue<T> {
 
