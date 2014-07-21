@@ -1,4 +1,4 @@
-package com.interview.array;
+package com.interview.recursion;
 
 /**
  * Generate all combination of size k and less of adjacent numbers
