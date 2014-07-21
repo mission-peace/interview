@@ -1,4 +1,4 @@
-package com.interview.array;
+package com.interview.sort;
 
 /**
  * http://www.geeksforgeeks.org/sort-n-numbers-range-0-n2-1-linear-time/
