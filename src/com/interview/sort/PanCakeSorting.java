@@ -1,4 +1,4 @@
-package com.interview.array;
+package com.interview.sort;
 
 /**
  * http://www.geeksforgeeks.org/pancake-sorting/
