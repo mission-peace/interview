@@ -4,7 +4,7 @@ package com.interview.array;
  * http://www.geeksforgeeks.org/longest-monotonically-increasing-subsequence-size-n-log-n/
  * http://www.geeksforgeeks.org/construction-of-longest-monotonically-increasing-subsequence-n-log-n/
  */
-public class LongestIncreasingSubSequence {
+public class LongestIncreasingSubSequenceOlogNMethod {
 
 	private int ceilIndex(int input[],int end, int s){
 		int start = 0;
@@ -43,7 +43,7 @@ public class LongestIncreasingSubSequence {
 	
 	public static void main(String args[]){
 		int input[] = {2,5,3,1,2,10,6,7,8,-10,-9,-8,-7,-6,-5,-4};
-		LongestIncreasingSubSequence lis = new LongestIncreasingSubSequence();
+		LongestIncreasingSubSequenceOlogNMethod lis = new LongestIncreasingSubSequenceOlogNMethod();
 		System.out.println(lis.longestIncreasingSubSequence(input));
 	}
 }
