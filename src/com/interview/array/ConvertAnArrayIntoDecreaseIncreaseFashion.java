@@ -1,6 +1,5 @@
-package com.interview.misc;
+package com.interview.array;
 
-import com.interview.array.KthElementInArray;
 
 /**
  * Convert an unsorted array into an array such that
