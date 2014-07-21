@@ -1,6 +1,6 @@
 package com.interview.number;
 
-import com.interview.array.QuickSort;
+import com.interview.sort.QuickSort;
 
 /**
  e.g 1 7 9 8 4 will transform to 1 8 4 7 9
