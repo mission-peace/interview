@@ -1,5 +1,8 @@
 package com.interview.dynamic;
 
+/**
+ * http://www.geeksforgeeks.org/minimum-number-of-jumps-to-reach-end-of-a-given-array/
+ */
 public class MinJumpToReachEnd {
 
 	public int minJump(int arr[],int result[]){
