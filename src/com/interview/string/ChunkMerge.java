@@ -3,11 +3,56 @@ package com.interview.string;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.PriorityQueue;
 
-import com.interview.graph.BinaryMinHeap;
-import com.interview.graph.BinaryMinHeap.Node;
-
+/**
+ * Given a list of lists. Each element in the list is sorted. Sort the 
+ * entire list.
+ * Test cases
+ * One or more lists are empty
+ * All elements in one list are smaller than all elements in another list
+ */
 public class ChunkMerge {
+	
+	class Pair implements Comparable<Pair>{
+		int pos;
+		int val;
+		@Override
+		public int compareTo(Pair o) {
+			if(val <= o.val){
+				return -1;
+			}else{
+				return 1;
+			}
+		}
+	}
+	
+	public List<Integer> mergeUsingHeap(List<List<Integer>> chunks){
+		List<Integer> result = new ArrayList<Integer>();
+		PriorityQueue<Pair> queue = new PriorityQueue<Pair>();
+		//add first element of every chunk into queue
+		int pos[] = new int[chunks.size()];
+		for(int i=0; i < pos.length; i++){
+			pos[i] = 1;
+		}
+		for(int i=0; i < chunks.size(); i++){
+			Pair p = new Pair();
+			p.pos = i;
+			p.val = chunks.get(i).get(0);
+			queue.add(p);
+		}
+		
+		while(!queue.isEmpty()){
+			Pair p = queue.poll();
+			result.add(p.val);
+			if(pos[p.pos] < chunks.get(p.pos).size()){
+				p.val = chunks.get(p.pos).get(pos[p.pos]);
+				pos[p.pos]++;
+				queue.add(p);
+			}
+		}
+		return result;
+	}
 	
 	public List<Integer> mergeChunksOfDifferentSize(List<List<Integer>> chunks){
 		List<Integer> result = new ArrayList<Integer>();
@@ -102,6 +147,12 @@ public class ChunkMerge {
 		ChunkMerge cm = new ChunkMerge();
 		List<Integer> result = cm.mergeChunksOfDifferentSize(chunks);
 		System.out.println(result.size());
+		for(Integer r : result){
+			System.out.print(r + " ");
+		}
+		
+		result = cm.mergeUsingHeap(chunks);
+		System.out.println();
 		for(Integer r : result){
 			System.out.print(r + " ");
 		}
