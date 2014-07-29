@@ -11,6 +11,7 @@ import java.util.LinkedList;
  * Tree with only root
  * Tree and input with a and b as cousin node
  * Tree and input with a and b not cousin node
+ * Tree with input a and b being siblings(not cousin)
  */
 public class CousinNodes {
 
@@ -24,6 +25,11 @@ public class CousinNodes {
 			levelSize = 0;
 			while(tempLevelSize > 0){
 				Node node = queue.pollLast();
+				//this is to make sure a and b are not siblings of each other
+				//if they are return false since they cant be cousins
+				if(checkSameParent(node,a,b)){
+					return false;
+				}
 				if(node.data == a || node.data == b){
 					if(foundFirst){
 						return true;
@@ -48,6 +54,16 @@ public class CousinNodes {
 		return false;
 	}
 	
+	private boolean checkSameParent(Node root, int a, int b){
+		if(root.left != null && root.right != null){
+			if((root.left.data == a || root.left.data == b) &&
+					(root.right.data == a || root.right.data == b)){
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public static void main(String args[]){
 		BinaryTree bt = new BinaryTree();
 		Node head = null;
@@ -65,5 +81,7 @@ public class CousinNodes {
 		System.out.println(cn.areCousins(head, 19, 7));
 		System.out.println(cn.areCousins(head, 19, -1));
 		System.out.println(cn.areCousins(head, 19, -6));
+		System.out.println(cn.areCousins(head, -1, 7));
+		System.out.println(cn.areCousins(head, 7 , -1));
 	}
 }
