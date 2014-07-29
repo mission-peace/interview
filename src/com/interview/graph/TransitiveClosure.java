@@ -1,5 +1,8 @@
 package com.interview.graph;
 
+/**
+ * http://www.geeksforgeeks.org/transitive-closure-of-a-graph/
+ */
 public class TransitiveClosure {
 
 	public boolean[][] getTransitiveClosure(int [][]graph){
