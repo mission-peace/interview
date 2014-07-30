@@ -1,4 +1,4 @@
-package com.interview.misc;
+package com.interview.number;
 
 /**
  http://www.geeksforgeeks.org/given-a-number-find-next-smallest-palindrome-larger-than-this-number/

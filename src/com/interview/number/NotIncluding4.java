@@ -1,4 +1,4 @@
-package com.interview.misc;
+package com.interview.number;
 
 /**
  * http://saikatd.wordpress.com/author/saikatd/page/4/

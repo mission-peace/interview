@@ -1,4 +1,4 @@
-package com.interview.misc;
+package com.interview.stackqueue;
 
 import java.util.LinkedList;
 import java.util.Queue;

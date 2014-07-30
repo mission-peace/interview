@@ -1,4 +1,4 @@
-package com.interview.misc;
+package com.interview.recursion;
 
 /**
  * http://stackoverflow.com/questions/2344496/how-can-i-print-out-all-possible-letter-combinations-a-given-phone-number-can-re

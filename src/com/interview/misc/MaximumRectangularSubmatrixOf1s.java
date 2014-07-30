@@ -1,5 +1,7 @@
 package com.interview.misc;
 
+import com.interview.stackqueue.MaximumHistogram;
+
 
 /*
  * http://www.careercup.com/question?id=6299074475065344
