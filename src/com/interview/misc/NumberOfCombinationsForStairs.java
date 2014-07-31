@@ -13,12 +13,20 @@ import java.util.LinkedList;
  */
 public class NumberOfCombinationsForStairs {
 
+	/**
+	 * Assumption is k is always greater than or equal to 2
+	 */
 	public int numberOfWays(int n,int k){
+		if(k < 2){
+			throw new IllegalArgumentException();
+		}
 		LinkedList<Integer> queue = new LinkedList<Integer>();
 		queue.add(1);
-		for(int i=1; i < k ; i++){
+		queue.add(2);
+		int count=0;
+		for(int i=2; i < k ; i++){
 			Iterator<Integer> itr = queue.iterator();
-			int count = 1;
+			count = 0;
 			while(itr.hasNext()){
 				count += itr.next();
 			}
@@ -26,7 +34,7 @@ public class NumberOfCombinationsForStairs {
 		}
 		for(int i = k; i < n ; i++){
 			Iterator<Integer> itr = queue.iterator();
-			int count = 0;
+			count = 0;
 			while(itr.hasNext()){
 				count += itr.next();
 			}
