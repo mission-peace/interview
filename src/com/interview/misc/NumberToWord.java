@@ -17,7 +17,7 @@ public class NumberToWord {
 	public String toWord(int number){
 		StringBuffer buffer = new StringBuffer();
 		if(number ==0){
-			return "zero";
+			return toString(number);
 		}
 		if(number < 0){
 			buffer.append("minus ");
