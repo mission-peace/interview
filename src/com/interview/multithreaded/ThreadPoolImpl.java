@@ -51,7 +51,7 @@ public class ThreadPoolImpl {
 		}
 	}
 
-	public void execute() {
+	private void execute() {
 		if (!isExecuting) {
 			isExecuting = true;
 			ExecutingRunnable runnable = new ExecutingRunnable();
