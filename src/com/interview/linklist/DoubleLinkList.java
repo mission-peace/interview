@@ -24,6 +24,31 @@ public class DoubleLinkList {
 		}
 	}
 	
+
+	public void printFrontBack(Node head){
+		Node prev = null;
+		while(head != null){
+			System.out.print(head.data + " ");
+			prev = head;
+			head = head.next;
+		}
+		System.out.println();
+		while(prev != null){
+			System.out.print(prev.data + " ");
+			prev = prev.before;
+		}
+	}
+	
+	public Node find(Node head, int data){
+		while(head != null){
+			if(head.data == data){
+				return head;
+			}
+			head = head.next;
+		}
+		return null;
+	}
+	
 	public static void main(String args[]){
 		DoubleLinkList dll = new DoubleLinkList();
 		Node head = null;
