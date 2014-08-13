@@ -17,6 +17,16 @@ public class DoubleLinkList {
 		return head;
 	}
 	
+	public Node addAtFront(Node head, int data){
+		Node newNode = Node.newNode(data);
+		if(head == null){
+			return newNode;
+		}
+		newNode.next = head;
+		head.before = newNode;
+		return newNode;
+	}
+	
 	public void print(Node head){
 		while(head != null){
 			System.out.print(head.data + " ");
