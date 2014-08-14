@@ -1,4 +1,4 @@
-package com.interview.string;
+package com.interview.combperm;
 
 public class StringPermutationRotation {
 
