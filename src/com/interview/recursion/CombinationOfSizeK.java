@@ -1,4 +1,4 @@
-package com.interview.combperm;
+package com.interview.recursion;
 
 /**
  * http://www.geeksforgeeks.org/print-all-possible-combinations-of-r-elements-in-a-given-array-of-size-n/

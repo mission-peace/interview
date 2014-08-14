@@ -1,4 +1,4 @@
-package com.interview.combperm;
+package com.interview.recursion;
 
 public class Combination {
 
