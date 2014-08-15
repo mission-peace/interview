@@ -6,8 +6,8 @@ package com.interview.tree;
 public class BSTOneChildPreOrderTraversal {
 
 	public boolean isBST(int input[]){
-		int max = 10000;
-		int min = -100000;
+		int max = Integer.MAX_VALUE;
+		int min = Integer.MIN_VALUE;
 		for(int i = 0; i < input.length-1; i++){
 			if(input[i] > min && input[i] < max){
 				if(input[i+1] < input[i]){
