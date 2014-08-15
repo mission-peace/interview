@@ -7,7 +7,7 @@ package com.interview.tree;
  * 1 element array
  * multi element array
  */
-public class SortedOrderPrintFullTreeArray {
+public class SortedOrderPrintCompleteTreeArray {
 
 	private void print(int arr[],int current){
 		if(current >= arr.length){
@@ -24,7 +24,7 @@ public class SortedOrderPrintFullTreeArray {
 	
 	public static void main(String args[]){
 		int arr[] = {4, 2, 5, 1, 3};
-		SortedOrderPrintFullTreeArray sop = new SortedOrderPrintFullTreeArray();
+		SortedOrderPrintCompleteTreeArray sop = new SortedOrderPrintCompleteTreeArray();
 		sop.print(arr);
 	}
 }
