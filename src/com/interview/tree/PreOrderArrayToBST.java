@@ -16,6 +16,11 @@ public class PreOrderArrayToBST {
 		return toBST(preorder,Integer.MIN_VALUE,Integer.MAX_VALUE,index);
 	}
 	
+	//stack based version
+	public Node toBSTIterative(int preorder[]){
+		return null;
+	}
+	
 	private Node toBST(int preorder[],int min, int max,Index index){
 		if(index.index >= preorder.length){
 			return null;
