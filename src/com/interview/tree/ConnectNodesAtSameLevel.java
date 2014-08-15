@@ -63,7 +63,7 @@ public class ConnectNodesAtSameLevel {
 		else if(root.right != null){
 			return root.right;
 		}
-		return findRightSibling(root.right);
+		return findRightSibling(root.next);
 	}
 	
 	public static void main(String args[]){
