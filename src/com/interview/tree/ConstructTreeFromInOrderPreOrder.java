@@ -1,7 +1,18 @@
 package com.interview.tree;
 
+/**
+ * http://www.geeksforgeeks.org/construct-tree-from-given-inorder-and-preorder-traversal/
+ * Test cases:
+ * Empty tree
+ * One node tree
+ * All left side tree
+ * All right side tree
+ * Mixed tree
+ * Full tree
+ * complete tree
+ */
 public class ConstructTreeFromInOrderPreOrder {
-
+	
 	private int index = 0;
 	public Node createTree(int inorder[],int preorder[]){
 		return createTree(inorder,preorder,0,inorder.length-1);
