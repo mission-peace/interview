@@ -2,11 +2,14 @@ package com.interview.tree;
 
 /**
  * http://www.geeksforgeeks.org/construct-a-special-tree-from-given-preorder-traversal/
+ * Test cases:
+ * Length of pre and val is not same
+ * val contains values other than N or L
  */
 class PreIndex{
 	int index;
 }
-public class TreeFromPreOrderTraversalWith0or2Child {
+public class ConstructTreeFromPreOrderTraversalWith0or2Child {
 
 	public Node createTree(int pre[],char val[]){
 		PreIndex pi = new PreIndex();
@@ -33,7 +36,7 @@ public class TreeFromPreOrderTraversalWith0or2Child {
 	public static void main(String args[]){
 		int pre[] = {10,20,30,40,50,60,70,80,90};
 		char val[] = {'N','N','N','L','L','L','N','L','L'};
-		TreeFromPreOrderTraversalWith0or2Child tfp = new TreeFromPreOrderTraversalWith0or2Child();
+		ConstructTreeFromPreOrderTraversalWith0or2Child tfp = new ConstructTreeFromPreOrderTraversalWith0or2Child();
 		Node root = tfp.createTree(pre, val);
 		TreeTraversals tt = new TreeTraversals();
 		tt.preOrder(root);

@@ -9,7 +9,7 @@ class Index{
  * empty array
  * 1,2 or more elements in the array
  */
-public class PreOrderArrayToBST {
+public class ConstructBSTFromPreOrderArray {
 
 	public Node toBST(int preorder[]){
 		Index index = new Index();
@@ -39,7 +39,7 @@ public class PreOrderArrayToBST {
 	
 	public static void main(String args[]){
 		int preorder[] = {10,5,1,7,40,50};
-		PreOrderArrayToBST poa = new PreOrderArrayToBST();
+		ConstructBSTFromPreOrderArray poa = new ConstructBSTFromPreOrderArray();
 		Node root = poa.toBST(preorder);
 		TreeTraversals tt = new TreeTraversals();
 		tt.preOrder(root);
