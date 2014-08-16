@@ -1,4 +1,4 @@
-package com.interview.misc;
+package com.interview.multiarray;
 
 import com.interview.stackqueue.MaximumHistogram;
 

@@ -1,4 +1,4 @@
-package com.interview.misc;
+package com.interview.number;
 
 import java.util.Iterator;
 import java.util.LinkedList;
