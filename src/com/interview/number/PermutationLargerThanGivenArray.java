@@ -40,7 +40,7 @@ public class PermutationLargerThanGivenArray {
 		boolean hasEqual = false;
 		int nextGreaterIndex = -1;
 		int equalIndex = -1;
-		int nextGreaterDiff = 10000;
+		int nextGreaterDiff = Integer.MAX_VALUE;
 		for(int i=0; i < src.length; i++){
 			if(used[i]){
 				continue;
