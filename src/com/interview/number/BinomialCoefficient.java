@@ -9,20 +9,20 @@ package com.interview.number;
  */
 public class BinomialCoefficient {
 
-	public int calculate(int n, int k){
-		if(k > n-k){
-			k = n-k;
-		}
-		int result = 1;
-		for(int i=0; i < k; i++){
-			result *= (n-i);
-			result /= (i+1);
-		}
-		return result;
-	}
-	
-	public static void main(String args[]){
-		BinomialCoefficient bc = new BinomialCoefficient();
-		System.out.print(bc.calculate(8, 3));
-	}
+    public int calculate(int n, int k){
+        if(k > n-k){
+            k = n-k;
+        }
+        int result = 1;
+        for(int i=0; i < k; i++){
+            result *= (n-i);
+            result /= (i+1);
+        }
+        return result;
+    }
+    
+    public static void main(String args[]){
+        BinomialCoefficient bc = new BinomialCoefficient();
+        System.out.print(bc.calculate(8, 3));
+    }
 }
