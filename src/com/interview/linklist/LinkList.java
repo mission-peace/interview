@@ -137,7 +137,7 @@ public class LinkList {
     //  head = headRef.node;
     //  ll.printList(head);
         System.out.println();
-        head = ll.reverseRecursive1(head);
+        head = ll.reverseRecursiveEasy(head);
         ll.printList(head);
     }
 }
