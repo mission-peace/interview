@@ -61,7 +61,7 @@ public class CloneDirectedGraph<T> {
             Edge<T> newEdge = new Edge<T>(cloneVertex, adjVertexClone, edge.isDirected(), edge.getWeight());
             cloneVertex.addAdjacentVertex(newEdge, adjVertexClone);
         }else{
-            Vertex<T> adjVertexClone = new Vertex<T>(adjVertex.getId()*10);
+            Vertex<T> adjVertexClone = new Vertex<T>(adjVertex.getId());
             cloneMap.put(adjVertex, adjVertexClone);
             Edge<T> newEdge = new Edge<T>(cloneVertex, adjVertexClone, edge.isDirected(), edge.getWeight());
             cloneVertex.addAdjacentVertex(newEdge, adjVertexClone);
