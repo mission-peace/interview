@@ -6,12 +6,21 @@ package com.interview.number;
  * The order of the input cannot be changed. 
  * If there is an equation, print it; or print "no equation". 
  * If more than one solution, any working equation is fine.
+ * 
+ * Test cases:
+ * 0 with / operator
+ * Input array is less than size 1
+ * Does not handle float/double, does division with integer results.
+ * Total is negative number, zero or positive number
  */
 public class ArithmeticOperatorForFinalResult {
 
     private static char operators[] = {'+','-','*','/'};
     
     public char[] matchesResult(int input[], int result){
+        if(input.length < 1){
+            throw new IllegalArgumentException();
+        }
         char[] equation = new char[input.length-1];
         boolean flag =  getResult(input, 1, result, input[0],equation);
         if(flag){
