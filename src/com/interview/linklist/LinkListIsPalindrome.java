@@ -11,29 +11,29 @@ package com.interview.linklist;
  */
 public class LinkListIsPalindrome {
 
-	public boolean isPalindrome(NodeRef head,Node end){
-		if(end == null){
-			return true;
-		}
-		boolean r = isPalindrome(head,end.next);
-		r = r && head.node.data == end.data;
-		head.next();
-		return r;
-	}
-	
-	public static void main(String args[]){
-		LinkList ll = new LinkList();
-		Node head = null;
-		head = ll.addNode(1, head);
-		head = ll.addNode(2, head);
-		head = ll.addNode(3, head);
-		head = ll.addNode(4, head);
-		head = ll.addNode(3, head);
-		head = ll.addNode(2, head);
-		head = ll.addNode(1, head);
-		NodeRef nodeRef = new NodeRef();
-		nodeRef.node = head;
-		LinkListIsPalindrome llp = new LinkListIsPalindrome();
-		System.out.println(llp.isPalindrome(nodeRef, head));
-	}
+    public boolean isPalindrome(NodeRef head,Node end){
+        if(end == null){
+            return true;
+        }
+        boolean r = isPalindrome(head,end.next);
+        r = r && head.node.data == end.data;
+        head.next();
+        return r;
+    }
+    
+    public static void main(String args[]){
+        LinkList ll = new LinkList();
+        Node head = null;
+        head = ll.addNode(1, head);
+        head = ll.addNode(2, head);
+        head = ll.addNode(3, head);
+        head = ll.addNode(4, head);
+        head = ll.addNode(3, head);
+        head = ll.addNode(2, head);
+        head = ll.addNode(1, head);
+        NodeRef nodeRef = new NodeRef();
+        nodeRef.node = head;
+        LinkListIsPalindrome llp = new LinkListIsPalindrome();
+        System.out.println(llp.isPalindrome(nodeRef, head));
+    }
 }
