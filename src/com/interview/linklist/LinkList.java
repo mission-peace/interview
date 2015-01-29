@@ -12,30 +12,39 @@ class Node{
     Node next;
     Node before;
     Node child;
+    Object obj;
     
-    public static Node newNode(int data){
+    public static Node newNode(int data, Object... obj){
         Node n = new Node();
         n.data = data;
         n.next = null;
         n.before = null;
+        if(obj.length > 0)
+        {    
+            n.obj = obj[0];
+        }
         return n;
     }
 }
 
 public class LinkList {
     
-    public Node addNode(int data, Node head){
+    public Node addNode(int data, Node head, Object... obj){
         Node temp = head;
+        Node n = null;
+        if(obj.length > 0){
+            n = Node.newNode(data, obj[0]);
+        }else{
+            n = Node.newNode(data);
+        }
         if(head == null){
-            head = Node.newNode(data);
-            return head;
+            return n;
         }
         
         while(head.next != null){
             head = head.next;
         }
         
-        Node n = Node.newNode(data);
         head.next = n;
         return temp;
     }
