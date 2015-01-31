@@ -5,10 +5,14 @@ package com.interview.linklist;
  * Test case
  * k is even odd
  * number of nodes are even odd
+ * k is less than or equal to 1.
  */
 public class ReverseAlternateKNodes {
 
     public Node reverse(Node head,int k,boolean reverse){
+        if(k <= 1){
+            return head;
+        }
         if(head == null){
             return null;
         }
