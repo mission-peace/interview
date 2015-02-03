@@ -21,7 +21,6 @@ public class CopyLinkListWIthArbitPointer {
             current.next = newNode;
             current = newNode.next;
         }
-        System.out.println("Hello");
         //copy arbit position of current for the copy
         current = head;
         while(current != null){
