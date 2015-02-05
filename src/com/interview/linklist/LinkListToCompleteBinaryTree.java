@@ -14,28 +14,27 @@ public class LinkListToCompleteBinaryTree {
         if(head == null){
             return;
         }
+        
         Queue<Node> queue = new LinkedList<Node>();
-        queue.offer(head);
+        queue.add(head);
         head = head.next;
-        Node current = null;
         while(head != null){
-            current = queue.poll();
-            current.before = head;
-            queue.offer(head);
-            Node prev = head;
+            Node top = queue.poll();
+            top.before = head;
             head = head.next;
-            //dont forget to null the next before you proceed.
-            prev.next = null;
             if(head != null){
-                current.next = head;
-                queue.offer(head);
-                prev = head;
+                top.next = head;
                 head = head.next;
-                //dont forget to null the next before you proceed.
-                prev.next = null;
+                //null the next of child before putting them into queue
+                top.before.next = null;
+                top.next.next = null;
+                queue.add(top.before);
+                queue.add(top.next);
+            }else{
+                break;
             }
         }
-    }
+     }
     
     public void inorder(Node head){
         if(head == null){
