@@ -6,7 +6,7 @@ package com.interview.dynamic;
  */
 public class CountNumberOfTreesInBST {
 
-    int countTrees(int numKeys) {
+    int countTreesRec(int numKeys) {
         if (numKeys <=1) {
             return(1);
         }
@@ -14,15 +14,15 @@ public class CountNumberOfTreesInBST {
             int sum = 0;
             int left, right, root;
             for (root=1; root<=numKeys; root++) {
-                left = countTrees(root - 1);
-                right = countTrees(numKeys - root);
+                left = countTreesRec(root - 1);
+                right = countTreesRec(numKeys - root);
                 sum += left*right;
             }
             return(sum);
         }
     }
     
-    public int countTreesDynamic(int n){
+    public int countTrees(int n){
         int T[] = new int[n+1];
         T[0] = 1;
         T[1] = 1;
@@ -35,7 +35,7 @@ public class CountNumberOfTreesInBST {
     }
     public static void main(String args[]){
         CountNumberOfTreesInBST cnt = new CountNumberOfTreesInBST();
-        System.out.println(cnt.countTreesDynamic(3));
-        System.out.println(cnt.countTreesDynamic(4));
+        System.out.println(cnt.countTrees(3));
+        System.out.println(cnt.countTrees(4));
     }
 }
