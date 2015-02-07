@@ -45,43 +45,32 @@ public class LongestIncreasingSubsequence {
         return temp[maxIndex];
     }
     
+    private int longestSubsequenceRecursive(int arr[], int pos, int lastNum){
+        if(pos == arr.length){
+            return 0;
+        }
+        int t1 = 0;
+        if(arr[pos] > lastNum){
+            t1 = 1 + longestSubsequenceRecursive(arr, pos+1, arr[pos]);
+        }
+        int t2 = longestSubsequenceRecursive(arr, pos+1, lastNum);
+        return Math.max(t1, t2);
+    }
+    
     public int longestSubsequenceRecursive(int arr[]){
-        int maxLen = 1;
-        for(int i=0; i < arr.length; i++){
-            int len = recursiveSolution(arr,i,1);
+        int maxLen = 0;
+        for(int i=0; i < arr.length-1; i++){
+            int len = longestSubsequenceRecursive(arr,i+1,arr[i]);
             if(len > maxLen){
                 maxLen = len;
             }
         }
-        return maxLen;
-    }
-    
-    private int recursiveSolution(int arr[],int pos,int len){
-        if(pos == arr.length){
-            return len;
-        }
-        int maxLen = len;
-        for(int i=pos+1; i < arr.length; i++){
-            if(arr[i] > arr[pos]){
-                int returnedLen = recursiveSolution(arr, i, len+1);
-                if(returnedLen > maxLen){
-                    maxLen = returnedLen;
-                }
-            }else{
-                int returnedLen = recursiveSolution(arr, i+1, len);
-                if(returnedLen > maxLen){
-                    maxLen = returnedLen;
-                }
-            
-            }
-        }
-        return maxLen;
+        return maxLen + 1;
     }
     
     public static void main(String args[]){
         LongestIncreasingSubsequence lis = new LongestIncreasingSubsequence();
-        int arr[] = {23,10,22,5,33,8,9,21,50,41,60,80};
-    //  int arr[] = {7,4,7,8};
+        int arr[] = {23,10,22,5,33,8,9,21,50,41,60,80,99, 22,23,24,25,26,27};
         int result = lis.longestSubsequenceWithActualSolution(arr);
         int result1 = lis.longestSubsequenceRecursive(arr);
         System.out.println(result);

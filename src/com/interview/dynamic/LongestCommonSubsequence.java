@@ -10,7 +10,6 @@ public class LongestCommonSubsequence {
         if(len1 == str1.length || len2 == str2.length){
             return 0;
         }
-        
         if(str1[len1] == str2[len2]){
             return 1 + lcs(str1,str2,len1+1,len2+1);
         }
