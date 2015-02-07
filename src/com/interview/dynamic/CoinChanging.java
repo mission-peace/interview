@@ -66,6 +66,10 @@ public class CoinChanging {
     }
     
     
+    /**
+     * Keep input sorted. Otherwise temp[j-arr[i]) + 1 can become Integer.Max_value + 1 which
+     * can be very low negative number
+     */
     public int minCoinChangeInfinteSupply(int total, int arr[]){
         int temp[] = new int[total+1];
         temp[0] = 0;
@@ -75,6 +79,7 @@ public class CoinChanging {
         for(int i=0; i < arr.length; i++){
             for(int j=1; j <= total; j++){
                 if(j >= arr[i]){
+                    //be careful here. Max_val + 1 can result in very small neg number.
                     temp[j] = Math.min(temp[j], temp[j-arr[i]] +1);
                 }
             }
@@ -82,11 +87,34 @@ public class CoinChanging {
         return temp[total];
     }
 
+    /**
+     * Recursive solution 
+     */
+    public int minCoinChangeInfinteSupplyRec(int total, int coins[]){
+        return minCoinChangeInfinteSupplyRec(total, coins, 0);
+    }
     
+    private int minCoinChangeInfinteSupplyRec(int total, int coins[], int count){
+        if(total == 0){
+            return count;
+        }
+        int min = Integer.MAX_VALUE;
+        for(int i=0; i < coins.length; i++){
+            if(coins[i] <= total){
+                int sum = minCoinChangeInfinteSupplyRec(total - coins[i], coins, count+1);
+                if(min > sum){
+                    min = sum;
+                }
+            }
+        }
+        return min;
+    }
+
     public static void main(String args[]){
         CoinChanging cc = new CoinChanging();
-        int total =10;
-        int coins[] = {6,1,3,4};
-        cc.printCoinChangingSolution(total, coins);
+        int total = 15;
+        int coins[] = {1,3,4,6,7,9};
+        System.out.println(cc.minCoinChangeInfinteSupply(total, coins));
+        System.out.println(cc.minCoinChangeInfinteSupplyRec(total, coins));
     }
 }
