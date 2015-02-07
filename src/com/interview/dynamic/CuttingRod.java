@@ -44,7 +44,10 @@ public class CuttingRod {
     public static void main(String args[]){
         CuttingRod cr =new CuttingRod();
         int[] price = {3,5,8,9,10,20,22,25};
+        long t1 = System.currentTimeMillis();
         int r = cr.recursiveMaxValue(price,8);
-        System.out.print(r);
+        long t2 = System.currentTimeMillis();
+        System.out.println(r);
+        System.out.println(t2 - t1);
     }
 }
