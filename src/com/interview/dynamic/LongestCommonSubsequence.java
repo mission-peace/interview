@@ -7,10 +7,7 @@ public class LongestCommonSubsequence {
 
     public int lcs(char str1[],char str2[],int len1, int len2){
         
-        if(len1 == str1.length){
-            return 0;
-        }
-        if(len2 == str2.length){
+        if(len1 == str1.length || len2 == str2.length){
             return 0;
         }
         
