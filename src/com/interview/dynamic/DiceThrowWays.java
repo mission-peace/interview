@@ -7,7 +7,7 @@ package com.interview.dynamic;
  */
 public class DiceThrowWays {
 
-    public int numberOfWays(int n, int m, int k){
+    public int numberOfWays(int n, int f, int k){
         
         int T[][] = new int[n+1][k+1];
         T[0][0] = 1;
@@ -16,7 +16,7 @@ public class DiceThrowWays {
         }*/
         
         for(int i=1; i <= n; i++){
-            for(int j =1; j <= i*m && j <= k ; j++){
+            for(int j =1; j <= i*f && j <= k ; j++){
                 if(j == i){
                     T[i][j] = 1;
                     continue;
@@ -24,7 +24,7 @@ public class DiceThrowWays {
                 if(j < i){
                     continue;
                 }
-                for(int l =1; l <=m ;l++){
+                for(int l =1; l <=f ;l++){
                     if(j >= l){
                         T[i][j] += T[i-1][j-l];
                     }
