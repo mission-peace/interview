@@ -39,7 +39,7 @@ public class NumberOfWaysToScorePoints {
     }
     
     public static void main(String args[]){
-        int score[] = {1,2};
+        int score[] = {1,2,3};
         NumberOfWaysToScorePoints now = new NumberOfWaysToScorePoints();
         System.out.println(now.version1(score, 4));
         System.out.println(now.version2(score, 4));
