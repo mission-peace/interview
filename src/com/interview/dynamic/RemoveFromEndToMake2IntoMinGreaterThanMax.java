@@ -23,7 +23,7 @@ public class RemoveFromEndToMake2IntoMinGreaterThanMax {
     }
     
     private int min(int input[],int low,int high){
-        int min = 100000;
+        int min = Integer.MAX_VALUE;
         for(int i=low; i <=high; i++){
             if(min > input[i]){
                 min = input[i];
@@ -32,7 +32,7 @@ public class RemoveFromEndToMake2IntoMinGreaterThanMax {
         return min;
     }
     private int max(int input[],int low,int high){
-        int max = -1;
+        int max = Integer.MIN_VALUE;
         for(int i=low; i <=high; i++){
             if(max < input[i]){
                 max = input[i];
