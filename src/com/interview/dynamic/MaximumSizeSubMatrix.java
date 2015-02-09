@@ -1,5 +1,8 @@
 package com.interview.dynamic;
 
+/**
+ * http://www.geeksforgeeks.org/maximum-size-sub-matrix-with-all-1s-in-a-binary-matrix/
+ */
 public class MaximumSizeSubMatrix {
 
     private int min(int a,int b, int c){
