@@ -46,7 +46,7 @@ public class EggDropping {
     
     public static void main(String args[]){
         EggDropping ed = new EggDropping();
-        int r = ed.calculateRecursive(3,20);
+        int r = ed.calculate(3,100);
         System.out.println(r);
     }
 }
