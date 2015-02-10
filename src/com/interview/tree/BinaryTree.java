@@ -56,21 +56,12 @@ public class BinaryTree {
     }
     
     public int height(Node root){
-        IntegerRef ir = new IntegerRef();
-        heightOfTree(root,ir);
-        return ir.height;
-    }
-    
-    private void heightOfTree(Node root,IntegerRef max){
         if(root == null){
-            max.height = 0;
-            return;
+            return 0;
         }
-        IntegerRef irl = new IntegerRef();
-        IntegerRef irr = new IntegerRef();
-        heightOfTree(root.left,irl);
-        heightOfTree(root.right,irr);
-        max.height = Math.max(irl.height, irr.height) + 1;
+        int leftHeight  = height(root.left);
+        int rightHeight = height(root.right);
+        return Math.max(leftHeight, rightHeight) + 1;
     }
     
     public static void main(String args[]){
@@ -84,5 +75,7 @@ public class BinaryTree {
         head = bt.addNode(20, head);
         head = bt.addNode(-1, head);
         head = bt.addNode(21, head);
+        System.out.println(bt.height(head));
+        
     }
 }
