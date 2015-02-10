@@ -2,6 +2,8 @@ package com.interview.tree;
 
 /**
  * http://www.geeksforgeeks.org/construct-binary-tree-from-inorder-traversal/
+ * Given inorder traversal of binary tree where every node is greater than 
+ * its left and right child.
  * Test cases:
  * One two or more nodes in the tree
  */
