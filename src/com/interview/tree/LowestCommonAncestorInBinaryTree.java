@@ -2,6 +2,9 @@ package com.interview.tree;
 
 /**
  * http://www.geeksforgeeks.org/lowest-common-ancestor-binary-tree-set-1/
+ * This program assumes that both key val1 and val2 are present in tree under root.
+ * If it is possible that val1 or val2 wont be present you need extra check to see that
+ * whatever node is returned has val1 or val2 under it.
  * Test cases:
  * Both val1 and val2 exists in the tree
  * val1 is ancestor of val2
