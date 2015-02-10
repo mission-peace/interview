@@ -2,6 +2,7 @@ package com.interview.tree;
 
 /**
  * http://www.geeksforgeeks.org/convert-an-arbitrary-binary-tree-to-a-tree-that-holds-children-sum-property/
+ * Only operation you can do is increase data on the node. No decrement of data
  * Test case
  * Root greater than children
  * Root less than children

@@ -41,7 +41,8 @@ public class BinaryTreeToDoubleLinkList {
     }
     
     public static void main(String args[]){
-        BinaryTreeToDoubleLinkList btd = new BinaryTreeToDoubleLinkList();  BinaryTree bt = new BinaryTree();
+        BinaryTreeToDoubleLinkList btd = new BinaryTreeToDoubleLinkList();  
+        BinaryTree bt = new BinaryTree();
         Node head = null;
         head = bt.addNode(100, head);
         head = bt.addNode(90, head);
@@ -52,5 +53,6 @@ public class BinaryTreeToDoubleLinkList {
         head = bt.addNode(7, head);
         head = bt.addNode(-7, head);
         btd.toDoubleLL(head);
+        btd.print(head);
     }
 }
