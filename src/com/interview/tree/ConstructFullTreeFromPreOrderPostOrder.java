@@ -2,6 +2,7 @@ package com.interview.tree;
 
 /**
  * http://www.geeksforgeeks.org/full-and-complete-binary-tree-from-given-preorder-and-postorder-traversals/
+ * Full tree is a tree with all nodes with either 0 or 2 child. Never has 1 child.
  * Test cases
  * Empty tree
  * Tree with big on left side
