@@ -11,37 +11,37 @@ package com.interview.tree;
  */
 public class LowestCommonAncestorInBinaryTree {
 
-	public Node lowestCommonAncestor(int val1, int val2,Node root){
-		if(root == null){
-			return null;
-		}
-		if(root.data == val1 || root.data == val2){
-			return root;
-		}
-		
-		Node left = lowestCommonAncestor(val1, val2, root.left);
-		Node right = lowestCommonAncestor(val1, val2, root.right);
-		
-		if(left != null && right != null){
-			return root;
-		}
-		return left != null ? left : right;
-	}
-	
-	public static void main(String args[]){
-		BinaryTree bt = new BinaryTree();
-		Node root = null;
-		root = bt.addNode(10, root);
-		root = bt.addNode(25, root);
-		root = 	bt.addNode(-10, root);
-		root = bt.addNode(0, root);
-		root = bt.addNode(-20, root);
-		root = bt.addNode(15, root);
-		root = bt.addNode(18, root);
-		root = bt.addNode(35, root);
-		
-		LowestCommonAncestorInBinaryTree lca = new LowestCommonAncestorInBinaryTree();
-		Node result = lca.lowestCommonAncestor(0, -20, root);
-		System.out.print(result.data);
-	}
+    public Node lowestCommonAncestor(int val1, int val2,Node root){
+        if(root == null){
+            return null;
+        }
+        if(root.data == val1 || root.data == val2){
+            return root;
+        }
+        
+        Node left = lowestCommonAncestor(val1, val2, root.left);
+        Node right = lowestCommonAncestor(val1, val2, root.right);
+        
+        if(left != null && right != null){
+            return root;
+        }
+        return left != null ? left : right;
+    }
+    
+    public static void main(String args[]){
+        BinaryTree bt = new BinaryTree();
+        Node root = null;
+        root = bt.addNode(10, root);
+        root = bt.addNode(25, root);
+        root =  bt.addNode(-10, root);
+        root = bt.addNode(0, root);
+        root = bt.addNode(-20, root);
+        root = bt.addNode(15, root);
+        root = bt.addNode(18, root);
+        root = bt.addNode(35, root);
+        
+        LowestCommonAncestorInBinaryTree lca = new LowestCommonAncestorInBinaryTree();
+        Node result = lca.lowestCommonAncestor(0, -20, root);
+        System.out.print(result.data);
+    }
 }
