@@ -7,6 +7,8 @@ class Count{
 
 /**
  * http://www.geeksforgeeks.org/check-if-a-given-binary-tree-is-sumtree/
+ * A SumTree is a Binary Tree where the value of a node is equal to sum of the nodes present 
+ * in its left subtree and right subtree
  */
 public class SumTree {
 
