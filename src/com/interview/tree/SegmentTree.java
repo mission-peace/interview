@@ -8,7 +8,7 @@ public class SegmentTree {
 
     public int[] createTree(int input[]){
         int height = (int)Math.ceil(Math.log(input.length)/Math.log(2));
-        int segmentTree[] = new int[(int)(2*Math.pow(2, height)-1)];
+        int segmentTree[] = new int[(int)(Math.pow(2, height+1)-1)];
         constructTree(segmentTree,input,0,input.length-1,0);
         return segmentTree;
     }
