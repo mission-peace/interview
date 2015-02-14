@@ -5,6 +5,8 @@ import java.util.LinkedList;
 
 /**
  * http://www.geeksforgeeks.org/next-greater-element/
+ * Find next larger element on right side of a number in array for 
+ * all positions in array
  */
 public class LargerElementOnRight {
 
@@ -33,10 +35,14 @@ public class LargerElementOnRight {
     
     public static void main(String args[]){
         LargerElementOnRight leo = new LargerElementOnRight();
-        int input[] = {4,2,8,6,0,-3,-1,1,9};
+        int input[] = {4,2,-8,6,0,-3,-1,1,9};
         int result[] = leo.larger(input);
         for(int i=0; i < result.length; i++){
-            System.out.print(result[i]);
+            if(result[i] != -1){
+                System.out.print(input[result[i]] + " ");
+            }else{
+                System.out.print("NIL ");
+            }
         }
     }
 }

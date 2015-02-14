@@ -61,6 +61,12 @@ public class KthLargestInTwoSortedArray {
             return Math.min(input1[l1],input2[l2]);
         }
 
+        //handle the situation where only one element is left
+        //in either of array.
+        //e.g k =2 and arr1 = 8 arr2 = 1,9,11
+        //we try to find if 8 is before 9 betweenn 1 and 9
+        //or before 1. In all these cases k will be either
+        //1 8 or 9 
         if(l2 == h2 || l1 == h1){
             if(l2 == h2){
                 if(input1[l1+k-1] < input2[l2]){
