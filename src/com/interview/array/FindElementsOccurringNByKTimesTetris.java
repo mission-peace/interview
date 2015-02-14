@@ -2,6 +2,12 @@ package com.interview.array;
 
 /**
  * http://www.geeksforgeeks.org/given-an-array-of-of-size-n-finds-all-the-elements-that-appear-more-than-nk-times/
+ * The reason this algorithm works is there can never be more than k-1 elements of size
+ * more than n/k
+ * 
+ * This question does not make much sense. Why not just use a map and keep count and
+ * check if occurrence is more than n/k. This is way too much effort to find elements more than
+ * n by k even though it saves some space.
  */
 public class FindElementsOccurringNByKTimesTetris {
 
