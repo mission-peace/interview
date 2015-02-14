@@ -1,5 +1,12 @@
 package com.interview.array;
 
+/**
+ * Kth largest element in an array.
+ * Use quickselect of quicksort to find the solution in hopefully O(nlogn) time.
+ * Test cases
+ * Sorted array
+ * Reverse sorted array
+ */
 public class KthElementInArray {
     
     public int kthElement(int arr[],int k){
