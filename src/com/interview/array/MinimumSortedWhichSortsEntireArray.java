@@ -18,8 +18,8 @@ public class MinimumSortedWhichSortsEntireArray {
             j--;
         }
         
-        int max = -1;
-        int min = 10000;
+        int max = Integer.MIN_VALUE;
+        int min = Integer.MAX_VALUE;
         for(int k = i; k <= j; k++){
             if(max < arr[k]){
                 max = arr[k];
