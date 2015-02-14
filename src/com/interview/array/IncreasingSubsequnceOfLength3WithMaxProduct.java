@@ -1,5 +1,15 @@
 package com.interview.array;
 
+/**
+ * http://www.geeksforgeeks.org/increasing-subsequence-of-length-three-with-maximum-product/
+ * Keep two arrays which keeps max from current position to right side
+ * Other array keeps max on left size which is smaller than current element
+ * Once you have these two arrays from 2nd to 2nd last position keep multiplying
+ * elements at 3 arrays index position to get max product
+ * Test cases
+ * Negative numbers
+ * 0 in the input
+ */
 public class IncreasingSubsequnceOfLength3WithMaxProduct {
 
     public int maxProduct(int arr[]){
@@ -19,6 +29,8 @@ public class IncreasingSubsequnceOfLength3WithMaxProduct {
             }
         }
         LGN[0] = 0;
+        //This can be implemented using an AVL tree instead of this way which will
+        //make it O(nLogn) operation insteado ofO(n2).
         for(int i=1; i < arr.length; i++){
             getLGN(arr,i,LGN);
         }
