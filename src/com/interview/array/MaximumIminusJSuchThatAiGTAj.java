@@ -50,7 +50,6 @@ public class MaximumIminusJSuchThatAiGTAj {
     public static void main(String args[]){
         MaximumIminusJSuchThatAiGTAj mj = new MaximumIminusJSuchThatAiGTAj();
         int input[] = {11,14,13,1,4,13,1,10};
-        System.out.println(mj.maximum(input));
         System.out.println(mj.maximumGeeks(input));
     }
 
