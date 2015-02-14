@@ -7,6 +7,10 @@ import java.util.PriorityQueue;
 
 /**
  * http://www.careercup.com/question?id=6026101998485504
+ * This answer two questions.
+ * Group elements in size m such that in every group only unique elements are possible.
+ * It also answers question where rearrange array such that same elements are exactly m
+ * distance from each other
  */
 class Pair{
     int num;
@@ -46,6 +50,7 @@ public class GroupElementsInSizeM {
         PriorityQueue<Pair> maxHeap = new PriorityQueue<Pair>(count.size(),new Comparators());
         for(Integer s : count.keySet()){
             int c = count.get(s);
+            //if any count is greater than len/m then this arrangement is not possible
             if(c > Math.ceil(input.length*1.0/m)){
                 return false;
             }
