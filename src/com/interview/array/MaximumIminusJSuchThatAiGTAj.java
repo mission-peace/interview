@@ -13,42 +13,6 @@ public class MaximumIminusJSuchThatAiGTAj {
         int size;
     }
     
-    public int maximum(int input[]){
-        LinkedList<Node> list = new LinkedList<Node>();
-        Node n = new Node();
-        n.index =0;
-        list.offerFirst(n);
-        
-        for(int i=1; i < input.length; i++){
-            Node top = list.getFirst();
-            if(input[top.index] > input[i]){
-                Node t = new Node();
-                t.index = i;
-                list.offerFirst(t);
-            }else{
-                Iterator<Node> itr = list.iterator();
-                while(itr.hasNext()){
-                    Node t = itr.next();
-                    if(input[t.index] < input[i]){
-                        t.size = i - t.index;
-                    }else{
-                        break;
-                    }
-                }
-            }
-        }
-        
-        Iterator<Node> itr = list.iterator();
-        int max = -1;
-        while(itr.hasNext()){
-            Node t = itr.next();
-            if(t.size > max){
-                max = t.size;
-            }
-        }
-        return max;
-    }
-    
     public int maximumGeeks(int input[]){
         int lhs[] = new int[input.length];
         int rhs[] = new int[input.length];
