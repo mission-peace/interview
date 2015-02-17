@@ -2,24 +2,27 @@ package com.interview.string;
 
 /**
 .Given an input string S write a function which returns true if it satisfies S = nT. Basically you have to find if a given string can be represented from a substring by iterating it �n� times. n >= 2
-An example would suffice �
+An example would suffice 
 Function should return true if
-1) S = �abab�
-2) S = �abcdabcd�
-3) S = �abcabcabc�
-4) S = �zzxzzxzzx�
+1) S = abab
+2) S = abcdabcd
+3) S = abcabcabc
+4) S = zzxzzxzzx
 
 Function should return false if
-1) S = �abac�
-2) S = �abcdabbd�
-3) S = �abcabcefg�
-4) S = �zzxzzyzzx�
+1) S = abac
+2) S = abcdabbd
+3) S = abcabcefg
+4) S = zzxzzyzzx
  */
 public class NTMatch {
 
     public boolean match(char str[]){
         int kmp[] = buildKMP(str);
         int index = kmp[str.length-1];
+        //reason end is this rather than index+1 because
+        //if our string was ababab for KMP we would have index as 4 at str.length-1 and we
+        //want end to be 1 rather than 5
         int end = str.length - index-1;
         if(end >= str.length/2){
             return false;
