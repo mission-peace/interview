@@ -2,6 +2,10 @@ package com.interview.string;
 
 public class LexicographicRankInPermutation {
 
+    //you can create a AVL tree to efficiently find total
+    //number of smaller characters.
+    //You can keep size of subtree at root and keep moving left or right
+    //depending on the character you looking for
     private int findNumberOfSmallerCharactersOnRight(int index,char []str){
         int count=0;
         for(int i=index+1; i < str.length; i++){
