@@ -2,6 +2,8 @@ package com.interview.binarysearch;
 
 /**
  * http://www.careercup.com/question?id=4877486110277632
+ * Given a circle with N defined points and a point M outside the circle, 
+ * find the point that is closest to M among the set of N. O(LogN)
  * Test cases
  * 1) smallest element at center
  * 2) smallest element at left/right end
@@ -19,6 +21,7 @@ public class CircularBinarySearch {
         int mid = 0;
         while (low < high) {
             mid = (low + high) / 2;
+            //if middle is less than both mid-1 and mid+1 then mid is the answer
             if((low == mid || arr[mid] < arr[mid-1])&& arr[mid] < arr[mid+1]){
                 return arr[mid];
             }

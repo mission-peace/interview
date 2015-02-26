@@ -23,7 +23,7 @@ public class NumberOfPairWithXPowerYGreaterThanYPowerX {
         }
         Arrays.sort(Y);
         int countPairs = 0;
-        for(int i=0 ; i < Y.length; i++){
+        for(int i=0 ; i < X.length; i++){
             countPairs += count(X[i],Y,hardCoded);
         }
         return countPairs;
@@ -69,7 +69,7 @@ public class NumberOfPairWithXPowerYGreaterThanYPowerX {
     public static void main(String args[]){
         NumberOfPairWithXPowerYGreaterThanYPowerX nop = new NumberOfPairWithXPowerYGreaterThanYPowerX();
         int X[] = {7,9,5,8,9,11,0,1,1,3};
-        int Y[] = {6,8,9,11,14,5,1,0,2,3};
+        int Y[] = {6,8,9,11,14,5,1,0,2,3,9};
         System.out.println(nop.countPairs(X, Y));
     }
 }
