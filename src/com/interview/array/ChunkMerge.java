@@ -14,11 +14,12 @@ import java.util.PriorityQueue;
  */
 public class ChunkMerge {
     
-    class Pair implements Comparable<Pair>{
+    class Triplet implements Comparable<Triplet>{
         int pos;
         int val;
+        int index;
         @Override
-        public int compareTo(Pair o) {
+        public int compareTo(Triplet o) {
             if(val <= o.val){
                 return -1;
             }else{
@@ -29,25 +30,22 @@ public class ChunkMerge {
     
     public List<Integer> mergeUsingHeap(List<List<Integer>> chunks){
         List<Integer> result = new ArrayList<Integer>();
-        PriorityQueue<Pair> queue = new PriorityQueue<Pair>();
+        PriorityQueue<Triplet> queue = new PriorityQueue<Triplet>();
         //add first element of every chunk into queue
-        int pos[] = new int[chunks.size()];
-        for(int i=0; i < pos.length; i++){
-            pos[i] = 1;
-        }
         for(int i=0; i < chunks.size(); i++){
-            Pair p = new Pair();
+            Triplet p = new Triplet();
             p.pos = i;
             p.val = chunks.get(i).get(0);
+            p.index = 1;
             queue.add(p);
         }
         
         while(!queue.isEmpty()){
-            Pair p = queue.poll();
+            Triplet p = queue.poll();
             result.add(p.val);
-            if(pos[p.pos] < chunks.get(p.pos).size()){
-                p.val = chunks.get(p.pos).get(pos[p.pos]);
-                pos[p.pos]++;
+            if(p.index < chunks.get(p.pos).size()){
+                p.val = chunks.get(p.pos).get(p.index);
+                p.index += 1;
                 queue.add(p);
             }
         }
