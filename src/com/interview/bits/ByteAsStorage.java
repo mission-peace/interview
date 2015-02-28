@@ -28,6 +28,5 @@ public class ByteAsStorage {
         boolean visited[] = {true,false,true,true,false};
         ByteAsStorage bas = new ByteAsStorage();
         bas.useByteAsBoolean(visited);
-        System.out.println(1<<0);
     }
 }
