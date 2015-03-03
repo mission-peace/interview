@@ -42,7 +42,7 @@ public class CombinationWithReptition {
         for(int i=pos; i < input.length;)
         {
             //idea is to find first non repeated char position j.
-            // then keep adding one element from reptition and find combination for 
+            // then keep adding one element from repetition and find combination for 
             //rest of the array
             //e.g aaabbc i = 0 j = 3 we do a{bbc} then aa{bbc} aaa{bbc} 
             int j= i;
@@ -73,5 +73,6 @@ public class CombinationWithReptition {
         cwr.combination("abc".toCharArray(), count);
         System.out.println();
         cwr.combination("aaabbccc".toCharArray());
+        cwr.combination("abc".toCharArray());
     }
 }
