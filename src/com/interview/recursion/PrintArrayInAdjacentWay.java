@@ -7,10 +7,15 @@ import java.util.List;
  * http://www.geeksforgeeks.org/find-all-possible-interpretations/
  * This is class fibonacci series example.
  * e.g {1,1,1,1} -> when n = 4 total number of ways possible are
- * f(3) + f(2). This of it as you want to reach at 4 steps and you can only
- * take 1 or 2 steps at a time. So total number of ways to reach 4th step is 
- * total number of reach 3 and then total number to reach 2 because we can go from
- * step 2 to 4 directly
+ * f(3) + f(2). 
+ * Suppose we solved for n =3 . When we add another 1 we know that total number
+ * of combinations without this 1 doing anything will be f(3). Not if we involve this new 1
+ * and exclude f(3) we get total of f(2) because think of as if we combined last 2 ones and 
+ * then see how many ways first 2 ones can combine
+ * example 
+ * {1,1,1, new1}
+ * f(3) is all combinations without including new1
+ * Now lets combine {1,1,newnew1} . This gives total of f(2)
  * Test cases
  * negative number
  * 0
