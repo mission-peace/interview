@@ -10,40 +10,35 @@ package com.interview.recursion;
  * * b c
  * * * c
  * 
- * Idea is to store the index of values instead of actual values and
- * while printing it print the indexes which are in result and if not 
- * in result print *
+ * Idea is to store the index of values in used[] array. So just
+ * like regular combination if used is set print it else print *
  */
 public class CombinationWithStar {
 
-    public void combine(char input[],int result[],int start,int r){
-        if(r == result.length){
-            return;
-        }
-        print(input,result,r);
-        for(int i=start; i < input.length; i++){
-            result[r] = i;
-            combine(input,result,i+1,r+1);
+    public void combine(char input[], int pos, boolean used[]){
+        printArray(input, used);
+        for(int i= pos; i < input.length; i++){
+            used[i] = true;
+            combine(input, i+1, used);
+            used[i] = false;
         }
     }
     
-    private void print(char input[],int result[],int r){
-        int index = 0;
-        for(int i=0; i < input.length ;i++){
-            if(r > 0 && index <r && (i == result[index])){
-                System.out.print(input[result[index]] + " ");
-                index++;
+    private void printArray(char result[], boolean used[]){
+        for(int i=0; i < used.length; i++){
+            if(used[i]){
+                System.out.print(result[i] + " ");
             }else{
                 System.out.print("* ");
             }
         }
         System.out.println();
     }
-    
+     
     public static void main(String args[]){
         char input[] = {'a','b','c','d'};
         CombinationWithStar cws = new CombinationWithStar();
-        int result[] = new int[input.length];
-        cws.combine(input, result, 0, 0);
+        boolean used[] = new boolean[input.length];
+        cws.combine(input, 0, used);
     }
 }
