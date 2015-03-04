@@ -80,12 +80,12 @@ public class OneEditApart {
         System.out.println(oea.matchRecurisve("cat".toCharArray(), "cats".toCharArray()));
         System.out.println(oea.matchRecurisve("cat".toCharArray(), "cut".toCharArray()));
         System.out.println(oea.matchRecurisve("cats".toCharArray(), "casts".toCharArray()));
-        System.out.println(oea.matchRecurisve("cats".toCharArray(), "acts".toCharArray()));
+        System.out.println(oea.matchRecurisve("catsts".toCharArray(), "casts".toCharArray()));
             
         System.out.println(oea.matchIterative("cat".toCharArray(), "dog".toCharArray()));
         System.out.println(oea.matchIterative("cat".toCharArray(), "cats".toCharArray()));
         System.out.println(oea.matchIterative("cat".toCharArray(), "cut".toCharArray()));
         System.out.println(oea.matchIterative("cats".toCharArray(), "casts".toCharArray()));
-        System.out.println(oea.matchIterative("cats".toCharArray(), "acts".toCharArray()));
+        System.out.println(oea.matchIterative("catsts".toCharArray(), "casts".toCharArray()));
     }
 }
