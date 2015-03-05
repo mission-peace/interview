@@ -1,7 +1,7 @@
 package com.interview.number;
 
 /**
- * Babylonian method for calcuating square root
+ * Babylonian method for calculating square root
  */
 public class SquareRoot {
 

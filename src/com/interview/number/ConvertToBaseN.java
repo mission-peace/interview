@@ -18,6 +18,6 @@ public class ConvertToBaseN {
     
     public static void main(String args[]){
         ConvertToBaseN ctb = new ConvertToBaseN();
-        System.out.println(ctb.baseN(13, 10));
+        System.out.println(ctb.baseN(13, 9));
     }
 }
