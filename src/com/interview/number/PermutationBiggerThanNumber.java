@@ -17,6 +17,11 @@ public class PermutationBiggerThanNumber {
             if(arr[i-1] < arr[i]){
                 int swapPoint = findNextLargerNumber(arr,arr[i-1],i);
                 swap(arr,i-1,swapPoint);
+                /*TODO
+                 * Instead of doing quicksort considering reversing elements 
+                 * from swapPoint to arr.lenght -1 since they are already in
+                 * reverse sorted order
+                 */
                 QuickSort qs = new QuickSort();
                 qs.sort(arr,i,arr.length-1);
                 break;
