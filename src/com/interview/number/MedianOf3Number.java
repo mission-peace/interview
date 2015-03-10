@@ -2,7 +2,6 @@ package com.interview.number;
 
 public class MedianOf3Number {
 
-
     public int median(int arr[]){
         int l = 0;
         int h = 2;

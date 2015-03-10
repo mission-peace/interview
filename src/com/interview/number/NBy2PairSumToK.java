@@ -1,7 +1,7 @@
 package com.interview.number;
 
 /**
- * Write a program to determine whether n/2 distintinctive pairs can be formed 
+ * Write a program to determine whether n/2 distinctive pairs can be formed 
  * from given n integers where n is even and each pair's sum is divisible by given k. 
  * Numbers cannot be repeated in the pairs, that means only you can form total n/2 pairs.
  */
