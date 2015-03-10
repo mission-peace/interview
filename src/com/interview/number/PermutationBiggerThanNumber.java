@@ -5,6 +5,9 @@ import com.interview.sort.QuickSort;
 /**
  e.g 1 7 9 8 4 will transform to 1 8 4 7 9
  or  4 2 6 4 3 will transform to 4 3 2 4 6
+ Test cases
+ 1) Non decreasing number in array
+ 2) Non increasing number in array. In this case there is no permutation larger than this
  */
 public class PermutationBiggerThanNumber {
 
