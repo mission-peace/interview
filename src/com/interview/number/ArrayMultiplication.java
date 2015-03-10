@@ -94,8 +94,8 @@ public class ArrayMultiplication {
         int result2 = multiplicationImproved(x%div, y % div, len);
         int result3 = multiplicationImproved(x/div + x%div,y/div + y % div,len);
         
-        return result1*(power(2*len) - power(len)) +
-                result3*power(len) - result2*(power(len) -1 );
+        return result1*div*(div -1) +
+                result3*div - result2*(div -1 );
         
     }
     
