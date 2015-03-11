@@ -2,6 +2,17 @@ package com.interview.sort;
 
 /**
  * http://www.geeksforgeeks.org/pancake-sorting/
+ * Two ways to do it
+ * 1) Start i from arr.length-1 towards 0, find max from 0 to i, move this max to top
+ * by one flip and then move this max to ith position by another flip
+ * 
+ * 2) Start i from 0 towards arr.length-1, find floor of input[i] from 0 to i-1 lets call
+ * f , flip 0 to f, then flip 0 to i-1 then flip 0 to i, then flip 0 to i-1.
+ * e.g 1 2 3 5 4. Here i is 4 and f is 2
+ * 1 2 3 5 4 flip(0,f) -> 3 2 1 5 4
+ * 3 2 1 5 4 flip(0,i-1) -> 5 1 2 3 4
+ * 5 1 2 3 4 flip(0,i) -> 4 3 2 1 5
+ * 4 3 2 1 5 flip(0,i-1) -> 1 2 3 4 5
  */
 public class PanCakeSorting {
 
