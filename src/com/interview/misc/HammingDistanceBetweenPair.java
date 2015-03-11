@@ -8,27 +8,27 @@ package com.interview.misc;
  */
 public class HammingDistanceBetweenPair {
 
-	public int hammingDistance(String input[]){
-		int size = input[0].length();
-		int total = 0;
-		for(int i=0; i < size; i++){
-			int count0s = 0;
-			int count1s = 0;
-			for(String str : input){
-				if(str.charAt(i) == '0'){
-					count0s++;
-				}else{
-					count1s++;
-				}
-			}
-			total += count0s * count1s;
-		}
-		return total;
-	}
-	
-	public static void main(String args[]){
-		String input[] = {"10011","00011","11101","01010"};
-		HammingDistanceBetweenPair hdb = new HammingDistanceBetweenPair();
-		System.out.println(hdb.hammingDistance(input));
-	}
+    public int hammingDistance(String input[]){
+        int size = input[0].length();
+        int total = 0;
+        for(int i=0; i < size; i++){
+            int count0s = 0;
+            int count1s = 0;
+            for(String str : input){
+                if(str.charAt(i) == '0'){
+                    count0s++;
+                }else{
+                    count1s++;
+                }
+            }
+            total += count0s * count1s;
+        }
+        return total;
+    }
+    
+    public static void main(String args[]){
+        String input[] = {"10011","00011","11101","01010"};
+        HammingDistanceBetweenPair hdb = new HammingDistanceBetweenPair();
+        System.out.println(hdb.hammingDistance(input));
+    }
 }
