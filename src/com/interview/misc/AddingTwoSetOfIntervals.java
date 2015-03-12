@@ -34,7 +34,7 @@ public class AddingTwoSetOfIntervals {
         List<Pair> result = new ArrayList<Pair>();
         int i=0;
         int j=0;
-        Pair current = new Pair(-1000,-1000);
+        Pair current = new Pair(Integer.MIN_VALUE,Integer.MIN_VALUE+1);
         while(i < arr1.length && j < arr2.length){
             if(arr1[i].low <= arr2[j].low){
                 if(arr1[i].low <= current.high){
