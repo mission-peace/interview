@@ -9,36 +9,36 @@ import java.util.StringTokenizer;
  */
 public class MoveFromCurrentToNewFolder {
 
-	public String moveFolder(String absCurrentFolder, String relativeNewFolder){
-		Deque<String> stack = new LinkedList<String>();
-		StringTokenizer tokenizer = new StringTokenizer(absCurrentFolder, "/");
-		while(tokenizer.hasMoreTokens()){
-			stack.offerFirst(tokenizer.nextToken());
-		}
-		
-		tokenizer = new StringTokenizer(relativeNewFolder,"/");
-		while(tokenizer.hasMoreTokens()){
-			String token = tokenizer.nextToken();
-			if("..".equals(token)){
-				stack.pollFirst();
-			}else if(".".equals(token)){
-			}
-			else{
-				stack.offerFirst(token);
-			}
-		}
-		
-		StringBuffer buffer = new StringBuffer();
-		while(stack.size() > 0){
-			buffer.append(stack.pollLast()).append("/");
-		}
-		return buffer.toString();
-	}
-	
-	public static void main(String args[]){
-		String absCurrentFolder = "/home/tusroy";
-		String relativeNewFolder = "Desktop/.././Download/../../Tushar";
-		MoveFromCurrentToNewFolder mfc = new MoveFromCurrentToNewFolder();
-		System.out.println(mfc.moveFolder(absCurrentFolder, relativeNewFolder));
-	}
+    public String moveFolder(String absCurrentFolder, String relativeNewFolder){
+        Deque<String> stack = new LinkedList<String>();
+        StringTokenizer tokenizer = new StringTokenizer(absCurrentFolder, "/");
+        while(tokenizer.hasMoreTokens()){
+            stack.offerFirst(tokenizer.nextToken());
+        }
+        
+        tokenizer = new StringTokenizer(relativeNewFolder,"/");
+        while(tokenizer.hasMoreTokens()){
+            String token = tokenizer.nextToken();
+            if("..".equals(token)){
+                stack.pollFirst();
+            }else if(".".equals(token)){
+            }
+            else{
+                stack.offerFirst(token);
+            }
+        }
+        
+        StringBuffer buffer = new StringBuffer();
+        while(stack.size() > 0){
+            buffer.append(stack.pollLast()).append("/");
+        }
+        return buffer.toString();
+    }
+    
+    public static void main(String args[]){
+        String absCurrentFolder = "/home/tusroy";
+        String relativeNewFolder = "Desktop/.././Download/../../Tushar";
+        MoveFromCurrentToNewFolder mfc = new MoveFromCurrentToNewFolder();
+        System.out.println(mfc.moveFolder(absCurrentFolder, relativeNewFolder));
+    }
 }
