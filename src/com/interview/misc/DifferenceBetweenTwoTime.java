@@ -27,7 +27,7 @@ public class DifferenceBetweenTwoTime {
         DifferenceBetweenTwoTime dbtt = new DifferenceBetweenTwoTime();
         int time = dbtt.diff(1400, 1645);
         System.out.println(time);
-        time = dbtt.diff(1200, 1200);
+        time = dbtt.diff(1223, 1246);
         System.out.println(time);
         time = dbtt.diff(1500, 1620);
         System.out.println(time);

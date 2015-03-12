@@ -2,6 +2,8 @@ package com.interview.misc;
 
 /**
  * Number of days between two valid dates
+ * The idea is to get number of days from 00/00/0000 for both the dates and find the
+ * difference between them.
  */
 public class DayDifferenceBetweenTwoDates {
 
