@@ -5,6 +5,8 @@ import java.util.LinkedList;
 
 /**
  * http://www.geeksforgeeks.org/largest-rectangle-under-histogram/
+ * The reason it works is because it always keeps minimum till the point in the queue and 
+ * multiplies minimum with i+1;
  */
 public class MaximumHistogram {
 
@@ -36,7 +38,7 @@ public class MaximumHistogram {
     
     public static void main(String args[]){
         MaximumHistogram mh = new MaximumHistogram();
-        int input[] = {1,2,2,6,0,5,4,2,2,2,2};
+        int input[] = {2,2,2,6,1,5,4,2,2,2,2};
         System.out.println(mh.maxHistogram(input));
     }
 }
