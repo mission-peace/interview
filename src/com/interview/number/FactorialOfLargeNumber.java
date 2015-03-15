@@ -8,8 +8,8 @@ package com.interview.number;
  * 
  * Solution 
  * Since result will be very large it cannot fit in long. We need to store result in array
- * and do regular multiplication of result in array with next number of factorial
- * result is randomly initialized with size 500. Better would be to use list which grows
+ * and do regular multiplication of result in array with next number of factorial.
+ * Result is randomly initialized with size 500. Better would be to use list which grows
  * dynamically.
  * 
  * Test cases:
