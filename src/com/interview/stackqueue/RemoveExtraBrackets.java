@@ -10,6 +10,11 @@ import java.util.LinkedList;
  * Given a string with unbalanced brackets how do you remove minimum number
  * of extra brackets so that you are left with balanced brackets in the string
  * 
+ * e.g )( -> empty string
+ *     (a) -> (a)
+ *     ((mnq)abc))) -> ((mna)abc)
+ *     (abc)(( -> (abc)
+ * 
  * Solution 1
  * Keep a stack. When non bracket character shows up just skip it.
  * When an opening bracket shows up just add it.
@@ -128,7 +133,7 @@ public class RemoveExtraBrackets {
         printArray(input1, pos);
       
         char input1_1[] = ")(".toCharArray();
-        pos = reb.remove(input1_1);
+        pos = reb.removeWithoutExtraSpace(input1_1);
         printArray(input1_1, pos);
       
         char input2[] = "(((abc)(lm)(()".toCharArray();
@@ -152,7 +157,7 @@ public class RemoveExtraBrackets {
         printArray(input4, pos);
  
         char input4_1[] = "((((".toCharArray();
-        pos = reb.remove(input4_1);
+        pos = reb.removeWithoutExtraSpace(input4_1);
         printArray(input4_1, pos);
  
         char input5[] = "))))".toCharArray();
@@ -160,7 +165,7 @@ public class RemoveExtraBrackets {
         printArray(input5, pos);
  
         char input5_1[] = "))))".toCharArray();
-        pos = reb.remove(input5_1);
+        pos = reb.removeWithoutExtraSpace(input5_1);
         printArray(input5_1, pos);
 
         char input6[] = "((Test))(Great)".toCharArray();
@@ -168,7 +173,7 @@ public class RemoveExtraBrackets {
         printArray(input6, pos);
  
         char input6_1[] = "((Test))(Great)".toCharArray();
-        pos = reb.remove(input6_1);
+        pos = reb.removeWithoutExtraSpace(input6_1);
         printArray(input6_1, pos);
  
     }
