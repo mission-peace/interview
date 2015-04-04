@@ -23,6 +23,7 @@ import java.util.concurrent.atomic.AtomicLongArray;
  * 
  * Solution:
  * Keep atomiclong of 300 in array. PositionUpdater updates position every second.
+ * @Threadsafe
  */
 public class RealTimeCounter {
 
