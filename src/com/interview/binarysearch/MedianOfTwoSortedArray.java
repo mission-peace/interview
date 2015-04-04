@@ -48,9 +48,9 @@ public class MedianOfTwoSortedArray {
     private double getMedian(int arr[],int low,int high){
         int len = high - low+1;
         if(len % 2 == 0){
-            return (arr[len/2] + arr[len/2-1])/2;
+            return (arr[low + len/2] + arr[low+ len/2-1])/2;
         }else{
-            return arr[len/2];
+            return arr[low+len/2];
         }
     }
     
