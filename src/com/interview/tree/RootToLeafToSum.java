@@ -4,34 +4,44 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * http://www.geeksforgeeks.org/root-to-leaf-path-sum-equal-to-a-given-number/
- * Test cases
- * Negative number , 0 and postive number for sum
- * 0,1 or more nodes
+ * Date 04/11/2015
+ * @author tusroy
+ * 
+ * Given a binary tree and a sum, find if there is a path from root to leaf
+ * which sums to this sum.
+ * 
+ * Solution
+ * Keep going left and right and keep subtracting node value from sum.
+ * If leaf node is reached check if whatever sum is remaining same as leaf node data.
+ * 
+ * Time complexity is O(n) since all nodes are visited.
+ * 
+ * Test cases:
+ * Negative number, 0 and positive number
+ * Tree with 0, 1 or more nodes
+ * 
+ * Reference http://www.geeksforgeeks.org/root-to-leaf-path-sum-equal-to-a-given-number/
  */
 public class RootToLeafToSum {
 
-    public void printPath(Node root, int sum){
-        List<Node> path = new ArrayList<Node>();
-        printPath(root,path,sum);
-    }
-    
-    private void printPath(Node root, List<Node> path,int sum){
+    public boolean printPath(Node root, int sum, List<Node> path){
         if(root == null){
-            return;
+            return false;
         }
 
-        if(sum == root.data && root.left == null && root.right == null){
-            path.add(root);
-            for(Node node: path){
-                System.out.println(node.data + " ");
+        if(root.left == null && root.right == null){
+            if(root.data == sum){
+                path.add(root);
+                return true;
+            }else{
+                return false;
             }
-            path.remove(path.size()-1);
         }
-        path.add(root);
-        printPath(root.left, path,sum-root.data);
-        printPath(root.right, path,sum-root.data);
-        path.remove(path.size()-1);
+        if(printPath(root.left, sum-root.data, path) || printPath(root.right, sum - root.data, path)){
+            path.add(root);
+            return true;
+        }
+        return false;
     }
     
     public static void main(String args[]){
@@ -44,7 +54,14 @@ public class RootToLeafToSum {
         head = bt.addNode(7, head);
         head = bt.addNode(19, head);
         head = bt.addNode(20, head);
-        head = bt.addNode(-1, head);
-        rtl.printPath(head, 22);
+        head = bt.addNode(4, head);
+        head = bt.addNode(3, head);
+        List<Node> result = new ArrayList<>();
+        boolean r = rtl.printPath(head, 22, result);
+        if(r){
+            result.forEach(node -> System.out.print(node.data + " "));
+        }else{
+            System.out.println("No path for sum " + 22); 
+        }
     }
 }
