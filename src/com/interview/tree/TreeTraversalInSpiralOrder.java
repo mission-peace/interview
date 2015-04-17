@@ -65,7 +65,7 @@ public class TreeTraversalInSpiralOrder {
     }
 
     /**
-     * One deque method to print the matrix
+     * One deque method to print tree in spiral order
      */
     public void spiralWithOneDeque(Node root) {
         if (root == null) {
