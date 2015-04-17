@@ -32,38 +32,6 @@ public class LevelOrderTraversal {
         }
     }
 
-    public void levelOrderSpiral(Node root){
-        if(root == null){
-            return;
-        }
-        
-        Deque<Node> stack1 = new LinkedList<Node>();
-        Deque<Node> stack2 = new LinkedList<Node>();
-        stack1.addFirst(root);
-        while(!stack1.isEmpty() || !stack2.isEmpty()){
-            while(!stack1.isEmpty()){
-                Node node = stack1.pollFirst();
-                System.out.println(node.data);
-                if(node.left != null){
-                    stack2.addFirst(node.left);
-                }
-                if(node.right != null){
-                    stack2.addFirst(node.right);
-                }
-            }
-            while(!stack2.isEmpty()){
-                Node node = stack2.pollFirst();
-                System.out.println(node.data);
-                if(node.right != null){
-                    stack1.addFirst(node.right);
-                }
-                if(node.left != null){
-                    stack1.addFirst(node.left);
-                }
-            }
-        }
-    }
-    
     public static void main(String args[]){
         LevelOrderTraversal loi = new LevelOrderTraversal();
         BinaryTree bt = new BinaryTree();
@@ -75,6 +43,6 @@ public class LevelOrderTraversal {
         head = bt.addNode(19, head);
         head = bt.addNode(20, head);
         head = bt.addNode(-1, head);
-        loi.levelOrderSpiral(head);
+        loi.levelOrder(head);
     }
 }
