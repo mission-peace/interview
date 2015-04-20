@@ -20,9 +20,12 @@ import java.util.Stack;
  * Then once stack1 is empty pop from stack2 and put its child right,
  * left into stack1.
  * 
- * Solution 2 : Use one deque. Technique is like above but instead of
- * using two stack use deque. Also keep count till which point you read
- * in the dequeu.
+ * Solution 2 : Use one dequeue. Technique is like above but instead of
+ * using two stack use dequeue. Also keep count till which point you read
+ * in the dequeue.
+ * 
+ * Solution 3: Use one dequeue. Use a delimiter to separate between one 
+ * stack growing from top and another one growing from bottom.
  *         
  * Time complexity is O(n) 
  * Space complexity is O(n)
@@ -65,7 +68,7 @@ public class TreeTraversalInSpiralOrder {
     }
 
     /**
-     * One deque method to print tree in spiral order
+     * One deque with count method to print tree in spiral order
      */
     public void spiralWithOneDeque(Node root) {
         if (root == null) {
@@ -108,6 +111,44 @@ public class TreeTraversalInSpiralOrder {
         }
     }
 
+    /**
+     * One deque with delimiter to print tree in spiral order
+     */
+    public void spiralWithOneDequeDelimiter(Node root)
+    {
+        if(root == null){
+            return;
+        }
+        Deque<Node> q = new LinkedList<>();
+        q.offer(null);
+        q.offerFirst(root);
+        while(q.size() > 1){
+            root = q.peekFirst();
+            while(root != null){
+                root = q.pollFirst();
+                System.out.print(root.data + " ");
+                if(root.left != null){
+                    q.offerLast(root.left);
+                }
+                if(root.right != null){
+                    q.offerLast(root.right);
+                }
+                root = q.peekFirst();
+            }
+            root = q.peekLast();
+            while(root != null){
+                System.out.print(root.data + " ");
+                root = q.pollLast();
+                if(root.right != null){
+                    q.offerFirst(root.right);
+                }
+                if(root.left != null){
+                    q.offerFirst(root.left);
+                }
+                root = q.peekLast();
+            }
+        }
+    }
     public static void main(String args[]) {
         BinaryTree bt = new BinaryTree();
         Node root = null;
@@ -122,8 +163,11 @@ public class TreeTraversalInSpiralOrder {
         root = bt.addNode(45, root);
 
         TreeTraversalInSpiralOrder tt = new TreeTraversalInSpiralOrder();
+        System.out.println("Two stack method");
         tt.spiralWithTwoStack(root);
-        System.out.println();
+        System.out.println("\nOne deque with count");
         tt.spiralWithOneDeque(root);
+        System.out.println("\nOne deque with delimiter");
+        tt.spiralWithOneDequeDelimiter(root);
     }
 }
