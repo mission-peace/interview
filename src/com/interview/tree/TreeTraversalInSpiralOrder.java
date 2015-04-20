@@ -122,6 +122,7 @@ public class TreeTraversalInSpiralOrder {
         Deque<Node> q = new LinkedList<>();
         q.offer(null);
         q.offerFirst(root);
+        //if only delimiter(in this case null) is left in queue then break
         while(q.size() > 1){
             root = q.peekFirst();
             while(root != null){
