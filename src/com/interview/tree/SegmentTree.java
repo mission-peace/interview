@@ -1,7 +1,7 @@
 package com.interview.tree;
 
 /**
- * Date 04/21/2015
+ * Date 08/21/2014
  * @author tusroy
  * 
  * A segment tree is a tree data structure for storing intervals, or segments. It allows 
