@@ -1,9 +1,24 @@
 package com.interview.tree;
 
 /**
+ * Date 04/21/2015
+ * @author tusroy
+ * 
+ * A segment tree is a tree data structure for storing intervals, or segments. It allows 
+ * for faster querying (e.g sum or min) in these intervals.
+ * Write a program to support these operations for sum
+ * createSegmentTree(int arr[]) - create segment tree
+ * query(int segment[], int startRange, int endRange) - query in this range
+ * 
+ * Similar segment trees can be created for min or max.
+ * 
+ * Time complexity to create segment tree is O(nlogn)
+ * Space complexity to create segment tree is O(nlogn)
+ * Time complexity to search in segment tree is O(logn)
+ * 
+ * References
  * http://www.geeksforgeeks.org/segment-tree-set-1-sum-of-given-range/
  * http://www.geeksforgeeks.org/segment-tree-set-1-range-minimum-query/
- * Segment tree can be used for min, max or sum in range.
  */
 public class SegmentTree {
 
