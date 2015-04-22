@@ -20,6 +20,7 @@ import com.interview.bits.NextPowerOf2;
  * References
  * http://www.geeksforgeeks.org/segment-tree-set-1-sum-of-given-range/
  * http://www.geeksforgeeks.org/segment-tree-set-1-range-minimum-query/
+ * https://www.topcoder.com/community/data-science/data-science-tutorials/range-minimum-query-and-lowest-common-ancestor/
  */
 public class SegmentTreeMinimumRangeQuery {
 
@@ -67,6 +68,7 @@ public class SegmentTreeMinimumRangeQuery {
     }
     
     /**
+     * Segment tree for given example
      *                         -1
      *                0                -1
      *            0       2         1         -1
