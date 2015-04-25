@@ -1,7 +1,29 @@
 package com.interview.tree;
 
 /**
+ * Date 07/04/2014
+ * @author tusroy
+ * 
+ * Write a program to insert into an AVL tree.
+ * 
+ * AVL tree is self balancing binary tree. Difference of height of left or right subtree
+ * cannot be greater than one.
+ * 
+ * There are four different use cases to insert into AVL tree
+ * left left - needs ones right rotation
+ * left right - needs one left and one right rotation
+ * right left - needs one right and one left rotation
+ * right right - needs one left rotation
+ * 
+ * Follow rotation rules to keep tree balanced.
+ * 
+ * At every node we will also keep height of the tree so that we don't
+ * have to recalculate values again.
+ * 
+ * References 
+ * http://en.wikipedia.org/wiki/AVL_tree
  * http://www.geeksforgeeks.org/avl-tree-set-1-insertion/
+ * 
  */
 public class AVLTree {
 
@@ -59,17 +81,18 @@ public class AVLTree {
         else{
             root.left = insert(root.left,data);
         }
-        if(height(root.left) - height(root.right) > 1){
+        int balance = balance(root.left, root.right);
+        if(balance > 1){
             if(height(root.left.left) >= height(root.left.right)){
                 root = rightRotate(root);
             }else{
                 root.left = leftRotate(root.left);
                 root = rightRotate(root);
             }
-        }else if(height(root.right) - height(root.left) > 1){
+        }else if(balance < -1){
             if(height(root.right.right) >= height(root.right.left)){
                 root = leftRotate(root);
-        }else{
+            }else{
                 root.right = rightRotate(root.right);
                 root = leftRotate(root);
             }
@@ -79,6 +102,10 @@ public class AVLTree {
             root.size = setSize(root);
         }
         return root;
+    }
+    
+    private int balance(Node rootLeft, Node rootRight){
+        return height(rootLeft) - height(rootRight);
     }
     
     public static void main(String args[]){
