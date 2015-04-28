@@ -20,6 +20,8 @@ package com.interview.tree;
  * At every node we will also keep height of the tree so that we don't
  * have to recalculate values again.
  * 
+ * Runtime complexity to insert into AVL tree is O(logn).
+ * 
  * References 
  * http://en.wikipedia.org/wiki/AVL_tree
  * http://www.geeksforgeeks.org/avl-tree-set-1-insertion/
