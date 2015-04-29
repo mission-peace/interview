@@ -4,6 +4,8 @@ package com.interview.tree;
  * Date 04/11/2015
  * @author tusroy
  * 
+ * Youtube link - https://youtu.be/zm83jPHZ-jA
+ * 
  * Given a binary search tree and a key, return node which has data as this key or return
  * null if no node has data as key.
  * 

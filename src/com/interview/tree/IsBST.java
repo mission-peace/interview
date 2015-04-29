@@ -4,6 +4,8 @@ package com.interview.tree;
  * Date 04/11/2015
  * @author tusroy
  * 
+ * Youtube link - https://youtu.be/MILxfAbIhrE
+ * 
  * Given a binary tree, return true if it is binary search tree else return false.
  * 
  * Solution

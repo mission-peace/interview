@@ -1,8 +1,21 @@
 package com.interview.tree;
 
-
+/**
+ * Date 07/07/2014 
+ * @author tusroy
+ * 
+ * Youtube link - https://youtu.be/bmaeYtlO2OE
+ * Youtube link - https://youtu.be/_SiwrPXG9-g
+ * Youtube link - https://youtu.be/NA8B84DZYSA
+ *
+ */
 class NodeRef{
     Node node;
+}
+
+enum Color{
+    RED,
+    BLACK
 }
 
 class Node{
@@ -13,6 +26,7 @@ class Node{
     int lis;
     int height;
     int size;
+    Color color;
     
     public static Node newNode(int data){
         Node n = new Node();
@@ -22,6 +36,7 @@ class Node{
         n.lis = -1;
         n.height = 1;
         n.size = 1;
+        n.color = Color.RED;
         return n;
     }
 }
