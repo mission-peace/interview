@@ -1,6 +1,21 @@
 package com.interview.dynamic;
 
 /**
+ * Date 06/12/2014 
+ * @author tusroy
+ * 
+ * Given an array of non negative integers where each element represents the max 
+ * number of steps that can be made forward from that element. Write a function to 
+ * return the minimum number of jumps to reach the end of the array from first element
+ * 
+ * Solution 
+ * Have 2 for loop. j trails i. If arr[j] + j >= i then you calculate new jump
+ * and result.
+ * 
+ * Space complexity O(n) to maintain result and min jumps
+ * Time complexity O(n^2)
+ * 
+ * Reference
  * http://www.geeksforgeeks.org/minimum-number-of-jumps-to-reach-end-of-a-given-array/
  */
 public class MinJumpToReachEnd {
@@ -14,7 +29,7 @@ public class MinJumpToReachEnd {
         }
         
         for(int i=1; i < arr.length; i++){
-            for(int j=0; j < arr.length; j++){
+            for(int j=0; j < i; j++){
                 if(arr[j] + j >= i){
                     if(jump[i] > jump[j] + 1){
                         result[i] = j;
