@@ -7,6 +7,8 @@ import java.util.Queue;
  * Date 04/18/2015
  * @author tusroy
  * 
+ * Video link - https://youtu.be/7uG0gLDbhsI
+ * 
  * Given a binary tree print each level on new line.
  * 
  * e.g           10
@@ -31,7 +33,6 @@ import java.util.Queue;
  * count is 0 print a new line.
  * 
  * Time space complexity for all above algorithm is O(n).
- *
  */
 public class TreeTraversalLevelByLevel {
 

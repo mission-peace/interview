@@ -4,6 +4,8 @@ package com.interview.tree;
  * Date 08/21/2014
  * @author tusroy
  * 
+ * Video link - https://youtu.be/ZBHKZF5w4YU
+ *
  * A segment tree is a tree data structure for storing intervals, or segments. It allows 
  * for faster querying (e.g sum or min) in these intervals.
  * Write a program to support these operations for sum
@@ -15,7 +17,7 @@ package com.interview.tree;
  * Time complexity to create segment tree is O(nlogn)
  * Space complexity to create segment tree is O(nlogn)
  * Time complexity to search in segment tree is O(logn)
- * 
+ 
  * References
  * http://www.geeksforgeeks.org/segment-tree-set-1-sum-of-given-range/
  * http://www.geeksforgeeks.org/segment-tree-set-1-range-minimum-query/
