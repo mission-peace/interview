@@ -24,9 +24,6 @@ public class FenwickTree {
     /**
      * Start from index+1 if you updating index in original array. Keep adding this value 
      * for next node till you reach outside range of tree
-     * @param binaryIndexedTree
-     * @param val
-     * @param index
      */
     public void updateBinaryIndexedTree(int binaryIndexedTree[], int val, int index){
         while(index < binaryIndexedTree.length){
@@ -38,9 +35,6 @@ public class FenwickTree {
     /**
      * Start from index+1 if you want prefix sum 0 to index. Keep adding value
      * till you reach 0
-     * @param binaryIndexedTree
-     * @param index
-     * @return
      */
     public int getSum(int binaryIndexedTree[], int index){
         index = index + 1;
@@ -54,8 +48,6 @@ public class FenwickTree {
     
     /**
      * Creating tree is like updating Fenwick tree for every value in array
-     * @param input
-     * @return
      */
     public int[] createTree(int input[]){
         int binaryIndexedTree[] = new int[input.length+1];
@@ -80,7 +72,6 @@ public class FenwickTree {
      * 1) 2's complement of get minus of index
      * 2) AND this with index
      * 3) Add it to index
-     * @return
      */
     private int getNext(int index){
         return index + (index & -index);
