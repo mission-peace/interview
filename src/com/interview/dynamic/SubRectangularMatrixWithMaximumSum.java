@@ -96,10 +96,10 @@ public class SubRectangularMatrixWithMaximumSum {
     
     
     public static void main(String args[]){
-        int input[][] = {{ 1,  2, -1, -4, -20},
-                         {-8, -3,  4,  2,  1},
-                         { 3,  8,  10, 1,  3},
-                         {-4, -1,  1,  7, -6}};
+        int input[][] = {{ 2,  1, -3, -4,  5},
+                         { 0,  6,  3,  4,  1},
+                         { 2, -2, -1,  4, -5},
+                         {-3,  3,  1,  0,  3}};
         SubRectangularMatrixWithMaximumSum saw = new SubRectangularMatrixWithMaximumSum();
         System.out.println(saw.maxSum(input));
     }       
