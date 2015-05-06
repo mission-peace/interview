@@ -12,6 +12,7 @@ import com.interview.bits.NextPowerOf2;
  * Write a program to support mininmum range query
  * createSegmentTree(int arr[]) - create segment tree
  * query(int segment[], int startRange, int endRange) - returns minimum between startRange and endRange
+ * update(int segment[], int indexToBeUpdated, int newVal) - updates segmentTree with new Val;
  * 
  * Time complexity to create segment tree is O(n) since new array will be at max 4n size
  * Space complexity to create segment tree is O(n) since new array will be at max 4n size
@@ -52,8 +53,9 @@ public class SegmentTreeMinimumRangeQuery {
     }
     
     
-    public void updateSegmentTree(int segmentTree[], int index, int newVal, int len){
-        updateSegmentTree(segmentTree, index, newVal, 0, len-1, 0);
+    public void updateSegmentTree(int input[], int segmentTree[], int index, int newVal){
+        input[index] = newVal;
+        updateSegmentTree(segmentTree, index, newVal, 0, input.length-1, 0);
     }
     
     private void updateSegmentTree(int segmentTree[], int index, int newVal, int low, int high, int pos){
@@ -112,7 +114,7 @@ public class SegmentTreeMinimumRangeQuery {
         assert 0 == st.rangeMinimumQuery(segTree, 0, 3, input.length);
         assert 1 == st.rangeMinimumQuery(segTree, 1, 5, input.length);
         assert -1 == st.rangeMinimumQuery(segTree, 1, 6, input.length);
-        st.updateSegmentTree(segTree, 2, 1, input.length);
+        st.updateSegmentTree(input, segTree, 2, 1);
         assert 1 == st.rangeMinimumQuery(segTree, 1, 3, input.length);
     }
 }
