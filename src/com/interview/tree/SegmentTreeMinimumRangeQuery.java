@@ -12,11 +12,12 @@ import com.interview.bits.NextPowerOf2;
  * Write a program to support mininmum range query
  * createSegmentTree(int arr[]) - create segment tree
  * query(int segment[], int startRange, int endRange) - returns minimum between startRange and endRange
- * update(int segment[], int indexToBeUpdated, int newVal) - updates segmentTree with new Val;
+ * update(int input[], int segment[], int indexToBeUpdated, int newVal) - updates input and segmentTree with newVal at index indexToBeUpdated;
  * 
  * Time complexity to create segment tree is O(n) since new array will be at max 4n size
  * Space complexity to create segment tree is O(n) since new array will be at max 4n size
  * Time complexity to search in segment tree is O(logn) since you would at max travel 4 depths
+ * Time complexity to update in segment tree is O(logn)
  * 
  * References
  * http://www.geeksforgeeks.org/segment-tree-set-1-sum-of-given-range/
