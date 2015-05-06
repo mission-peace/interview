@@ -24,7 +24,7 @@ import com.interview.bits.NextPowerOf2;
  */
 public class SegmentTreeMinimumRangeQuery {
 
-    public int[] createTree(int input[]){
+    public int[] createSegmentTree(int input[]){
         NextPowerOf2 np2 = new NextPowerOf2();
         //if input len is pow of then size of 
         //segment tree is 2*len -1 otherwisze
@@ -50,6 +50,34 @@ public class SegmentTreeMinimumRangeQuery {
         constructMinSegmentTreeTree(segmentTree,input,mid+1,high,2*pos+2);
         segmentTree[pos] = Math.min(segmentTree[2*pos+1], segmentTree[2*pos+2]);
     }
+    
+    
+    public void updateSegmentTree(int segmentTree[], int index, int newVal, int len){
+        updateSegmentTree(segmentTree, index, newVal, 0, len-1, 0);
+    }
+    
+    private void updateSegmentTree(int segmentTree[], int index, int newVal, int low, int high, int pos){
+       
+        //if index to be updated is less than low or higher than high just return.
+        if(index < low || index > high){
+            return;
+        }
+        
+        //if low and high become equal, then index will be also equal to them and update
+        //that value in segment tree at pos
+        if(low == high){
+            segmentTree[pos] = newVal;
+            return;
+        }
+        //otherwise keep going left and right to find index to be updated 
+        //and then update current tree position if min of left or right has
+        //changed.
+        int mid = (low + high)/2;
+        updateSegmentTree(segmentTree, index, newVal, low, mid, 2*pos + 1);
+        updateSegmentTree(segmentTree, index, newVal, mid+1, high, 2*pos + 2);
+        segmentTree[pos] = Math.min(segmentTree[2*pos+1], segmentTree[2*pos + 2]);
+    }
+    
     
     public int rangeMinimumQuery(int []segmentTree,int qlow,int qhigh,int len){
         return rangeMinimumQuery(segmentTree,0,len-1,qlow,qhigh,0);
@@ -79,11 +107,12 @@ public class SegmentTreeMinimumRangeQuery {
     public static void main(String args[]){
         SegmentTreeMinimumRangeQuery st = new SegmentTreeMinimumRangeQuery();
         int input[] = {0,3,4,2,1,6,-1};
-        int segTree[] = st.createTree(input);
+        int segTree[] = st.createSegmentTree(input);
         
         assert 0 == st.rangeMinimumQuery(segTree, 0, 3, input.length);
         assert 1 == st.rangeMinimumQuery(segTree, 1, 5, input.length);
         assert -1 == st.rangeMinimumQuery(segTree, 1, 6, input.length);
-        assert 2 == st.rangeMinimumQuery(segTree, 1, 3, input.length);
+        st.updateSegmentTree(segTree, 2, 1, input.length);
+        assert 1 == st.rangeMinimumQuery(segTree, 1, 3, input.length);
     }
 }
