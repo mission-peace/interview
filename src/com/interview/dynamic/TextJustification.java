@@ -4,8 +4,9 @@ package com.interview.dynamic;
  * Date 05/07/2015
  * @author tusroy
  * 
- * Given a sequence of words and a line width telling how many characters can
- * fit in a line, print these sequence of words neatly.
+ * Given a sequence of words, and a limit on the number of characters that can be put 
+ * in one line (line width). Put line breaks in the given sequence such that the 
+ * lines are printed neatly
  * 
  * Solution:
  * Badness - We define badness has square of empty spaces in every line. So 2 empty space
