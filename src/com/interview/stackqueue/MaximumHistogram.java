@@ -4,6 +4,35 @@ import java.util.Deque;
 import java.util.LinkedList;
 
 /**
+ * 12/23/2014
+ * @author tusroy
+ * 
+ * Video link https://youtu.be/ZmnqCZp9bBs
+ * 
+ * Given an array representing height of bar in bar graph, find max histogram
+ * area in the bar graph. Max histogram will be max rectangular area in the
+ * graph.
+ * 
+ * Maintain a stack
+ * 
+ * If stack is empty or value at index of stack is less than or equal to value at current 
+ * index, push this into stack.
+ * Otherwise keep removing values from stack till value at index at top of stack is 
+ * less than value at current index.
+ * While removing value from stack calculate area
+ * if stack is empty 
+ * it means that till this point value just removed has to be smallest element
+ * so area = input[top] * i
+ * if stack is not empty then this value at index top is less than or equal to 
+ * everything from stack top + 1 till i. So area will
+ * area = input[top] * (i - stack.peek() - 1);
+ * Finally maxArea is area if area is greater than maxArea.
+ * 
+ * 
+ * Time complexity is O(n)
+ * Space complexity is O(n)
+ * 
+ * References:
  * http://www.geeksforgeeks.org/largest-rectangle-under-histogram/
  * The reason it works is because it always keeps minimum till the point in the queue and 
  * multiplies minimum with i+1;
@@ -20,7 +49,18 @@ public class MaximumHistogram {
                 stack.offerFirst(i++);
             }else{
                 int top = stack.pollFirst();
-                area = input[top] * (i - (!stack.isEmpty() ? stack.peekFirst() : -1) -1);
+                //if stack is empty means everything till i has to be
+                //greater or equal to input[top] so get area by
+                //input[top] * i;
+                if(stack.isEmpty()){
+                    area = input[top] * i;
+                }
+                //if stack is not empty then everythin from i-1 to input.peek() + 1
+                //has to be greater or equal to input[top]
+                //so area = input[top]*(i - stack.peek() - 1);
+                else{
+                    area = input[top] * (i - stack.peekFirst() - 1);
+                }
                 if(area > maxArea){
                     maxArea = area;
                 }
@@ -28,8 +68,19 @@ public class MaximumHistogram {
         }
         while(!stack.isEmpty()){
             int top = stack.pollFirst();
-            area = input[top] * (i - (!stack.isEmpty() ? stack.peekFirst() : -1 ) -1 );
-            if(area > maxArea){
+            //if stack is empty means everything till i has to be
+            //greater or equal to input[top] so get area by
+            //input[top] * i;
+            if(stack.isEmpty()){
+                area = input[top] * i;
+            }
+            //if stack is not empty then everything from i-1 to input.peek() + 1
+            //has to be greater or equal to input[top]
+            //so area = input[top]*(i - stack.peek() - 1);
+            else{
+                area = input[top] * (i - stack.peekFirst() - 1);
+            }
+        if(area > maxArea){
                 maxArea = area;
             }
         }
