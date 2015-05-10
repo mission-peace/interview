@@ -90,6 +90,8 @@ public class MaximumHistogram {
     public static void main(String args[]){
         MaximumHistogram mh = new MaximumHistogram();
         int input[] = {2,2,2,6,1,5,4,2,2,2,2};
-        System.out.println(mh.maxHistogram(input));
+        int maxArea = mh.maxHistogram(input);
+        //System.out.println(maxArea);
+        assert maxArea == 12;
     }
 }
