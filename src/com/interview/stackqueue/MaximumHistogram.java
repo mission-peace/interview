@@ -34,8 +34,6 @@ import java.util.LinkedList;
  * 
  * References:
  * http://www.geeksforgeeks.org/largest-rectangle-under-histogram/
- * The reason it works is because it always keeps minimum till the point in the queue and 
- * multiplies minimum with i+1;
  */
 public class MaximumHistogram {
 
