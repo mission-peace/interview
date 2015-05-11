@@ -33,19 +33,11 @@ public class LargestBSTInBinaryTree {
             return new MinMax();
         }
         
-        //if it is leaf node then we have BST of size 1.
-        //min max will be value of this node.
-        if(root.left == null && root.right == null){
-            MinMax m = new MinMax();
-            m.isBST = true;
-            m.max = root.data;
-            m.min = root.data;
-            m.size = 1;
-            return m;
-        }
-        
+        //postorder traversal of tree. First visit left and right then
+        //use information of left and right to calculate largest BST.
         MinMax leftMinMax = largest(root.left);
         MinMax rightMinMax =largest(root.right);
+        
         MinMax m = new MinMax();
         
         //if either of left or right subtree says its not BST or the data
@@ -63,22 +55,15 @@ public class LargestBSTInBinaryTree {
         //Set min and max to be returned to parent.
         m.isBST = true;
         m.size = leftMinMax.size + rightMinMax.size + 1;
-        
-        //if rightMinMax.max was Integer.MIN_VALUE then its right
-        //is null. So set your data as max
-        if(rightMinMax.max == Integer.MIN_VALUE){
-            m.max = root.data;
-        }else{
-            m.max = rightMinMax.max;
-        }
-        
-        //if leftMinMax.min was Integer.MAX_VALUE then its left
-        //is null. So set your data as min
-        if(leftMinMax.min == Integer.MAX_VALUE){
-            m.min = root.data;
-        }else{
-            m.min = leftMinMax.min;
-        }
+     
+        //if root.left is null then set root.data as min else
+        //take min of left side as min
+        m.min = root.left != null ? leftMinMax.min : root.data;
+  
+        //if root.right is null then set root.data as max else
+        //take max of right side as max.
+        m.max = root.right != null ? rightMinMax.max : root.data;
+   
         return m;
     }
     
