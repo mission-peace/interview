@@ -85,10 +85,13 @@ public class LargestBSTInBinaryTree {
     public static void main(String args[]){
         LargestBSTInBinaryTree lbi = new LargestBSTInBinaryTree();
         ConstructTreeFromInOrderPreOrder ctf = new ConstructTreeFromInOrderPreOrder();
+        //this is just to create a binary tree.
         int inorder[]  = {-7,-6,-5,-4,-3,-2,1,2,3,16,6,10,11,12,14};
         int preorder[] = {3,-2,-3,-4,-5,-6,-7,1,2,16,10,6,12,11,14};
         Node root = ctf.createTree(inorder, preorder);
-        System.out.println(lbi.largestBST(root));
+        int largestBSTSize = lbi.largestBST(root);
+        System.out.println("Size of largest BST  is " + largestBSTSize);
+        assert largestBSTSize == 8;
     }
 }
 
