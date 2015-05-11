@@ -28,7 +28,7 @@ public class LargestBSTInBinaryTree {
     }
     
     private MinMax largest(Node root){
-        //if root is null return min as Integer.MIN and max as Integer.MAX
+        //if root is null return min as Integer.MAX and max as Integer.MIN
         if(root == null){
             return new MinMax();
         }
