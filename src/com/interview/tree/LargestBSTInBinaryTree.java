@@ -1,25 +1,24 @@
 package com.interview.tree;
 
-class MinMax{
-    int min;
-    int max;
-    boolean isBST;
-    int size ;
-    
-    MinMax(){
-        min = Integer.MAX_VALUE;
-        max = Integer.MIN_VALUE;
-        isBST = true;
-        size = 0;
-    }
-}
-
 /**
+ * Date 07/20/2014
+ * @author tusroy
+ * 
+ * Video link - https://youtu.be/4fiDs7CCxkc
+ * 
+ * Given a binary tree, find size of largest binary search subtree in this
+ * binary tree.
+ * 
+ * Traverse tree in post order fashion. Left and right nodes return 4 piece
+ * of information to root which isBST, size of max BST, min and max in those
+ * subtree. 
+ * If both left and right subtree are BST and this node data is greater than max
+ * of left and less than min of right then it returns to above level left size +
+ * right size + 1 and new min will be min of left side and new max will be max of
+ * right side.
+ * 
+ * References:
  * http://www.geeksforgeeks.org/find-the-largest-subtree-in-a-tree-that-is-also-a-bst/
- * Test cases
- * Entire tree is BST
- * Only leaf node is BST
- * Mix of BST and non BST nodes
  */
 public class LargestBSTInBinaryTree {
 
@@ -29,33 +28,52 @@ public class LargestBSTInBinaryTree {
     }
     
     private MinMax largest(Node root){
+        //if root is null return min as Integer.MIN and max as Integer.MAX
         if(root == null){
             return new MinMax();
         }
         
+        //if it is leaf node then we have BST of size 1.
+        //min max will be value of this node.
         if(root.left == null && root.right == null){
             MinMax m = new MinMax();
             m.isBST = true;
             m.max = root.data;
             m.min = root.data;
             m.size = 1;
+            return m;
         }
         
         MinMax leftMinMax = largest(root.left);
         MinMax rightMinMax =largest(root.right);
         MinMax m = new MinMax();
+        
+        //if either of left or right subtree says its not BST or the data
+        //of this node is not greater/equal than max of left and less than min of right
+        //then subtree with this node as root will not be BST. 
+        //Return false and max size of left and right subtree to parent
         if(leftMinMax.isBST == false || rightMinMax.isBST == false || (leftMinMax.max > root.data || rightMinMax.min <= root.data)){
             m.isBST = false;
             m.size = Math.max(leftMinMax.size, rightMinMax.size);
             return m;
         }
+        
+        //if we reach this point means subtree with this node as root is BST.
+        //Set isBST as true. Then set size as size of left + size of right + 1.
+        //Set min and max to be returned to parent.
         m.isBST = true;
         m.size = leftMinMax.size + rightMinMax.size + 1;
+        
+        //if rightMinMax.max was Integer.MIN_VALUE then its right
+        //is null. So set your data as max
         if(rightMinMax.max == Integer.MIN_VALUE){
             m.max = root.data;
         }else{
             m.max = rightMinMax.max;
         }
+        
+        //if leftMinMax.min was Integer.MAX_VALUE then its left
+        //is null. So set your data as min
         if(leftMinMax.min == Integer.MAX_VALUE){
             m.min = root.data;
         }else{
@@ -71,5 +89,23 @@ public class LargestBSTInBinaryTree {
         int preorder[] = {3,-2,-3,-4,-5,-6,-7,1,2,16,10,6,12,11,14};
         Node root = ctf.createTree(inorder, preorder);
         System.out.println(lbi.largestBST(root));
+    }
+}
+
+/**
+ * Object of this class holds information which child passes back
+ * to parent node.
+ */
+class MinMax{
+    int min;
+    int max;
+    boolean isBST;
+    int size ;
+    
+    MinMax(){
+        min = Integer.MAX_VALUE;
+        max = Integer.MIN_VALUE;
+        isBST = true;
+        size = 0;
     }
 }
