@@ -37,6 +37,22 @@ import java.util.List;
  * 
  * Trick3 - Keep a global end on leaf to do rule 1 extension.
  * 
+ * Active point - It is the point from which traversal starts for next extension or next phase.
+ * Active point always starts from root. Other extension will get active point set up
+ * correctly by last extension.
+ * 
+ * Active node - Node from which active point will start
+ * Active Edge - It is used to choose the edge from active node. It has index of character. 
+ * Active Length - How far to go on active edge.
+ * 
+ * Active point rules
+ * 1) If rule 3 extension is applied then active length will increment by 1 if active length is not greater then length of path on edge.
+ * 2) If rule 3 extension is applied and if active length gets greater than length path of edge then change active node, active edge and active length
+ * 3) If active length is 0 then always start looking for the character from root.
+ * 4) If rule 2 extension is applied and if active node is root then active edge is active edge + 1 and active length is active lenght -1
+ * 5) If rule 2 extension is applied and if active node is not root then follow suffix link and make active node as suffix link and do no change 
+ * anything.
+ * 
  * Test cases 
  * adeacdade
  * abcabxabcd
@@ -46,6 +62,7 @@ import java.util.List;
  * abcabxabcd
  * mississippi
  * banana
+ * ooooooooo
  * 
  * References
  * http://web.stanford.edu/~mjkay/gusfield.pdf
@@ -84,52 +101,87 @@ public class SuffixTree {
         root.index = -1;
         active = new Active(root);
         this.end = new End(-1);
+        //loop through string to start new phase
         for(int i=0; i < input.length; i++){
             startPhase(i);
         }
+        //finally walk the tree again and set up the index.
         setIndexUsingDfs(root, 0, input.length);
     }
     
     private void startPhase(int i){
+        //set lastCreatedInternalNode to null before start of every phase.
         SuffixNode lastCreatedInternalNode = null;
+        //global end for leaf. Does rule 1 extension as per trick 3 by incrementing end.
         end.end++;
+        
+        //these many suffixes need to be created.
         remainingSuffixCount++;
         while(remainingSuffixCount > 0){
+            //if active length is 0 then look for current character from root.
             if(active.activeLength == 0){
+                //if current character from root is not null then increase active length by 1 
+                //and break out of while loop. This is rule 3 extension and trick 2 (show stopper)
                 if(selectNode(i) != null){
                     active.activeIndex = selectNode(i).start;
                     active.activeLength++;
                     break;
-                } else {
+                } //create a new leaf node with current character from leaf. This is rule 2 extension.
+                else {
                     root.child[input[i]] = SuffixNode.createNode(i, end);
                     remainingSuffixCount--;
                 }
             } else{
+                //if active length is not 0 means we are traversing somewhere in middle. So check if next character is same as
+                //current character. 
                 try {
                     char ch = nextChar(i);
+                    //if next character is same as current character then do a walk down. This is again a rule 3 extension and
+                    //trick 2 (show stopper).
                     if(ch == input[i]){
-                        walkDown(i, lastCreatedInternalNode);
+                        //if lastCreatedInternalNode is not null means rule 2 extension happened before this. Point suffix link of that node
+                        //to selected node using active point.
+                        //TODO - Could be wrong here. Do we only do this if when walk down goes past a node or we do it every time.
+                        if(lastCreatedInternalNode != null){
+                            lastCreatedInternalNode.suffixLink = selectNode();
+                        }
+                        //walk down and update active node if required as per rules of active node update for rule 3 extension.
+                        walkDown(i);
                         break;
                     }
                     else{
+                        //next character is not same as current character so create a new internal node as per 
+                        //rule 2 extension.
                         SuffixNode node = selectNode();
                         int oldStart = node.start;
                         node.start = node.start + active.activeLength;
+                        //create new internal node
                         SuffixNode newInternalNode = SuffixNode.createNode(oldStart, new End(oldStart + active.activeLength - 1));
                         
-                        SuffixNode newNode2 = SuffixNode.createNode(i, this.end);
+                        //create new leaf node
+                        SuffixNode newLeafNode = SuffixNode.createNode(i, this.end);
+                        
+                        //set internal nodes child as old node and new leaf node.
                         newInternalNode.child[input[newInternalNode.start + active.activeLength]] = node;
-                        newInternalNode.child[input[i]] = newNode2;
+                        newInternalNode.child[input[i]] = newLeafNode;
                         newInternalNode.index = -1;
                         active.activeNode.child[input[newInternalNode.start]] = newInternalNode;
+                        
+                        //if another internal node was created in last extension of this phase then suffix link of that
+                        //node will be this node.
                         if(lastCreatedInternalNode != null){
                             lastCreatedInternalNode.suffixLink = newInternalNode;
                         }
+                        //set this guy as lastCreatedInternalNode and if new internalNode is created in next extension of this phase
+                        //then point suffix of this node to that node. Meanwhile set suffix of this node to root.
                         lastCreatedInternalNode = newInternalNode;
                         newInternalNode.suffixLink = root;
+                        
+                        //if active node is not root then follow suffix link
                         if(active.activeNode != root){
                             active.activeNode = active.activeNode.suffixLink;
                         }
+                        //if active node is root then increase active index by one and decrease active length by 1
                         else{
                             active.activeIndex = active.activeIndex  + 1;
                             active.activeLength--;
@@ -138,31 +190,31 @@ public class SuffixTree {
                     }
            
                 } catch (EndOfPathException e) {
+                    
+                    //this happens when we are looking for new character from end of current path edge. Here we already have internal node so 
+                    //we don't have to create new internal node. Just create a leaf node from here and move to suffix new link.
                     SuffixNode node = selectNode();
-                        node.child[input[i]] = SuffixNode.createNode(i, end);
-                        if(lastCreatedInternalNode != null){
-                            lastCreatedInternalNode.suffixLink = node;
-                        }
-                        lastCreatedInternalNode = node;
-                        node.suffixLink = root;
-                        if(active.activeNode != root){
-                            active.activeNode = active.activeNode.suffixLink;
-                        }
-                        else{
-                            active.activeIndex = active.activeIndex + 1;
-                            active.activeLength--;
-                        }
-                        remainingSuffixCount--;
+                    node.child[input[i]] = SuffixNode.createNode(i, end);
+                    //if active node is not root then follow suffix link
+                    if(active.activeNode != root){
+                        active.activeNode = active.activeNode.suffixLink;
+                    }
+                    //if active node is root then increase active index by one and decrease active length by 1
+                    else{
+                        active.activeIndex = active.activeIndex + 1;
+                        active.activeLength--;
+                    }
+                    remainingSuffixCount--;
                 }
             }
         }
     }
     
-    private void walkDown(int index, SuffixNode lastCreatedInternalNode){
+    private void walkDown(int index){
         SuffixNode node = selectNode();
-        if(lastCreatedInternalNode != null){
-            lastCreatedInternalNode.suffixLink = node;
-        }
+        //active length is greater than path edge length.
+        //walk past current node so change active point.
+        //This is as per rules of walk down for rule 3 extension.
         if(diff(node) < active.activeLength){
             active.activeNode = node;
             active.activeLength = active.activeLength - diff(node);
@@ -172,6 +224,7 @@ public class SuffixTree {
         }
     }
     
+    //find next character to be compared to current phase character.
     private char nextChar(int i) throws EndOfPathException{
         SuffixNode node = selectNode();
         if(diff(node) >= active.activeLength){
@@ -225,6 +278,9 @@ public class SuffixTree {
         }
     }
     
+    /**
+     * Do a DFS traversal of the tree.
+     */
     public void dfsTraversal(){
         List<Character> result = new ArrayList<>();
         for(SuffixNode node : root.child){
@@ -262,6 +318,9 @@ public class SuffixTree {
        
     }
     
+    /**
+     * Do validation of the tree by comparing all suffixes and their index at leaf node.
+     */
     private boolean validate(SuffixNode root, char[] input, int index, int curr){
         if(root == null){
             System.out.println("Failed at " + curr + " for index " + index);
