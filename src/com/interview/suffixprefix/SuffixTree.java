@@ -4,21 +4,59 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * https://gist.github.com/axefrog/2373868
- * http://www.geeksforgeeks.org/ukkonens-suffix-tree-construction-part-6/
+ * Date 06/01/2015
+ * @author tusroy
+ * 
+ * Construct suffix tree using Ukkonen's algorithm
+ * 
+ * Solution
+ * Rule 1: For phase i+1 if S[j..i] ends at last character of leaf edge then add S[i+1] at 
+ * the end.
+ * Rule 2: For phase i+1 if S[j..i] ends somewhere in middle of edge and next character is
+ * not S[i+1] then a new leaf edge with label S[i+1] should be created
+ * Rule 3: For phase i+1 if S[j..i] ends somewhere in middle of edge and next character is
+ * S[i+1] then do nothing(resulting in implicit tree)
+ * 
+ * Suffix Link:
+ * For every node with label x@ where x is a single character and @ is possibly empty substring
+ * there is another node with label x. This node is suffix link of first node. If @ is
+ * empty then suffix link is root.
+ * 
+ * Trick1
+ * Skip/Count trick
+ * While traveling down if number of characters on edge is less than number of characters
+ * to traverse then skip directly to the end of the edge. If number of characters on label
+ * is more than number of characters to traverse then go directly to that character
+ * we care about.
+ * 
+ * Edge-label compression
+ * Instead of storing actual characters on the path store start and end indices on the 
+ * path.
+ * 
+ * Trick2 - Stop process as soon as you hit rule 3. Rule 3 is show stopper
+ * 
+ * Trick3 - Keep a global end on leaf to do rule 1 extension.
+ * 
+ * Test cases 
+ * adeacdade
+ * abcabxabcd
+ * abcdefabxybcdmnabcdex
+ * abcadak
+ * dedododeodo
+ * abcabxabcd
+ * mississippi
+ * banana
+ * 
+ * References
  * http://web.stanford.edu/~mjkay/gusfield.pdf
+ * http://www.geeksforgeeks.org/ukkonens-suffix-tree-construction-part-6/
+ * https://www.cs.helsinki.fi/u/ukkonen/SuffixT1withFigs.pdf
+ * https://gist.github.com/axefrog/2373868
  */
-//adeacdade
-//abcabxabcd
-//abcdefabxybcdmnabcdex
-// abcadak
-//dedododeodo
-//abcabxabcd
-//mississippi
 public class SuffixTree {
 
     public static void main(String args[]){
-        SuffixTree st = new SuffixTree("dedododeodo".toCharArray());
+        SuffixTree st = new SuffixTree("mississippi".toCharArray());
         
         st.build();
         st.dfsTraversal();
@@ -242,10 +280,19 @@ public class SuffixTree {
             System.out.println("Index not same. Failed at " + curr + " for index " + index);
             return false;        
         }
+        
         SuffixNode node = root.child[input[curr]];
         if(node == null){
             System.out.println("Failed at " + curr + " for index " + index);
             return false;
+        }
+        int j = 0;
+        for(int i=node.start ; i <= node.end.end; i++){
+            if(input[curr+j] != input[i] ){
+                System.out.println("Mismatch found " + input[curr+j] + " " + input[i]);
+                return false;
+            }
+            j++;
         }
         curr += node.end.end - node.start + 1;
         return validate(node, input, index, curr);
