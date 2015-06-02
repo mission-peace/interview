@@ -123,7 +123,7 @@ public class SuffixTree {
                 //if current character from root is not null then increase active length by 1 
                 //and break out of while loop. This is rule 3 extension and trick 2 (show stopper)
                 if(selectNode(i) != null){
-                    active.activeIndex = selectNode(i).start;
+                    active.activeEdge = selectNode(i).start;
                     active.activeLength++;
                     break;
                 } //create a new leaf node with current character from leaf. This is rule 2 extension.
@@ -183,7 +183,7 @@ public class SuffixTree {
                         }
                         //if active node is root then increase active index by one and decrease active length by 1
                         else{
-                            active.activeIndex = active.activeIndex  + 1;
+                            active.activeEdge = active.activeEdge  + 1;
                             active.activeLength--;
                         }
                         remainingSuffixCount--;
@@ -201,7 +201,7 @@ public class SuffixTree {
                     }
                     //if active node is root then increase active index by one and decrease active length by 1
                     else{
-                        active.activeIndex = active.activeIndex + 1;
+                        active.activeEdge = active.activeEdge + 1;
                         active.activeLength--;
                     }
                     remainingSuffixCount--;
@@ -218,7 +218,7 @@ public class SuffixTree {
         if(diff(node) < active.activeLength){
             active.activeNode = node;
             active.activeLength = active.activeLength - diff(node);
-            active.activeIndex = node.child[input[index]].start;
+            active.activeEdge = node.child[input[index]].start;
         }else{
             active.activeLength++;
         }
@@ -228,7 +228,7 @@ public class SuffixTree {
     private char nextChar(int i) throws EndOfPathException{
         SuffixNode node = selectNode();
         if(diff(node) >= active.activeLength){
-            return input[active.activeNode.child[input[active.activeIndex]].start + active.activeLength];
+            return input[active.activeNode.child[input[active.activeEdge]].start + active.activeLength];
         }
         if(diff(node) + 1 == active.activeLength ){
             if(node.child[input[i]] != null){
@@ -238,8 +238,8 @@ public class SuffixTree {
         else{
             active.activeNode = node;
             active.activeLength = active.activeLength - diff(node) -1;
-            active.activeIndex = active.activeIndex + diff(node)  +1;
-            return input[active.activeNode.child[input[active.activeIndex]].start + active.activeLength];
+            active.activeEdge = active.activeEdge + diff(node)  +1;
+            return input[active.activeNode.child[input[active.activeEdge]].start + active.activeLength];
         }
         
         throw new EndOfPathException();
@@ -250,7 +250,7 @@ public class SuffixTree {
     }
     
     private SuffixNode selectNode(){
-        return active.activeNode.child[input[active.activeIndex]];
+        return active.activeNode.child[input[active.activeEdge]];
     }
     
     private SuffixNode selectNode(int index){
@@ -414,17 +414,17 @@ class Active{
     Active(SuffixNode node){
         activeLength = 0;
         activeNode = node;
-        activeIndex = -1;
+        activeEdge = -1;
     }
     
     @Override
     public String toString() {
         
         return "Active [activeNode=" + activeNode + ", activeIndex="
-                + activeIndex + ", activeLength=" + activeLength + "]";
+                + activeEdge + ", activeLength=" + activeLength + "]";
     }
 
     SuffixNode activeNode;
-    int activeIndex;
+    int activeEdge;
     int activeLength;
 }
