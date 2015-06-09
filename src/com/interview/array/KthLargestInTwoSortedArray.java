@@ -2,6 +2,7 @@ package com.interview.array;
 
 /**
  * http://stackoverflow.com/questions/4686823/given-2-sorted-arrays-of-integers-find-the-nth-largest-number-in-sublinear-time
+ * http://articles.leetcode.com/2011/01/find-k-th-smallest-element-in-union-of.html
  */
 public class KthLargestInTwoSortedArray {
 
@@ -17,10 +18,10 @@ public class KthLargestInTwoSortedArray {
             return arr1[low1+k];
         }
         if(k == 0){
-            return arr1[low1] < arr2[low2] ? arr1[low1] : arr2[low2];
+            return Math.min(arr1[low1], arr2[low2]);
         }
         
-        //TODO - understand how mid is calculated
+     
         int mid1 = len1*k/(len1 + len2);
         int mid2 = k - mid1 - 1;
         
