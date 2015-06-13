@@ -11,13 +11,15 @@ package com.interview.string;
  */
 public class SubstringSearch {
 
-    public boolean hasSubstring(char[] str, char[] subString){
-        
+    /**
+     * Slow method of pattern matching
+     */
+    public boolean hasSubstring(char[] text, char[] pattern){
         int i=0;
         int j=0;
         int k = 0;
-        while(i < str.length && j < subString.length){
-            if(str[i] == subString[j]){
+        while(i < text.length && j < pattern.length){
+            if(text[i] == pattern[j]){
                 i++;
                 j++;
             }else{
@@ -26,18 +28,18 @@ public class SubstringSearch {
                 i = k;
             }
         }
-        if(j == subString.length){
+        if(j == pattern.length){
             return true;
         }
         return false;
     }
     
-    private int[] computeLPSArray(char str[]){
+    private int[] computeLPSArray(char pattern[]){
         
-        int [] lps = new int[str.length];
+        int [] lps = new int[pattern.length];
         int index =0;
-        for(int i=1; i < str.length;){
-            if(str[i] == str[index]){
+        for(int i=1; i < pattern.length;){
+            if(pattern[i] == pattern[index]){
                 lps[i] = index + 1;
                 index++;
                 i++;
@@ -53,13 +55,16 @@ public class SubstringSearch {
         return lps;
     }
     
-    public boolean KMP(char []str, char []subString){
+    /**
+     * KMP alogrithm of pattern matching.
+     */
+    public boolean KMP(char []text, char []pattern){
         
-        int lps[] = computeLPSArray(subString);
+        int lps[] = computeLPSArray(pattern);
         int i=0;
         int j=0;
-        while(i < str.length && j < subString.length){
-            if(str[i] == subString[j]){
+        while(i < text.length && j < pattern.length){
+            if(text[i] == pattern[j]){
                 i++;
                 j++;
             }else{
@@ -70,7 +75,7 @@ public class SubstringSearch {
                 }
             }
         }
-        if(j == subString.length){
+        if(j == pattern.length){
             return true;
         }
         return false;
@@ -78,8 +83,8 @@ public class SubstringSearch {
         
     public static void main(String args[]){
         
-        String str = "AABDAABDAABLM";
-        String subString = "AABDAABL";
+        String str = "abcxabcdabcdabcy";
+        String subString = "abcdabcy";
         SubstringSearch ss = new SubstringSearch();
         boolean result = ss.KMP(str.toCharArray(), subString.toCharArray());
         System.out.print(result);
