@@ -1,5 +1,14 @@
 package com.interview.string;
 
+/**
+ * Date 09/22/2014
+ * @author tusroy
+ * 
+ * Do pattern matching using KMP algorithm
+ * 
+ * Runtime complexity - O(m + n) where m is length of text and n is length of pattern
+ * Space complexity - O(n)
+ */
 public class SubstringSearch {
 
     public boolean hasSubstring(char[] str, char[] subString){
