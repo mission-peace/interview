@@ -34,8 +34,11 @@ public class SubstringSearch {
         return false;
     }
     
-    private int[] computeLPSArray(char pattern[]){
-        
+    /**
+     * Compute temporary array to maintain size of suffix which is same as prefix
+     * Time/space complexity is O(size of pattern)
+     */
+    private int[] computeTemporaryArray(char pattern[]){
         int [] lps = new int[pattern.length];
         int index =0;
         for(int i=1; i < pattern.length;){
@@ -56,11 +59,11 @@ public class SubstringSearch {
     }
     
     /**
-     * KMP alogrithm of pattern matching.
+     * KMP algorithm of pattern matching.
      */
     public boolean KMP(char []text, char []pattern){
         
-        int lps[] = computeLPSArray(pattern);
+        int lps[] = computeTemporaryArray(pattern);
         int i=0;
         int j=0;
         while(i < text.length && j < pattern.length){
