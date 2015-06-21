@@ -56,10 +56,10 @@ public class DisjointSet {
         
         //else whoever's rank is higher becomes parent of other
         if(parent1.rank >= parent2.rank){
-            parent1.rank += 1;
+            //increment rank only if both sets have same rank
+            parent1.rank = (parent1.rank == parent2.rank) ? parent1.rank + 1 : parent1.rank; 
             parent2.parent = parent1;
         } else{
-            parent2.rank += 1;
             parent1.parent = parent2;
         }
     }

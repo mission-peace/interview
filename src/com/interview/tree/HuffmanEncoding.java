@@ -67,10 +67,10 @@ public class HuffmanEncoding {
             map.put(node.input,buff.toString());
             return;
         }
-        buff.append("1");
+        buff.append("0");
         createCode(node.left,map,buff);
         buff.deleteCharAt(buff.length()-1);
-        buff.append("0");
+        buff.append("1");
         createCode(node.right,map,buff);
         buff.deleteCharAt(buff.length()-1);
     }
