@@ -22,7 +22,7 @@ public class DisjointSet {
     private Map<Long, Node> map = new HashMap<>();
     
     class Node{
-        long id;
+        long data;
         Node parent;
         int rank;
     }
@@ -30,27 +30,27 @@ public class DisjointSet {
     /**
      * Create a set with only one element.
      */
-    public void makeSet(long id){
+    public void makeSet(long data){
         Node node = new Node();
-        node.id = id;
+        node.data = data;
         node.parent = node;
         node.rank = 0;
-        map.put(id,  node);
+        map.put(data,  node);
     }
     
     /**
      * Combines two sets together to one.
      * Does union by rank
      */
-    public void union(long id1, long id2){
-        Node node1 = map.get(id1);
-        Node node2 = map.get(id2);
+    public void union(long data1, long data2){
+        Node node1 = map.get(data1);
+        Node node2 = map.get(data2);
         
         Node parent1 = findSet(node1);
         Node parent2 = findSet(node2);
         
         //if they are part of same set do nothing
-        if(parent1.id == parent2.id){
+        if(parent1.data == parent2.data){
             return;
         }
         
@@ -67,8 +67,8 @@ public class DisjointSet {
     /**
      * Finds the representative of this set
      */
-    public long findSet(long id){
-        return findSet(map.get(id)).id;
+    public long findSet(long data){
+        return findSet(map.get(data)).data;
     }
     
     /**
@@ -85,38 +85,29 @@ public class DisjointSet {
     }
     
     public static void main(String args[]){
-       long id1 = 1;
-       long id2 = 2;
-       long id3 = 3;
-       long id4 = 4;
-       long id5 = 5;
-       long id6 = 6;
-       long id7 = 7;
-       
        DisjointSet ds = new DisjointSet();
-       ds.makeSet(id1);
-       ds.makeSet(id2);
-       ds.makeSet(id3);
-       ds.makeSet(id4);
-       ds.makeSet(id5);
-       ds.makeSet(id6);
-       ds.makeSet(id7);
+       ds.makeSet(1);
+       ds.makeSet(2);
+       ds.makeSet(3);
+       ds.makeSet(4);
+       ds.makeSet(5);
+       ds.makeSet(6);
+       ds.makeSet(7);
           
-       ds.union(id1, id2);
-       ds.union(id3, id4);
-       ds.union(id3, id5);
-       ds.union(id6, id7);
-        
-       ds.union(id5, id7);
-       ds.union(id2, id6);
+       ds.union(1, 2);
+       ds.union(2, 3);
+       ds.union(4, 5);
+       ds.union(6, 7);
+       ds.union(5, 6);
+       ds.union(3, 7);
        
-       System.out.println(ds.findSet(id1));
-       System.out.println(ds.findSet(id2));
-       System.out.println(ds.findSet(id3));
-       System.out.println(ds.findSet(id4));
-       System.out.println(ds.findSet(id5));
-       System.out.println(ds.findSet(id6));
-       System.out.println(ds.findSet(id7));
+       System.out.println(ds.findSet(1));
+       System.out.println(ds.findSet(2));
+       System.out.println(ds.findSet(3));
+       System.out.println(ds.findSet(4));
+       System.out.println(ds.findSet(5));
+       System.out.println(ds.findSet(6));
+       System.out.println(ds.findSet(7));
        
   }
 }
