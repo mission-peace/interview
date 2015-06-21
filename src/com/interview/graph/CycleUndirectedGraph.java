@@ -11,19 +11,19 @@ public class CycleUndirectedGraph<T> {
 
     public boolean hasCycle(Graph<T> graph){
         
-        PathCompressionAndRank rank = new PathCompressionAndRank();
+        DisjointSet disjointSet = new DisjointSet();
         
         for(Vertex<T> vertex : graph.getAllVertex()){
-            rank.addNode(vertex.getId());
+            disjointSet.makeSet(vertex.getId());
         }
         
         for(Edge<T> edge : graph.getAllEdges()){
-            long parent1 = rank.find(edge.getVertex1().getId());
-            long parent2 = rank.find(edge.getVertex2().getId());
+            long parent1 = disjointSet.findSet(edge.getVertex1().getId());
+            long parent2 = disjointSet.findSet(edge.getVertex2().getId());
             if(parent1 == parent2){
                 return true;
             }
-            rank.union(edge.getVertex1().getId(), edge.getVertex2().getId());
+            disjointSet.union(edge.getVertex1().getId(), edge.getVertex2().getId());
         }
         return false;
     }
@@ -64,7 +64,7 @@ public class CycleUndirectedGraph<T> {
         CycleUndirectedGraph<Integer> cycle = new CycleUndirectedGraph<Integer>();
         Graph<Integer> graph = new Graph<Integer>(false);
         
-        graph.addEdge(0,1);
+        graph.addEdge(0, 1);
         graph.addEdge(1, 2);
         graph.addEdge(0, 3);
         graph.addEdge(3, 4);

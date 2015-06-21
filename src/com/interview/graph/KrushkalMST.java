@@ -28,22 +28,22 @@ public class KrushkalMST {
         List<Edge<Integer>> allEdges = graph.getAllEdges();
         EdgeComparator edgeComparator = new EdgeComparator();
         Collections.sort(allEdges, edgeComparator);
-        PathCompressionAndRank pcar = new PathCompressionAndRank();
+        DisjointSet disjointSet = new DisjointSet();
         
         for(Vertex<Integer> vertex : graph.getAllVertex()){
-            pcar.addNode(vertex.getId());
+            disjointSet.makeSet(vertex.getId());
         }
         
         List<Edge<Integer>> resultEdge = new ArrayList<Edge<Integer>>();
         
         for(Edge<Integer> edge : allEdges){
-            long root1 = pcar.find(edge.getVertex1().getId());
-            long root2 = pcar.find(edge.getVertex2().getId());
+            long root1 = disjointSet.findSet(edge.getVertex1().getId());
+            long root2 = disjointSet.findSet(edge.getVertex2().getId());
             if(root1 == root2){
                 continue;
             }else{
                 resultEdge.add(edge);
-                pcar.union(edge.getVertex1().getId(), edge.getVertex2().getId());
+                disjointSet.union(edge.getVertex1().getId(), edge.getVertex2().getId());
             }
             
         }
