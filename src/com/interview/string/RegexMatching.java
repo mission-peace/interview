@@ -1,6 +1,12 @@
 package com.interview.string;
 /**
- * http://leetcode.com/2011/09/regular-expression-matching.html
+ * Date 06/24/2015
+ * @author tusroy
+ * 
+ * Write a program to perform regex matching with * an . 
+ * 
+ * References : http://leetcode.com/2011/09/regular-expression-matching.html
+ * Leetcode verified solution
  */
 public class RegexMatching {
 
