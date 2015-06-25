@@ -8,44 +8,33 @@ public class RegexMatching {
         return match(str,pattern,0,0);
     }
     
-    private boolean match(char[] str,char pattern[],int pos1, int pos2){
-        if(pos1 == str.length && pos2 == pattern.length){
+    private boolean match(char text[], char pattern[], int pos1, int pos2){
+        //if pos2 has reached end of pattern means pos2 should also reach end of text for match
+        //to happen
+        if(pos2 == pattern.length) { 
+            return pos1 == text.length;
+        } 
+      
+        //if next character is not * means either current value at pattern and text should be same
+        //or current value at pattern should be . in which case you can skip one character of text
+        if(pos2 == pattern.length - 1 || pattern[pos2+1] != '*') {
+            return (pos1 < text.length && (text[pos1] == pattern[pos2] || pattern[pos2] == '.')) && match(text, pattern, pos1+1, pos2+1); 
+        }
+  
+        //if we have case like abc and ad*bc so here we totally skip d*
+        if(match(text, pattern, pos1, pos2+2)){
             return true;
         }
-        if(pos2 == pattern.length){
-            return false;
-        }
-        if(pos1 == str.length){
-            return pos2 + 1 < pattern.length && pattern[pos2+1] == '*' && 
-                    match(str,pattern,pos1, pos2+2);
-        }
-        
-        if(pos2 + 1 >= pattern.length || pattern[pos2+1] != '*'){
-            if(pattern[pos2] == '.'){
-                return match(str,pattern,pos1+1,pos2+1);
-            }else{
-                return str[pos1] == pattern[pos2] && match(str,pattern,pos1+1,pos2+1);
+  
+        //For case like abbc and ab*c match first b with b* and then next b to c. If that does not work out
+        //then try next b with b* and then c with c and so on.
+        //if pattern current val is . then skip one character at time from text till we either reach end of text
+        //or a match is found
+        while(pos1 < text.length && (text[pos1] == pattern[pos2] || pattern[pos2] == '.')){
+            if( match(text, pattern, pos1+1, pos2+2)){
+                return true;
             }
-        }
-        
-        if(match(str,pattern,pos1,pos2+2)){
-            return true;
-        }
-        for(int i=pos1+1; i <= str.length; i++){
-            if(pattern[pos2] == '.'){
-                boolean flag = match(str,pattern,i,pos2+2);
-                if(flag){
-                    return true;
-                }
-            }else{
-                if(str[i-1] != pattern[pos2]){
-                    break;
-                }
-                boolean flag = match(str,pattern,i,pos2+2);
-                if(flag){
-                    return true;
-                }
-            }
+            pos1++;
         }
         return false;
     }
@@ -60,5 +49,6 @@ public class RegexMatching {
         System.out.println(rm.match("abbbbccc".toCharArray(),".*bcc".toCharArray()));
         System.out.println(rm.match("abbbbccc".toCharArray(),".*bcc*".toCharArray()));
         System.out.println(rm.match("abbbbccc".toCharArray(),".*bcc*".toCharArray()));
+        System.out.println(rm.match("aaa".toCharArray(),"ab*a*c*a".toCharArray()));
     }
 }
