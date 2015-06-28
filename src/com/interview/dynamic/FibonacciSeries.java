@@ -23,9 +23,9 @@ package com.interview.dynamic;
  */
 public class FibonacciSeries {
 
-    /**
-     * Recursive and slow version. Recalculates same value over and over again.
-     * Chokes for n greater than 60
+	 /**
+     * DP version where we do not recalculate values but just keep last 2
+     * calculate values
      */
     public int fibonacciSeries(int n){
         int a = 1;
@@ -39,9 +39,10 @@ public class FibonacciSeries {
         return c;
     }
     
+   
     /**
-     * DP version where we do not recalculate values but just keep last 2
-     * calculate values
+     * Recursive and slow version. Recalculates same value over and over again.
+     * Chokes for n greater than 60
      */
     public int fibonacciSeriesRecursive(int n){
         if(n == 1 || n == 0){
