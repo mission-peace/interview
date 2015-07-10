@@ -74,12 +74,12 @@ public class CoinChanging {
         int temp[] = new int[total+1];
         temp[0] = 0;
         for(int i=1; i <= total; i++){
-            temp[i] = Integer.MAX_VALUE;
+            temp[i] = Integer.MAX_VALUE-1;
         }
         for(int i=0; i < arr.length; i++){
             for(int j=1; j <= total; j++){
                 if(j >= arr[i]){
-                    //be careful here. Max_val + 1 can result in very small neg number.
+                    //be careful here. Max_val + 1 can result in very small negative number.
                     temp[j] = Math.min(temp[j], temp[j-arr[i]] +1);
                 }
             }
@@ -113,7 +113,7 @@ public class CoinChanging {
     public static void main(String args[]){
         CoinChanging cc = new CoinChanging();
         int total = 15;
-        int coins[] = {1,3,4,6,7,9};
+        int coins[] = {3,4,6,7,9};
         System.out.println(cc.minCoinChangeInfinteSupply(total, coins));
         System.out.println(cc.minCoinChangeInfinteSupplyRec(total, coins));
     }
