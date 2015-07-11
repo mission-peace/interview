@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * @author Tushar Roy
  http://www.geeksforgeeks.org/dynamic-programming-set-7-coin-change/
  */
 public class CoinChanging {

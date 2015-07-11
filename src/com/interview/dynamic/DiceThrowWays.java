@@ -1,6 +1,7 @@
 package com.interview.dynamic;
 
 /**
+ * @author Tushar Roy
  * http://www.geeksforgeeks.org/dice-throw-problem/
  * This solution assumes that 1,2,1 is different from 2,1,1 which is different from 1,1 2
  * so total 3 ways are possible
