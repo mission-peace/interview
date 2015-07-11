@@ -27,10 +27,10 @@ public class PrintSumCombination {
 
     public void print(int input[], int sum) {
         List<Integer> result = new ArrayList<>();
-        print(input, sum, result, 0);
+        print(input, sum, result);
     }
     
-    private void print(int input[], int sum, List<Integer >result, int pos) {     
+    private void print(int input[], int sum, List<Integer >result) {     
         if(sum < 0) {
             return;
         }
@@ -43,7 +43,7 @@ public class PrintSumCombination {
         
         for(int i=0; i < input.length; i++) {
             result.add(input[i]);
-            print(input, sum - input[i], result, pos+1);
+            print(input, sum - input[i], result);
             result.remove(result.size()-1);
         }
     }
