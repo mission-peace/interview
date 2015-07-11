@@ -26,12 +26,11 @@ import java.util.List;
 public class PrintSumCombination {
 
     public void print(int input[], int sum) {
-        boolean used[] = new boolean[input.length];
         List<Integer> result = new ArrayList<>();
-        print(input, sum, result, 0, used);
+        print(input, sum, result, 0);
     }
     
-    private void print(int input[], int sum, List<Integer >result, int pos, boolean used[]) {     
+    private void print(int input[], int sum, List<Integer >result, int pos) {     
         if(sum < 0) {
             return;
         }
@@ -44,7 +43,7 @@ public class PrintSumCombination {
         
         for(int i=0; i < input.length; i++) {
             result.add(input[i]);
-            print(input, sum - input[i], result, pos+1, used);
+            print(input, sum - input[i], result, pos+1);
             result.remove(result.size()-1);
         }
     }
