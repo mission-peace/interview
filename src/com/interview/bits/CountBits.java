@@ -35,9 +35,25 @@ public class CountBits {
         }
         return total;
     }
+    
+    //http://bits.stephan-brumme.com/countBits.html
+    public int countBitsEvenFaster(int x){
+        // count bits of each 2-bit chunk
+        x = x - ((x >> 1) & 0x55555555);
+        // count bits of each 4-bit chunk
+        x = (x & 0x33333333) + ((x >> 2) & 0x33333333);
+        // count bits of each 8-bit chunk
+        x = x + (x >> 4);
+        // mask out junk
+        x &= 0xF0F0F0F;
+        // add all four 8-bit chunks
+        return (x * 0x01010101) >> 24;
+    }
+
     public static void main(String args[]){
         CountBits cb = new CountBits();
         System.out.println(cb.countBits(3636363));
         System.out.println(cb.countBitsFaster(3636363));
+        System.out.println(cb.countBitsEvenFaster(3636363));
     }
 }
