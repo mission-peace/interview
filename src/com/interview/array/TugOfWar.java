@@ -21,8 +21,8 @@ public class TugOfWar {
 
     private void combinationUtil(int arr[],int k, int start,int sum, int total,int pos, List<Integer> result){
         if(pos == k){
-            if(Math.abs(sum - (total-sum)) < minFoundSoFar){
-                minFoundSoFar = Math.abs(sum - (total-sum));
+            if(Math.abs(sum - total/2)) < minFoundSoFar){
+                minFoundSoFar = Math.abs(sum - total/2);
                 System.out.println(result);
             }
             return;
