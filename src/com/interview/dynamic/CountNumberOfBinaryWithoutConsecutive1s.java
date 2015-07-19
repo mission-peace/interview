@@ -23,6 +23,19 @@ public class CountNumberOfBinaryWithoutConsecutive1s {
         return a[n-1] + b[n-1];
     }
     
+    public int countSimple(int n){
+        int a = 1;
+        int b = 1;
+        
+        for(int i=1; i < n; i++){
+            int tmp = a;
+        	a = a + b;
+            b = tmp;
+        }
+        
+        return a + b;
+    }
+    
     public static void main(String args[]){
         CountNumberOfBinaryWithoutConsecutive1s cnb = new CountNumberOfBinaryWithoutConsecutive1s();
         System.out.println(cnb.count(5));
