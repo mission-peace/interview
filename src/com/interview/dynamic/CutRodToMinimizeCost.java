@@ -5,7 +5,7 @@ package com.interview.dynamic;
  * @author Tushar Roy
  *
  * Given a rod with markings. Cut the rod along markings but reduce the cost of cutting.
- * Cost if cutting is propotional to the length of rod being cut.
+ * Cost if cutting is proportional to the length of rod being cut.
  *
  * Solve is using top down dynamic programming. Memoize minimum cost of cutting between marking
  * start to end. To calculate the value try all markings b/w start to end.
