@@ -1,13 +1,19 @@
 package com.interview.string;
 
 /**
+ * Date 07/29/2015
+ * @author Tushar Roy
+ *
+ * Given a string find longest palindromic substring in this string.
+ *
+ * References
  * http://www.geeksforgeeks.org/longest-palindrome-substring-set-1/
  * http://www.geeksforgeeks.org/longest-palindromic-substring-set-2/
  * http://articles.leetcode.com/2011/11/longest-palindromic-substring-part-ii.html
  * http://www.akalin.cx/longest-palindrome-linear-time
  * http://tarokuriyama.com/projects/palindrome2.php
  */
-public class LongestPanlindromeSubstring {
+public class LongestPalindromeSubstring {
 
     public int longestPalindromeSubstringEasy(char arr[]) {
 
@@ -107,11 +113,12 @@ public class LongestPanlindromeSubstring {
         int max = Integer.MIN_VALUE;
         for(int i = 0; i < T.length; i++) {
             int val;
-            if(i%2 == 0) {
+      /*      if(i%2 == 0) {
                 val = (T[i] -1)/2;
             } else {
                 val = T[i]/2;
-            }
+            }*/
+            val = T[i]/2;
             if(max < val) {
                 max = val;
             }
@@ -152,7 +159,7 @@ public class LongestPanlindromeSubstring {
     }
 
     public static void main(String args[]) {
-        LongestPanlindromeSubstring lps = new LongestPanlindromeSubstring();
+        LongestPalindromeSubstring lps = new LongestPalindromeSubstring();
         System.out.println(lps.longestPalindromicSubstringLinear("abba".toCharArray()));
         System.out.println(lps.longestPalindromicSubstringLinear("abbababba".toCharArray()));
         System.out.println(lps.longestPalindromicSubstringLinear("babcbaabcbaccba".toCharArray()));
