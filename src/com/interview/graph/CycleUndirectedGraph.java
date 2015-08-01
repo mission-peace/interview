@@ -4,13 +4,21 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- http://www.geeksforgeeks.org/union-find/
- It has both union-find and DFS way to find the cycle
+ * Date 10/11/2014
+ * @author Tushar Roy
+ *
+ * Given an undirected graph find cycle in this graph.
+ *
+ * Solution
+ * This can be solved in many ways.
+ * Below is the code to solve it using disjoint sets and DFS.
+ *
+ * Runtime and space complexity for both the techniques is O(v)
+ * where v is total number of vertices in the graph.
  */
 public class CycleUndirectedGraph<T> {
 
-    public boolean hasCycle(Graph<T> graph){
-        
+    public boolean hasCycleUsingDisjointSets(Graph<T> graph){
         DisjointSet disjointSet = new DisjointSet();
         
         for(Vertex<T> vertex : graph.getAllVertex()){
@@ -71,8 +79,8 @@ public class CycleUndirectedGraph<T> {
         graph.addEdge(4, 5);
         graph.addEdge(5, 1);
         boolean isCycle = cycle.hasCycleDFS(graph);
-        
-        
+        System.out.println(isCycle);
+        isCycle = cycle.hasCycleUsingDisjointSets(graph);
         System.out.print(isCycle);
         
     }
