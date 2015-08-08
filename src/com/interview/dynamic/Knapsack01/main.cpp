@@ -3,16 +3,19 @@
 using namespace std;
 
 int calculate(int val[], int wt[], int W){
-        int K[sizeof(val)/sizeof(val[0])+1][W+1];
+        int K[sizeof(val)/sizeof(val[0])][W+1];
+        for(i=0;i<sizeof(sizeof(val)/sizeof(val[0]));i++){
+                K[i][0]=0;
+        }
+        for(j=0;j<W+1;j++){
+                K[0][j]=1;
+        }
 
-        for(int i=0; i <= sizeof(val)/sizeof(val[0]); i++){
+        for(int i=1; i < sizeof(val)/sizeof(val[0]); i++){
             for(int j=0; j <= W; j++){
-                if(i == 0 || j == 0){
-                    K[i][j] = 0;
-                    continue;
-                }
-                if(j - wt[i-1] >= 0){
-                    K[i][j] = max(K[i-1][j], K[i-1][j-wt[i-1]] + val[i-1]);
+                
+                if(j - wt[i] >= 0){
+                    K[i][j] = max(K[i-1][j], K[i-1][j-wt[i]] + val[i]);
                 }else{
                     K[i][j] = K[i-1][j];
                 }
