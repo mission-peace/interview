@@ -4,10 +4,11 @@ import com.interview.bits.NextPowerOf2;
 
 /**
  * Date 08/22/2015
- * @author tusroy
+ * @author Tushar Roy
  * 
  * A segment tree is a tree data structure for storing intervals, or segments. It allows 
- * for faster querying (e.g sum or min) in these intervals.
+ * for faster querying (e.g sum or min) in these intervals. Lazy propagation is useful
+ * when there are high number of updates in the input array.
 
  * Write a program to support mininmum range query
  * createSegmentTree(int arr[]) - create segment tree
@@ -230,11 +231,26 @@ public class SegmentTreeMinimumRangeQuery {
 
     public static void main(String args[]){
         SegmentTreeMinimumRangeQuery st = new SegmentTreeMinimumRangeQuery();
-        int input[] = {-1,2,4,1,7,1,3,2};
+
+        int input[] = {0,3,4,2,1,6,-1};
         int segTree[] = st.createSegmentTree(input);
-        int lazy[] =  new int[segTree.length];
-        st.updateSegmentTreeRangeLazy(input, segTree, lazy, 0, 3, 1);
-        st.updateSegmentTreeRangeLazy(input, segTree, lazy, 0, 0, 2);
-        assert 1 == st.rangeMinimumQueryLazy(segTree, lazy, 3, 5, input.length);
+
+        //non lazy propagation example
+        assert 0 == st.rangeMinimumQuery(segTree, 0, 3, input.length);
+        assert 1 == st.rangeMinimumQuery(segTree, 1, 5, input.length);
+        assert -1 == st.rangeMinimumQuery(segTree, 1, 6, input.length);
+        st.updateSegmentTree(input, segTree, 2, 1);
+        assert 2 == st.rangeMinimumQuery(segTree, 1, 3, input.length);
+        st.updateSegmentTreeRange(input, segTree, 3, 5, -2);
+        assert -1 == st.rangeMinimumQuery(segTree, 5, 6, input.length);
+        assert 0 == st.rangeMinimumQuery(segTree, 0, 3, input.length);
+
+        //lazy propagation example
+        int input1[] = {-1,2,4,1,7,1,3,2};
+        int segTree1[] = st.createSegmentTree(input1);
+        int lazy1[] =  new int[segTree.length];
+        st.updateSegmentTreeRangeLazy(input1, segTree1, lazy1, 0, 3, 1);
+        st.updateSegmentTreeRangeLazy(input1, segTree1, lazy1, 0, 0, 2);
+        assert 1 == st.rangeMinimumQueryLazy(segTree1, lazy1, 3, 5, input1.length);
     }
 }
