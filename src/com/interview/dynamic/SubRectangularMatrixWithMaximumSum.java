@@ -91,7 +91,7 @@ public class SubRectangularMatrixWithMaximumSum {
                 max = maxSoFar;
             }
         }
-        return new KadaneResult(maxSoFar, maxStart, maxEnd);
+        return new KadaneResult(max, maxStart, maxEnd);
     }
     
     
