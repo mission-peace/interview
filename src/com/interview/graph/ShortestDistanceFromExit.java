@@ -22,18 +22,18 @@ class Point{
  * @Date 07/05/2015
  * @author Tushar Roy
  * 
- * Given a 2 D space with 3 values empty space, block and multiple guards. Find distance of every empty space
- * from nearest guards
+ * Given a 2 D floor plan with empty space, block and multiple exits. Find distance of every empty space
+ * from nearest exits in case of fire emergency.
  * 
- * Idea is to start from every guard position and do BFS search in all 4 directions and maintain the distance of every 
- * space from guard. If another guard in future iterator is closer than already calculated guard then update
+ * Idea is to start from every exit position and do BFS search in all 4 directions and maintain the distance of every
+ * space from exit. If another exit in future iterator is closer than already calculated exit then update
  * the distance.
  * 
  * Space complexity is O(n*m)
- * Time complexity is O(number of guards * m * n);
+ * Time complexity is O(number of exit * m * n);
  *
  */
-public class ShortestDistanceFromGuard {
+public class ShortestDistanceFromExit {
 
 	public int[][] findShortest(Cell input[][]){
 		int distance[][] = new int[input.length][input[0].length];
@@ -45,7 +45,7 @@ public class ShortestDistanceFromGuard {
 		
 		for(int i=0; i < input.length; i++){
 			for(int j =0; j < input[i].length; j++){
-				//for every guard location do a BFS starting with this guard as the origin
+				//for every exit location do a BFS starting with this exit as the origin
 				if(input[i][j] == Cell.GUARD){
 					distance[i][j] = 0;
 					setDistance(input, i, j, distance);
@@ -88,7 +88,7 @@ public class ShortestDistanceFromGuard {
 		return new Point(x,y);
 	}
 	public static void main(String args[]){
-		ShortestDistanceFromGuard sdg = new ShortestDistanceFromGuard();
+		ShortestDistanceFromExit sdg = new ShortestDistanceFromExit();
 		Cell input[][] = {{Cell.SPACE, Cell.SPACE, Cell.BLOCK, Cell.BLOCK},
 						  {Cell.SPACE, Cell.SPACE, Cell.GUARD, Cell.SPACE},
 						  {Cell.SPACE, Cell.SPACE, Cell.BLOCK, Cell.SPACE},
