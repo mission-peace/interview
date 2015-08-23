@@ -60,9 +60,11 @@ public class ArticulationPoint<T> {
         int childCount =0;
         boolean isArticulationPoint = false;
         for(Vertex<T> adj : vertex.getAdjacentVertexes()){
+            //if adj is same as parent then just ignore this vertex.
             if(adj.equals(parent.get(vertex))) {
                 continue;
             }
+            //if adj has not been visited then visit it.
             if(!visited.contains(adj)) {
                 parent.put(adj, vertex);
                 childCount++;
@@ -71,14 +73,14 @@ public class ArticulationPoint<T> {
                 if(visitedTime.get(vertex) <= lowTime.get(adj)) {
                     isArticulationPoint = true;
                 } else {
-                    //lowTime[vertex] = min(lowTime[vertex], lowTime[adj]);
+                    //below operation basically does lowTime[vertex] = min(lowTime[vertex], lowTime[adj]);
                     lowTime.compute(vertex, (currentVertex, time) ->
                         Math.min(time, lowTime.get(adj))
                     );
                 }
 
-            } else {
-                //lowTime[vertex] = min(lowTime[vertex], visitedTime[adj]);
+            } else { //if adj is already visited see if you can get better low time.
+                //below operation basically does lowTime[vertex] = min(lowTime[vertex], visitedTime[adj]);
                 lowTime.compute(vertex, (currentVertex, time) ->
                                 Math.min(time, visitedTime.get(adj))
                 );
