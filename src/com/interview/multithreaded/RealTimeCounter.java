@@ -62,6 +62,8 @@ public class RealTimeCounter {
     }
     
     void incrementPosition(){
+        //first reset the value to 0 at next counter location.
+        counter.set((pos + 1)%GRANULARITY, 0);
         pos = (pos + 1)%GRANULARITY;
     }
     
