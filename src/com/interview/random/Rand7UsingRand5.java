@@ -4,7 +4,7 @@ public class Rand7UsingRand5 {
 
 	public int rand7(){
 		int r = (rand5()-1)*5 + rand5();
-		while(r > 20){
+		while(r > 21){   // I just need to ignore [22, 25] 
 			r = (rand5()-1)*5 + rand5();
 		}
 		return (r%7) + 1;
