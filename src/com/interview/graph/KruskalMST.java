@@ -17,7 +17,7 @@ import java.util.List;
  * References
  * https://en.wikipedia.org/wiki/Kruskal%27s_algorithm
  */
-public class KrushkalMST {
+public class KruskalMST {
 
     /**
      * Comparator to sort edges by weight in non decreasing order
@@ -82,7 +82,7 @@ public class KrushkalMST {
         graph.addEdge(3,4, 5);
         graph.addEdge(3,7, 8);
         
-        KrushkalMST mst = new KrushkalMST();
+        KruskalMST mst = new KruskalMST();
         List<Edge<Integer>> result = mst.getMST(graph);
         for(Edge<Integer> edge : result){
             System.out.println(edge.getVertex1() + " " + edge.getVertex2());
