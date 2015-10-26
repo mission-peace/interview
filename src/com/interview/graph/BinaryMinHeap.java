@@ -20,7 +20,6 @@ public class BinaryMinHeap<T> {
     }
     
     public void add(int weight,T data) {
-
         Node node = new Node();
         node.weight = weight;
         node.data = data;
@@ -42,7 +41,6 @@ public class BinaryMinHeap<T> {
                 break;
             }
         }
-
     }
 
     private void swap(Node node1,Node node2){
@@ -86,7 +84,16 @@ public class BinaryMinHeap<T> {
             }
         }
     }
-    
+
+    public Integer getWeight(T data) {
+        Integer position = nodePosition.get(data);
+        if( position == null ) {
+            return null;
+        } else {
+            return allNodes.get(position).weight;
+        }
+    }
+
     public T extractMin(){
         int size = allNodes.size() -1;
         T max = allNodes.get(0).data;

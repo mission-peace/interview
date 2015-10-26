@@ -6,7 +6,7 @@ import java.util.*;
  * Find all simple cycles in a directed graph using Tarjan's algorithm.
  *
  * Space complexity - O(E + V + S) where S is length of all cycles
- * Time complexity - O(E*V(C+1) where C is total number of cycles 
+ * Time complexity - O(E*V(C+1) where C is total number of cycles
  *
  * Reference - https://ecommons.cornell.edu/handle/1813/5941
  * https://github.com/jgrapht/jgrapht/tree/master/jgrapht-core/src/main/java/org/jgrapht/alg/cycle
