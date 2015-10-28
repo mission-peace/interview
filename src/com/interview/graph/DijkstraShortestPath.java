@@ -1,15 +1,20 @@
 package com.interview.graph;
 
-import com.interview.recursion.InterpretationOfArray;
-
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 /**
- * http://www.geeksforgeeks.org/greedy-algorithms-set-7-dijkstras-algorithm-for-adjacency-list-representation/
- */
+ * Date 10/11/2014
+ * @author Tushar Roy
+ *
+ * Find single source shortest path using Dijkstra's algorithm
+ *
+ * Space complexity - O(E + V)
+ * Time complexity - O(ElogV)
+ *
+ * References
+ * https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
+ * CLRS book*/
 public class DijkstraShortestPath {
 
     public Map<Vertex<Integer>,Integer> shortestPath(Graph<Integer> graph, Vertex<Integer> sourceVertex){
@@ -100,7 +105,6 @@ public class DijkstraShortestPath {
         graph.addEdge(6, 4, 2);
         graph.addEdge(3, 4, 3);
 
-        
         DijkstraShortestPath dsp = new DijkstraShortestPath();
         Vertex<Integer> sourceVertex = graph.getVertex(1);
         Map<Vertex<Integer>,Integer> distance = dsp.shortestPath(graph, sourceVertex);
