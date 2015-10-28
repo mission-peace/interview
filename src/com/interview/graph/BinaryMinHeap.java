@@ -21,8 +21,8 @@ import java.util.Map;
  */
 public class BinaryMinHeap<T> {
 
-    private List<Node> allNodes = new ArrayList<Node>();
-    private Map<T,Integer> nodePosition = new HashMap<T,Integer>();
+    private List<Node> allNodes = new ArrayList<>();
+    private Map<T,Integer> nodePosition = new HashMap<>();
         
     public class Node {
         int weight;
@@ -109,15 +109,18 @@ public class BinaryMinHeap<T> {
     }
 
     /**
-     * Extract min value key from the heap
+     * Returns the min node of the heap
      */
-    public T extractMin(){
+    public Node extractMinNode() {
         int size = allNodes.size() -1;
-        T max = allNodes.get(0).key;
+        Node minNode = new Node();
+        minNode.key = allNodes.get(0).key;
+        minNode.weight = allNodes.get(0).weight;
+
         int lastNodeWeight = allNodes.get(size).weight;
         allNodes.get(0).weight = lastNodeWeight;
         allNodes.get(0).key = allNodes.get(size).key;
-        nodePosition.remove(max);
+        nodePosition.remove(minNode.key);
         nodePosition.remove(allNodes.get(0));
         nodePosition.put(allNodes.get(0).key, 0);
         allNodes.remove(size);
@@ -142,7 +145,14 @@ public class BinaryMinHeap<T> {
                 break;
             }
         }
-        return max;
+        return minNode;
+    }
+    /**
+     * Extract min value key from the heap
+     */
+    public T extractMin(){
+        Node node = extractMinNode();
+        return node.key;
     }
 
     private void printPositionMap(){
