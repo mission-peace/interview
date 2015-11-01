@@ -70,10 +70,10 @@ public class Knapsack01 {
     /**
      * Solves 0/1 knapsack in top down DP
      */
-    public int topDownRecursive(int val[], int wt[], int W) {
+    public int topDownRecursive(int values[], int weights[], int W) {
         //map of key(remainingWeight, remainingCount) to maximumValue they can get.
         Map<Index, Integer> map = new HashMap<>();
-        return topDownRecursiveUtil(val, wt, W, val.length, 0, map);
+        return topDownRecursiveUtil(values, weights, W, values.length, 0, map);
     }
 
     public int topDownRecursiveUtil(int values[], int weights[], int remainingWeight, int totalItems, int currentItem, Map<Index, Integer> map) {
@@ -106,7 +106,6 @@ public class Knapsack01 {
         return maxValue;
 
     }
-
 
     public static void main(String args[]){
         Knapsack01 k = new Knapsack01();
