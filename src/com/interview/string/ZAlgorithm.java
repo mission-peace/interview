@@ -30,10 +30,12 @@ public class ZAlgorithm {
                 Z[k] = right - left;
                 right--;
             } else {
+                //we are operating inside box
                 int k1 = k - left;
+                //if value does not stretches till right bound then just copy it.
                 if(Z[k1] < right - k + 1) {
                     Z[k] = Z[k1];
-                } else {
+                } else { //otherwise try to see if there are more matches.
                     left = k;
                     while(right < input.length && input[right] == input[right - left]) {
                         right++;
@@ -46,7 +48,10 @@ public class ZAlgorithm {
         return Z;
     }
 
-    public List<Integer> substring(char text[], char pattern[]) {
+    /**
+     * Returns list of all indices where pattern is found in text.
+     */
+    public List<Integer> matchPattern(char text[], char pattern[]) {
         char newString[] = new char[text.length + pattern.length + 1];
         int i = 0;
         for(char ch : pattern) {
@@ -74,13 +79,8 @@ public class ZAlgorithm {
         String text = "aaabcxyzaaaabczaaczabbaaaaaabc";
         String pattern = "aaabc";
         ZAlgorithm zAlgorithm = new ZAlgorithm();
-        List<Integer> result = zAlgorithm.substring(text.toCharArray(), pattern.toCharArray());
+        List<Integer> result = zAlgorithm.matchPattern(text.toCharArray(), pattern.toCharArray());
         result.forEach(System.out::println);
-
-        int Z[] = zAlgorithm.calculateZ("aabcaabxaaaz".toCharArray());
-        for(int z : Z) {
-            System.out.print(z + " ");
-        }
     }
 
 
