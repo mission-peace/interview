@@ -17,7 +17,7 @@ public class ContructTreeFromInOrderTraversalRootGreaterThanChild {
         if(low > high){
             return null;
         }
-        int i=low;
+        int i;
         int maxIndex = low;
         for(i=low ; i <= high; i++){
             if(inorder[maxIndex] > inorder[i]){

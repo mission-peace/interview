@@ -15,7 +15,7 @@ public class LinkListToCompleteBinaryTree {
             return;
         }
         
-        Queue<Node> queue = new LinkedList<Node>();
+        Queue<Node> queue = new LinkedList<>();
         queue.add(head);
         head = head.next;
         while(head != null){
