@@ -141,6 +141,10 @@ public class RedBlackTree {
             }
         }
 
+        //duplicate insertion is not allowed for this tree.
+        if(root.data == data) {
+            throw new IllegalArgumentException("Duplicate date " + data);
+        }
         //if we go on left side then isLeft will be true
         //if we go on right side then isLeft will be false.
         boolean isLeft;
@@ -254,10 +258,11 @@ public class RedBlackTree {
         if(root.data == data) {
             if(root.right.isNullLeaf || root.left.isNullLeaf) {
                 deleteOneChild(root, rootReference);
+            } else {
+                Node inorderSuccessor = findSmallest(root.right);
+                root.data = inorderSuccessor.data;
+                delete(root.right, inorderSuccessor.data, rootReference);
             }
-            Node inorderSuccessor = findSmallest(root.right);
-            root.data = inorderSuccessor.data;
-            delete(root.right, inorderSuccessor.data, rootReference);
         }
         if(root.data < data) {
             delete(root.right, data, rootReference);
@@ -268,7 +273,7 @@ public class RedBlackTree {
 
     private Node findSmallest(Node root) {
         Node prev = null;
-        while(root != null && root.isNullLeaf) {
+        while(root != null && !root.isNullLeaf) {
             prev = root;
             root = root.left;
         }
@@ -440,7 +445,7 @@ public class RedBlackTree {
     public static void main(String args[]) {
         Node root = null;
         RedBlackTree redBlackTree = new RedBlackTree();
-        root = redBlackTree.insert(root, 10);
+        /*root = redBlackTree.insert(root, 10);
         root = redBlackTree.insert(root, 20);
         root = redBlackTree.insert(root, 0);
         root = redBlackTree.insert(root, 25);
@@ -460,9 +465,29 @@ public class RedBlackTree {
         root = redBlackTree.insert(root, 17);
         root = redBlackTree.insert(root, 40);
         root = redBlackTree.insert(root, 50);
-        root = redBlackTree.insert(root, 60);
+        root = redBlackTree.insert(root, 60);*/
 
+        root = redBlackTree.insert(root, 10);
+        root = redBlackTree.insert(root, 15);
+        root = redBlackTree.insert(root, -10);
+        root = redBlackTree.insert(root, 20);
+        root = redBlackTree.insert(root, 30);
+        root = redBlackTree.insert(root, 40);
+        root = redBlackTree.insert(root, 50);
+        root = redBlackTree.insert(root, -15);
+        root = redBlackTree.insert(root, 25);
+        root = redBlackTree.insert(root, 17);
+        root = redBlackTree.insert(root, 21);
+        root = redBlackTree.insert(root, 24);
+        root = redBlackTree.insert(root, 28);
+        root = redBlackTree.insert(root, 34);
+        root = redBlackTree.insert(root, 32);
         redBlackTree.printRedBlackTree(root);
+
+        System.out.print("\n\n");
+        root = redBlackTree.delete(root, 28);
+        redBlackTree.printRedBlackTree(root);
+
         System.out.println(redBlackTree.validateRedBlackTree(root));
     }
 }
