@@ -15,18 +15,20 @@ import java.util.concurrent.atomic.AtomicReference;
  * Delete - O(logn)
  * Search - O(logn)
  *
+ * Does not work for duplicates.
+ *
  * References
  * http://pages.cs.wisc.edu/~skrentny/cs367-common/readings/Red-Black-Trees/
  * https://en.wikipedia.org/wiki/Red%E2%80%93black_tree
  */
 public class RedBlackTree {
 
-    static enum Color {
+    public enum Color {
         RED,
         BLACK;
     }
 
-    static class Node {
+    public static class Node {
         int data;
         Color color;
         Node left;
@@ -60,6 +62,52 @@ public class RedBlackTree {
         node.left = createNullLeafNode(node);
         node.right = createNullLeafNode(node);
         return node;
+    }
+
+    /**
+     * Main insert method of red black tree.
+     */
+    public Node insert(Node root, int data) {
+        return insert(null, root, data);
+    }
+
+    /**
+     * Main delete method of red black tree.
+     */
+    public Node delete(Node root, int data) {
+        AtomicReference<Node> rootReference = new AtomicReference<>();
+        delete(root, data, rootReference);
+        if(rootReference.get() == null) {
+            return root;
+        } else {
+            return rootReference.get();
+        }
+    }
+
+    /**
+     * Main print method of red black tree.
+     */
+    public void printRedBlackTree(Node root) {
+        printRedBlackTree(root, 0);
+    }
+
+    /**
+     * Main validate method of red black tree.
+     */
+    public boolean validateRedBlackTree(Node root) {
+
+        if(root == null) {
+            return true;
+        }
+        //check if root is black
+        if(root.color != Color.BLACK) {
+            System.out.print("Root is not black");
+            return false;
+        }
+        //Use of AtomicInteger solely because java does not provide any other mutable int wrapper.
+        AtomicInteger blackCount = new AtomicInteger(0);
+        //make sure black count is same on all path and there is no red red relationship
+        return checkBlackNodesCount(root, blackCount, 0) && noRedRedParentChild(root, Color.BLACK);
     }
 
     private void rightRotate(Node root, boolean changeColor) {
@@ -124,10 +172,6 @@ public class RedBlackTree {
         } else {
             return false;
         }
-    }
-
-    public Node insert(Node root, int data) {
-        return insert(null, root, data);
     }
 
     private Node insert(Node parent, Node root, int data) {
@@ -241,16 +285,6 @@ public class RedBlackTree {
         return root;
     }
 
-    public Node delete(Node root, int data) {
-        AtomicReference<Node> rootReference = new AtomicReference<>();
-        delete(root, data, rootReference);
-        if(rootReference.get() == null) {
-            return root;
-        } else {
-            return rootReference.get();
-        }
-    }
-
     private void delete(Node root, int data, AtomicReference<Node> rootReference) {
         if(root == null || root.isNullLeaf) {
             return;
@@ -280,6 +314,9 @@ public class RedBlackTree {
         return prev != null ? prev : root;
     }
 
+    /**
+     * Assumption that node to be deleted has either 0 or 1 non leaf child
+     */
     private void deleteOneChild(Node nodeToBeDelete, AtomicReference<Node> rootReference) {
         Node child = nodeToBeDelete.right.isNullLeaf ? nodeToBeDelete.left : nodeToBeDelete.right;
         replaceNode(nodeToBeDelete, child, rootReference);
@@ -378,7 +415,8 @@ public class RedBlackTree {
 
     /**
      * If sibling is black, double black node is left child of its parent, sibling left child is black and sibling's right child is
-     * red, then do a left rotation at sibling and swap its color with its parent. This removes double black and we are done. This
+     * red, sibling takes its parent color, parent color becomes black, sibling's right child becomes black and then do
+     * left rotation at sibling without any further change in color. This removes double black and we are done. This
      * also has a mirror condition.
      */
     private void deleteCase6(Node doubleBlackNode, AtomicReference<Node> rootReference) {
@@ -423,21 +461,6 @@ public class RedBlackTree {
         printRedBlackTree(root.left, space + 5);
     }
 
-    public boolean validateRedBlackTree(Node root) {
-
-        if(root == null) {
-            return true;
-        }
-        //check if root is black
-        if(root.color != Color.BLACK) {
-            System.out.print("Root is not black");
-            return false;
-        }
-        AtomicInteger blackCount = new AtomicInteger(0);
-        //make sure black count is same on all path and there is no red red relationship
-        return checkBlackNodesCount(root, blackCount, 0) && noRedRedParentChild(root, Color.BLACK);
-    }
-
     private boolean noRedRedParentChild(Node root, Color parentColor) {
         if(root == null) {
             return true;
@@ -466,35 +489,9 @@ public class RedBlackTree {
         return checkBlackNodesCount(root.left, blackCount, currentCount) && checkBlackNodesCount(root.right, blackCount, currentCount);
     }
 
-
-    public void printRedBlackTree(Node root) {
-        printRedBlackTree(root, 0);
-    }
-
     public static void main(String args[]) {
         Node root = null;
         RedBlackTree redBlackTree = new RedBlackTree();
-        /*root = redBlackTree.insert(root, 10);
-        root = redBlackTree.insert(root, 20);
-        root = redBlackTree.insert(root, 0);
-        root = redBlackTree.insert(root, 25);
-        root = redBlackTree.insert(root, -10);
-        root = redBlackTree.insert(root, 35);
-        root = redBlackTree.insert(root, 33);
-        root = redBlackTree.insert(root, 34);
-        root = redBlackTree.insert(root, 30);
-        root = redBlackTree.insert(root, 23);
-        root = redBlackTree.insert(root, 24);
-        root = redBlackTree.insert(root, 5);
-        root = redBlackTree.insert(root, 4);
-        root = redBlackTree.insert(root, 10);
-        root = redBlackTree.insert(root, 20);
-        root = redBlackTree.insert(root, -10);
-        root = redBlackTree.insert(root, 15);
-        root = redBlackTree.insert(root, 17);
-        root = redBlackTree.insert(root, 40);
-        root = redBlackTree.insert(root, 50);
-        root = redBlackTree.insert(root, 60);*/
 
         root = redBlackTree.insert(root, 10);
         root = redBlackTree.insert(root, 15);
@@ -516,10 +513,43 @@ public class RedBlackTree {
         root = redBlackTree.insert(root, 19);
         redBlackTree.printRedBlackTree(root);
 
-        System.out.print("\n\n");
+        root = redBlackTree.delete(root, 50);
+        System.out.println(redBlackTree.validateRedBlackTree(root));
+        root = redBlackTree.delete(root, 40);
+        System.out.println(redBlackTree.validateRedBlackTree(root));
+        root = redBlackTree.delete(root, -10);
+        System.out.println(redBlackTree.validateRedBlackTree(root));
+        root = redBlackTree.delete(root, 15);
+        System.out.println(redBlackTree.validateRedBlackTree(root));
+        root = redBlackTree.delete(root, 17);
+        System.out.println(redBlackTree.validateRedBlackTree(root));
+        root = redBlackTree.delete(root, 24);
+        System.out.println(redBlackTree.validateRedBlackTree(root));
+        root = redBlackTree.delete(root, 21);
+        System.out.println(redBlackTree.validateRedBlackTree(root));
+        root = redBlackTree.delete(root, 32);
+        System.out.println(redBlackTree.validateRedBlackTree(root));
+        root = redBlackTree.delete(root, 26);
+        System.out.println(redBlackTree.validateRedBlackTree(root));
+        root = redBlackTree.delete(root, 19);
+        System.out.println(redBlackTree.validateRedBlackTree(root));
+        root = redBlackTree.delete(root, 25);
+        System.out.println(redBlackTree.validateRedBlackTree(root));
+        root = redBlackTree.delete(root, 17);
+        System.out.println(redBlackTree.validateRedBlackTree(root));
+        root = redBlackTree.delete(root, -15);
+        System.out.println(redBlackTree.validateRedBlackTree(root));
+        root = redBlackTree.delete(root, 20);
+        System.out.println(redBlackTree.validateRedBlackTree(root));
+        root = redBlackTree.delete(root, 35);
+        System.out.println(redBlackTree.validateRedBlackTree(root));
+        root = redBlackTree.delete(root, 34);
+        System.out.println(redBlackTree.validateRedBlackTree(root));
         root = redBlackTree.delete(root, 30);
-        redBlackTree.printRedBlackTree(root);
-
+        System.out.println(redBlackTree.validateRedBlackTree(root));
+        root = redBlackTree.delete(root, 28);
+        System.out.println(redBlackTree.validateRedBlackTree(root));
+        root = redBlackTree.delete(root, 10);
         System.out.println(redBlackTree.validateRedBlackTree(root));
     }
 }
