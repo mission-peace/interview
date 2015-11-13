@@ -293,6 +293,10 @@ public class RedBlackTree {
     }
 
 
+    /**
+     * If double black node becomes root then we are done. Turning it into
+     * single black node just reduces one black in every path.
+     */
     private void deleteCase1(Node doubleBlackNode, AtomicReference<Node> rootReference) {
         if(doubleBlackNode.parent == null) {
             rootReference.set(doubleBlackNode);
@@ -301,6 +305,11 @@ public class RedBlackTree {
         deleteCase2(doubleBlackNode, rootReference);
     }
 
+    /**
+     * If sibling is red and parent and sibling's children are black then rotate it
+     * so that sibling becomes black. Double black node is still double black so we need
+     * further processing.
+     */
     private void deleteCase2(Node doubleBlackNode, AtomicReference<Node> rootReference) {
         Node siblingNode = findSiblingNode(doubleBlackNode).get();
         if(siblingNode.color == Color.RED) {
@@ -316,6 +325,11 @@ public class RedBlackTree {
         deleteCase3(doubleBlackNode, rootReference);
     }
 
+    /**
+     * If sibling, sibling's children and parent are all black then turn sibling into red.
+     * This reduces black node for both the paths from parent. Now parent is new double black
+     * node which needs further processing by going back to case1.
+     */
     private void deleteCase3(Node doubleBlackNode, AtomicReference<Node> rootReference) {
 
         Node siblingNode = findSiblingNode(doubleBlackNode).get();
@@ -329,6 +343,11 @@ public class RedBlackTree {
         }
     }
 
+    /**
+     * If sibling color is black, parent color is red and sibling's children color is black then swap color b/w sibling
+     * and parent. This increases one black node on double black node path but does not affect black node count on
+     * sibling path. We are done if we hit this situation.
+     */
     private void deleteCase4(Node doubleBlackNode, AtomicReference<Node> rootReference) {
         Node siblingNode = findSiblingNode(doubleBlackNode).get();
         if(doubleBlackNode.parent.color == Color.RED && siblingNode.color == Color.BLACK && siblingNode.left.color == Color.BLACK
@@ -340,6 +359,11 @@ public class RedBlackTree {
         }
     }
 
+    /**
+     * If sibling is black, double black node is left child of its parent, siblings right child is black
+     * and sibling's left child is red then do a right rotation at siblings left child and swap colors.
+     * This converts it to delete case6. It will also have a mirror case.
+     */
     private void deleteCase5(Node doubleBlackNode, AtomicReference<Node> rootReference) {
         Node siblingNode = findSiblingNode(doubleBlackNode).get();
         if(siblingNode.color == Color.BLACK) {
@@ -352,6 +376,11 @@ public class RedBlackTree {
         deleteCase6(doubleBlackNode, rootReference);
     }
 
+    /**
+     * If sibling is black, double black node is left child of its parent, sibling left child is black and sibling's right child is
+     * red, then do a left rotation at sibling and swap its color with its parent. This removes double black and we are done. This
+     * also has a mirror condition.
+     */
     private void deleteCase6(Node doubleBlackNode, AtomicReference<Node> rootReference) {
         Node siblingNode = findSiblingNode(doubleBlackNode).get();
         siblingNode.color = siblingNode.parent.color;
@@ -482,10 +511,13 @@ public class RedBlackTree {
         root = redBlackTree.insert(root, 28);
         root = redBlackTree.insert(root, 34);
         root = redBlackTree.insert(root, 32);
+        root = redBlackTree.insert(root, 26);
+        root = redBlackTree.insert(root, 35);
+        root = redBlackTree.insert(root, 19);
         redBlackTree.printRedBlackTree(root);
 
         System.out.print("\n\n");
-        root = redBlackTree.delete(root, 28);
+        root = redBlackTree.delete(root, 30);
         redBlackTree.printRedBlackTree(root);
 
         System.out.println(redBlackTree.validateRedBlackTree(root));
