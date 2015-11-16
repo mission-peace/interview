@@ -285,19 +285,29 @@ public class RedBlackTree {
         return root;
     }
 
+    /**
+     * Using atomicreference because java does not provide mutable wrapper. Its like
+     * double pointer in C.
+     */
     private void delete(Node root, int data, AtomicReference<Node> rootReference) {
         if(root == null || root.isNullLeaf) {
             return;
         }
         if(root.data == data) {
+            //if node to be deleted has 0 or 1 null children then we have
+            //deleteOneChild use case as discussed in video.
             if(root.right.isNullLeaf || root.left.isNullLeaf) {
                 deleteOneChild(root, rootReference);
             } else {
+                //otherwise look for the inorder successor in right subtree.
+                //replace inorder successor data at root data.
+                //then delete inorder successor which should have 0 or 1 not null child.
                 Node inorderSuccessor = findSmallest(root.right);
                 root.data = inorderSuccessor.data;
                 delete(root.right, inorderSuccessor.data, rootReference);
             }
         }
+        //search for the node to be deleted.
         if(root.data < data) {
             delete(root.right, data, rootReference);
         } else {
@@ -319,11 +329,15 @@ public class RedBlackTree {
      */
     private void deleteOneChild(Node nodeToBeDelete, AtomicReference<Node> rootReference) {
         Node child = nodeToBeDelete.right.isNullLeaf ? nodeToBeDelete.left : nodeToBeDelete.right;
+        //replace node with either one not null child if it exists or null child.
         replaceNode(nodeToBeDelete, child, rootReference);
+        //if the node to be deleted is BLACK. See if it has one red child.
         if(nodeToBeDelete.color == Color.BLACK) {
+            //if it has one red child then change color of that child to be Black.
             if(child.color == Color.RED) {
                 child.color = Color.BLACK;
             } else {
+                //otherwise we have double black situation.
                 deleteCase1(child, rootReference);
             }
         }
@@ -391,6 +405,7 @@ public class RedBlackTree {
         && siblingNode.right.color == Color.BLACK) {
             siblingNode.color = Color.RED;
             doubleBlackNode.parent.color = Color.BLACK;
+            return;
         } else {
             deleteCase5(doubleBlackNode, rootReference);
         }
