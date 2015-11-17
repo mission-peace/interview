@@ -13,6 +13,10 @@ public class AllCyclesinDirectedGraphJohnson {
 
     public List<List<Vertex<Integer>>> simpleCyles(Graph<Integer> graph) {
 
+        blocked = new HashSet<>();
+        blockedNodes = new HashMap<>();
+        stack = new LinkedList<>();
+        allCycles = new ArrayList<>();
         long startIndex = 0;
         TarjanStronglyConnectedComponent tarjan = new TarjanStronglyConnectedComponent();
         while(startIndex < graph.getAllVertex().size()) {
@@ -55,7 +59,7 @@ public class AllCyclesinDirectedGraphJohnson {
         }
         Pair p = new Pair();
 
-        if(minScc != null) {
+        if(minScc == null) {
             return p;
         }
         Graph<Integer> graphScc = new Graph<>(true);
@@ -92,8 +96,11 @@ public class AllCyclesinDirectedGraphJohnson {
         for (Edge<Integer> e : vertex.getEdges()) {
             Vertex<Integer> successor = e.getVertex2();
             if (successor == startVertex) {
+
                 List<Vertex<Integer>> cycle = new ArrayList<>();
+                stack.push(startVertex);
                 cycle.addAll(stack);
+                stack.pop();
                 allCycles.add(cycle);
                 foundCycle = true;
             } else if (!blocked.contains(successor)) {
@@ -133,5 +140,33 @@ public class AllCyclesinDirectedGraphJohnson {
         return subGraph;
     }
 
+    public static void main(String args[]) {
+        AllCyclesinDirectedGraphJohnson johnson = new AllCyclesinDirectedGraphJohnson();
+        Graph<Integer> graph = new Graph<>(true);
+        graph.addEdge(0, 1);
+        graph.addEdge(1, 4);
+        graph.addEdge(1, 7);
+        graph.addEdge(1, 6);
+        graph.addEdge(4, 2);
+        graph.addEdge(4, 3);
+        graph.addEdge(2, 4);
+        graph.addEdge(2, 7);
+        graph.addEdge(2, 6);
+        graph.addEdge(7, 8);
+        graph.addEdge(7, 5);
+        graph.addEdge(5, 2);
+        graph.addEdge(5, 3);
+        graph.addEdge(3, 7);
+        graph.addEdge(3, 6);
+        graph.addEdge(3, 4);
+        graph.addEdge(6, 5);
+        graph.addEdge(6, 8);
+
+        List<List<Vertex<Integer>>> allCycles = johnson.simpleCyles(graph);
+        allCycles.forEach(cycle -> { cycle.forEach(vertex -> {
+            System.out.print(vertex.getId() + " ");
+        });
+        System.out.println();});
+    }
 
 }
