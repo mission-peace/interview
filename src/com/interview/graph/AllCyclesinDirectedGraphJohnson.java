@@ -30,12 +30,13 @@ public class AllCyclesinDirectedGraphJohnson {
         while(startIndex < graph.getAllVertex().size()) {
             Graph<Integer> subGraph = createSubGraph(startIndex, graph);
             List<Set<Vertex<Integer>>> sccs = tarjan.scc(subGraph);
-            Pair p = leastIndexSCC(sccs, subGraph);
-            if(p.leastVertex != null) {
+            Optional<Vertex<Integer>> maybeLeastVertex = leastIndexSCC(sccs, subGraph);
+            if(maybeLeastVertex.isPresent()) {
+                Vertex<Integer> leastVertex = maybeLeastVertex.get();
                 blocked.clear();
                 blockedNodes.clear();
-                findCyclesInSCG(p.leastVertex, p.leastVertex, p.sccGraph);
-                startIndex = p.leastVertex.getId() + 1;
+                findCyclesInSCG(leastVertex, leastVertex);
+                startIndex = leastVertex.getId() + 1;
             } else {
                 break;
             }
@@ -43,13 +44,7 @@ public class AllCyclesinDirectedGraphJohnson {
         return allCycles;
     }
 
-
-    class Pair {
-        Vertex<Integer> leastVertex;
-        Graph<Integer> sccGraph;
-    }
-
-    private Pair leastIndexSCC(List<Set<Vertex<Integer>>> sccs, Graph<Integer> subGraph) {
+   private Optional<Vertex<Integer>> leastIndexSCC(List<Set<Vertex<Integer>>> sccs, Graph<Integer> subGraph) {
         long min = Integer.MAX_VALUE;
         Vertex<Integer> minVertex = null;
         Set<Vertex<Integer>> minScc = null;
@@ -65,10 +60,9 @@ public class AllCyclesinDirectedGraphJohnson {
                 }
             }
         }
-        Pair p = new Pair();
 
-        if(minScc == null) {
-            return p;
+        if(minVertex == null) {
+            return Optional.empty();
         }
         Graph<Integer> graphScc = new Graph<>(true);
         for(Edge<Integer> edge : subGraph.getAllEdges()) {
@@ -76,9 +70,7 @@ public class AllCyclesinDirectedGraphJohnson {
                 graphScc.addEdge(edge.getVertex1().getId(), edge.getVertex2().getId());
             }
         }
-        p.leastVertex = minVertex;
-        p.sccGraph = graphScc;
-        return p;
+        return Optional.of(graphScc.getVertex(minVertex.getId()));
     }
 
     private void unblock(Vertex<Integer> u) {
@@ -95,8 +87,7 @@ public class AllCyclesinDirectedGraphJohnson {
 
     private boolean findCyclesInSCG(
             Vertex<Integer> startVertex,
-            Vertex<Integer> vertex,
-            Graph<Integer> scg) {
+            Vertex<Integer> vertex) {
         boolean foundCycle = false;
         stack.push(vertex);
         blocked.add(vertex);
@@ -113,7 +104,7 @@ public class AllCyclesinDirectedGraphJohnson {
                 foundCycle = true;
             } else if (!blocked.contains(successor)) {
                 boolean gotCycle =
-                        findCyclesInSCG(startVertex, successor, scg);
+                        findCyclesInSCG(startVertex, successor);
                 foundCycle = foundCycle || gotCycle;
             }
         }
