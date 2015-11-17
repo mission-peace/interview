@@ -3,11 +3,19 @@ package com.interview.graph;
 import java.util.*;
 
 /**
- * Created by tushar_v_roy on 11/14/15.
+ * Date 11/16/2015
+ * @author Tushar Roy
+ *
+ * Find all cycles in directed graph using Johnson's algorithm
+ *
+ * Time complexity - (E + V).(c+1) where c is number of cycles found
+ *
+ * References
+ * https://github.com/jgrapht/jgrapht/blob/master/jgrapht-core/src/main/java/org/jgrapht/alg/cycle/JohnsonSimpleCycles.java
  */
 public class AllCyclesinDirectedGraphJohnson {
     Set<Vertex<Integer>> blocked;
-    Map<Vertex<Integer>, List<Vertex<Integer>>> blockedNodes;
+    Map<Vertex<Integer>, Set<Vertex<Integer>>> blockedNodes;
     Deque<Vertex<Integer>> stack;
     List<List<Vertex<Integer>>> allCycles;
 
@@ -76,12 +84,12 @@ public class AllCyclesinDirectedGraphJohnson {
     private void unblock(Vertex<Integer> u) {
         blocked.remove(u);
         if(blockedNodes.get(u) != null) {
-            while (blockedNodes.get(u).size() > 0) {
-                Vertex w = blockedNodes.get(u).remove(blockedNodes.size()-1);
-                if (blocked.contains(w)) {
-                    unblock(w);
+            blockedNodes.get(u).forEach( v -> {
+                if(blocked.contains(v)) {
+                    unblock(v);
                 }
-            }
+            });
+            blockedNodes.remove(u);
         }
     }
 
@@ -114,7 +122,7 @@ public class AllCyclesinDirectedGraphJohnson {
         } else {
             for (Edge<Integer> e : vertex.getEdges()) {
                 Vertex<Integer> w = e.getVertex2();
-                List<Vertex<Integer>> bSet = getBSet(w);
+                Set<Vertex<Integer>> bSet = getBSet(w);
                 bSet.add(vertex);
             }
         }
@@ -122,12 +130,9 @@ public class AllCyclesinDirectedGraphJohnson {
         return foundCycle;
     }
 
-    private List<Vertex<Integer>> getBSet(Vertex<Integer> v) {
-        if(blockedNodes.containsKey(v)) {
-            return blockedNodes.get(v);
-        } else {
-            return new ArrayList<>();
-        }
+    private Set<Vertex<Integer>> getBSet(Vertex<Integer> v) {
+        return blockedNodes.computeIfAbsent(v, (key) ->
+            new HashSet<>() );
     }
 
     private Graph createSubGraph(long startVertex, Graph<Integer> graph) {
