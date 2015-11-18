@@ -99,6 +99,7 @@ public class AllCyclesinDirectedGraphJohnson {
                 List<Vertex<Integer>> cycle = new ArrayList<>();
                 stack.push(startVertex);
                 cycle.addAll(stack);
+                Collections.reverse(cycle);
                 stack.pop();
                 allCycles.add(cycle);
                 foundCycle = true;
@@ -139,7 +140,7 @@ public class AllCyclesinDirectedGraphJohnson {
     public static void main(String args[]) {
         AllCyclesinDirectedGraphJohnson johnson = new AllCyclesinDirectedGraphJohnson();
         Graph<Integer> graph = new Graph<>(true);
-        graph.addEdge(0, 1);
+        /*graph.addEdge(0, 1);
         graph.addEdge(1, 4);
         graph.addEdge(1, 7);
         graph.addEdge(1, 6);
@@ -156,13 +157,30 @@ public class AllCyclesinDirectedGraphJohnson {
         graph.addEdge(3, 6);
         graph.addEdge(3, 4);
         graph.addEdge(6, 5);
-        graph.addEdge(6, 8);
+        graph.addEdge(6, 8);*/
+
+        graph.addEdge(0, 1);
+        graph.addEdge(1, 2);
+        graph.addEdge(2, 0);
+        graph.addEdge(2, 1);
+        graph.addEdge(2, 3);
+        graph.addEdge(3, 4);
+        graph.addEdge(4, 5);
+        graph.addEdge(5, 1);
+        graph.addEdge(0, 5);
+        graph.addEdge(2, 4);
+        graph.addEdge(0, 6);
+        graph.addEdge(1, 7);
+        graph.addEdge(6, 7);
+        graph.addEdge(7, 6);
+        graph.addEdge(1, 9);
 
         List<List<Vertex<Integer>>> allCycles = johnson.simpleCyles(graph);
-        allCycles.forEach(cycle -> { cycle.forEach(vertex -> {
-            System.out.print(vertex.getId() + " ");
+        allCycles.forEach(cycle -> {
+            StringJoiner joiner = new StringJoiner("->");
+            cycle.forEach(vertex -> joiner.add(String.valueOf(vertex.getId())));
+            System.out.println(joiner);
         });
-        System.out.println();});
     }
 
 }
