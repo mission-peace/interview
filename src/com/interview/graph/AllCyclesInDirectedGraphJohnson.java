@@ -29,11 +29,14 @@ public class AllCyclesInDirectedGraphJohnson {
         blockedMap = new HashMap<>();
         stack = new LinkedList<>();
         allCycles = new ArrayList<>();
-        long startIndex = 0;
+        long startIndex = 1;
         TarjanStronglyConnectedComponent tarjan = new TarjanStronglyConnectedComponent();
-        while(startIndex < graph.getAllVertex().size()) {
+        while(startIndex <= graph.getAllVertex().size()) {
             Graph<Integer> subGraph = createSubGraph(startIndex, graph);
             List<Set<Vertex<Integer>>> sccs = tarjan.scc(subGraph);
+            //this creates graph consisting of strongly connected components only and then returns the
+            //least indexed vertex among all the strongly connected component graph.
+            //it also ignore one vertex graph since it wont have any cycle.
             Optional<Vertex<Integer>> maybeLeastVertex = leastIndexSCC(sccs, subGraph);
             if(maybeLeastVertex.isPresent()) {
                 Vertex<Integer> leastVertex = maybeLeastVertex.get();
@@ -97,10 +100,10 @@ public class AllCyclesInDirectedGraphJohnson {
         blockedSet.add(currentVertex);
 
         for (Edge<Integer> e : currentVertex.getEdges()) {
-            Vertex<Integer> successor = e.getVertex2();
-            //if successor is same as start vertex means cycle is found.
+            Vertex<Integer> neighbor = e.getVertex2();
+            //if neighbor is same as start vertex means cycle is found.
             //Store contents of stack in final result.
-            if (successor == startVertex) {
+            if (neighbor == startVertex) {
                 List<Vertex<Integer>> cycle = new ArrayList<>();
                 stack.push(startVertex);
                 cycle.addAll(stack);
@@ -108,10 +111,10 @@ public class AllCyclesInDirectedGraphJohnson {
                 stack.pop();
                 allCycles.add(cycle);
                 foundCycle = true;
-            } //explore this successor only if it is not in blockedSet.
-            else if (!blockedSet.contains(successor)) {
+            } //explore this neighbor only if it is not in blockedSet.
+            else if (!blockedSet.contains(neighbor)) {
                 boolean gotCycle =
-                        findCyclesInSCG(startVertex, successor);
+                        findCyclesInSCG(startVertex, neighbor);
                 foundCycle = foundCycle || gotCycle;
             }
         }
