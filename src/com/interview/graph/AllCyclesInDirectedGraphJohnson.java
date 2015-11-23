@@ -14,7 +14,7 @@ import java.util.*;
  * References
  * https://github.com/jgrapht/jgrapht/blob/master/jgrapht-core/src/main/java/org/jgrapht/alg/cycle/JohnsonSimpleCycles.java
  */
-public class AllCyclesinDirectedGraphJohnson1 {
+public class AllCyclesInDirectedGraphJohnson {
     Set<Vertex<Integer>> blockedSet;
     Map<Vertex<Integer>, Set<Vertex<Integer>>> blockedMap;
     Deque<Vertex<Integer>> stack;
@@ -149,7 +149,7 @@ public class AllCyclesinDirectedGraphJohnson1 {
     }
 
     public static void main(String args[]) {
-        AllCyclesinDirectedGraphJohnson1 johnson = new AllCyclesinDirectedGraphJohnson1();
+        AllCyclesInDirectedGraphJohnson johnson = new AllCyclesInDirectedGraphJohnson();
         Graph<Integer> graph = new Graph<>(true);
         graph.addEdge(1, 2);
         graph.addEdge(1, 8);
