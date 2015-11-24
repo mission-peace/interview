@@ -69,33 +69,22 @@ public class MaximizeSkiGates {
             return dpMap.get(index);
         }
 
-        int val1 = 0, val2 = 0 , val3 = 0;
+        int val1 = 0, val2 = 0;
         //if current gate is picked.
-        if(isRight) {
-            if(gates[current] < prevItem) {
-                val1 = 1 + solution(gates, remainingDirectionChanges, current + 1, isRight, gates[current], dpMap);
-            } else if(remainingDirectionChanges > 0){
-                val1 = 1 + solution(gates, remainingDirectionChanges - 1, current + 1, !isRight, gates[current], dpMap);
-            }
-        } else {
-            if(gates[current] > prevItem) {
-                val1 = 1 + solution(gates, remainingDirectionChanges, current + 1, isRight, gates[current], dpMap);
-            } else if(remainingDirectionChanges > 0){
-                val1 = 1 + solution(gates, remainingDirectionChanges - 1, current + 1, !isRight, gates[current], dpMap);
+        if((isRight && gates[current] < prevItem) || (!isRight && gates[current] > prevItem)) {
+            val1 = 1 + solution(gates, remainingDirectionChanges, current + 1, isRight, gates[current], dpMap);
+            if(remainingDirectionChanges > 0) {
+                val2 = 1 + solution(gates, remainingDirectionChanges - 1, current + 1, !isRight, gates[current], dpMap);
             }
         }
-        //if current gate is not picked and direction not flipped
-        val2 = solution(gates, remainingDirectionChanges, current + 1, isRight, prevItem, dpMap);
 
-        if(remainingDirectionChanges > 0) {
-            //if current gate is not picked and direction flipped
-            val3 = solution(gates, remainingDirectionChanges - 1, current + 1, !isRight, prevItem, dpMap);
-        }
+        //if current gate is not picked and direction not flipped
+        int val3 = solution(gates, remainingDirectionChanges, current + 1, isRight, prevItem, dpMap);
+
         int max = Math.max(Math.max(val1, val2), val3);
         dpMap.put(index, max);
         return max;
     }
-
 
     public static void main(String args[]) {
         int input[] = {15, 13, 5, 7, 4, 10, 12, 8, 2, 11, 6, 9 , 3};
