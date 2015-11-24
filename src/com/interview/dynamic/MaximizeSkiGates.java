@@ -72,15 +72,18 @@ public class MaximizeSkiGates {
         int val1 = 0, val2 = 0;
         //if current gate is picked.
         if((isRight && gates[current] < prevItem) || (!isRight && gates[current] > prevItem)) {
+            //if we decide to continue in same direction.
             val1 = 1 + solution(gates, remainingDirectionChanges, current + 1, isRight, gates[current], dpMap);
             if(remainingDirectionChanges > 0) {
+                //if we flip direction. We can only do that if remainingDirectionChanges > 0
                 val2 = 1 + solution(gates, remainingDirectionChanges - 1, current + 1, !isRight, gates[current], dpMap);
             }
         }
 
-        //if current gate is not picked and direction not flipped
+        //if current gate is not picked
         int val3 = solution(gates, remainingDirectionChanges, current + 1, isRight, prevItem, dpMap);
 
+        //max of all 3 possibilities
         int max = Math.max(Math.max(val1, val2), val3);
         dpMap.put(index, max);
         return max;
