@@ -3,7 +3,7 @@ package com.interview.dynamic;
 /**
  * http://www.glassdoor.com/Interview/N-pots-each-with-some-number-of-gold-coins-are-arranged-in-a-line-You-are-playing-a-game-against-another-player-You-tak-QTN_350584.htm
  * @author tusroy
- *
+ * @author Z. Berkay Celik
  */
 public class NPotGold {
 
@@ -26,6 +26,8 @@ public class NPotGold {
         
         for(int i=0; i < pots.length; i++){
             moves[i][i].first = pots[i];
+            //to track the sequence of moves
+            moves[i][i].pick = i;
         }
         
         for(int l = 2; l <= pots.length; l++){
@@ -45,7 +47,22 @@ public class NPotGold {
         
         return moves;
     }
-    
+    //prints the sequence of values and indexes
+    public void printSequence(int pots[], Pair moves[][]){
+        int i = 0;
+        int j = pots.length - 1;
+        int step;
+        for (int k = 0; k < pots.length; k++) {
+            step = moves[i][j].pick;
+            //this is the value of pick and its index
+            System.out.print("value: " + pots[step] + " " + "index: " + step + " ");
+            if (step <= i) {
+                i = i + 1;
+            } else {
+                j = j - 1;
+            }
+        }
+    }
     public static void main(String args[]){
         NPotGold npg = new NPotGold();
         int pots[] = {3,1,5,6,2,9,3};
@@ -56,5 +73,7 @@ public class NPotGold {
             }
             System.out.print("\n");
         }
+        System.out.println("The moves by first player and second player:");
+        npg.printSequence(pots, moves);
     }
 }

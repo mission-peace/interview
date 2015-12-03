@@ -13,6 +13,10 @@ import java.util.Map;
  *
  * Time complexity - O(W*total items)
  *
+ * Youtube link
+ * Topdown DP - https://youtu.be/149WSzQ4E1g
+ * Bottomup DP - https://youtu.be/8LusJS5-AGo
+ *
  * References -
  * http://www.geeksforgeeks.org/dynamic-programming-set-10-0-1-knapsack-problem/
  * https://en.wikipedia.org/wiki/Knapsack_problem

@@ -8,33 +8,42 @@ import java.util.*;
  *
  * Find all cycles in directed graph using Johnson's algorithm
  *
- * Time complexity - (E + V).(c+1) where c is number of cycles found
+ * Time complexity - O(E + V).(c+1) where c is number of cycles found
+ * Space complexity - O(E + V + s) where s is sum of length of all cycles.
+ *
+ * Link to youtube video - https://youtu.be/johyrWospv0
  *
  * References
  * https://github.com/jgrapht/jgrapht/blob/master/jgrapht-core/src/main/java/org/jgrapht/alg/cycle/JohnsonSimpleCycles.java
  */
-public class AllCyclesinDirectedGraphJohnson {
-    Set<Vertex<Integer>> blocked;
-    Map<Vertex<Integer>, Set<Vertex<Integer>>> blockedNodes;
+public class AllCyclesInDirectedGraphJohnson {
+    Set<Vertex<Integer>> blockedSet;
+    Map<Vertex<Integer>, Set<Vertex<Integer>>> blockedMap;
     Deque<Vertex<Integer>> stack;
     List<List<Vertex<Integer>>> allCycles;
 
+    /**
+     * Main function to find all cycles
+     */
     public List<List<Vertex<Integer>>> simpleCyles(Graph<Integer> graph) {
 
-        blocked = new HashSet<>();
-        blockedNodes = new HashMap<>();
+        blockedSet = new HashSet<>();
+        blockedMap = new HashMap<>();
         stack = new LinkedList<>();
         allCycles = new ArrayList<>();
-        long startIndex = 0;
+        long startIndex = 1;
         TarjanStronglyConnectedComponent tarjan = new TarjanStronglyConnectedComponent();
-        while(startIndex < graph.getAllVertex().size()) {
+        while(startIndex <= graph.getAllVertex().size()) {
             Graph<Integer> subGraph = createSubGraph(startIndex, graph);
             List<Set<Vertex<Integer>>> sccs = tarjan.scc(subGraph);
+            //this creates graph consisting of strongly connected components only and then returns the
+            //least indexed vertex among all the strongly connected component graph.
+            //it also ignore one vertex graph since it wont have any cycle.
             Optional<Vertex<Integer>> maybeLeastVertex = leastIndexSCC(sccs, subGraph);
             if(maybeLeastVertex.isPresent()) {
                 Vertex<Integer> leastVertex = maybeLeastVertex.get();
-                blocked.clear();
-                blockedNodes.clear();
+                blockedSet.clear();
+                blockedMap.clear();
                 findCyclesInSCG(leastVertex, leastVertex);
                 startIndex = leastVertex.getId() + 1;
             } else {
@@ -74,28 +83,29 @@ public class AllCyclesinDirectedGraphJohnson {
     }
 
     private void unblock(Vertex<Integer> u) {
-        blocked.remove(u);
-        if(blockedNodes.get(u) != null) {
-            blockedNodes.get(u).forEach( v -> {
-                if(blocked.contains(v)) {
+        blockedSet.remove(u);
+        if(blockedMap.get(u) != null) {
+            blockedMap.get(u).forEach( v -> {
+                if(blockedSet.contains(v)) {
                     unblock(v);
                 }
             });
-            blockedNodes.remove(u);
+            blockedMap.remove(u);
         }
     }
 
     private boolean findCyclesInSCG(
             Vertex<Integer> startVertex,
-            Vertex<Integer> vertex) {
+            Vertex<Integer> currentVertex) {
         boolean foundCycle = false;
-        stack.push(vertex);
-        blocked.add(vertex);
+        stack.push(currentVertex);
+        blockedSet.add(currentVertex);
 
-        for (Edge<Integer> e : vertex.getEdges()) {
-            Vertex<Integer> successor = e.getVertex2();
-            if (successor == startVertex) {
-
+        for (Edge<Integer> e : currentVertex.getEdges()) {
+            Vertex<Integer> neighbor = e.getVertex2();
+            //if neighbor is same as start vertex means cycle is found.
+            //Store contents of stack in final result.
+            if (neighbor == startVertex) {
                 List<Vertex<Integer>> cycle = new ArrayList<>();
                 stack.push(startVertex);
                 cycle.addAll(stack);
@@ -103,27 +113,33 @@ public class AllCyclesinDirectedGraphJohnson {
                 stack.pop();
                 allCycles.add(cycle);
                 foundCycle = true;
-            } else if (!blocked.contains(successor)) {
+            } //explore this neighbor only if it is not in blockedSet.
+            else if (!blockedSet.contains(neighbor)) {
                 boolean gotCycle =
-                        findCyclesInSCG(startVertex, successor);
+                        findCyclesInSCG(startVertex, neighbor);
                 foundCycle = foundCycle || gotCycle;
             }
         }
+        //if cycle is found with current vertex then recursively unblock vertex and all vertices which are dependent on this vertex.
         if (foundCycle) {
-            unblock(vertex);
+            //remove from blockedSet  and then remove all the other vertices dependent on this vertex from blockedSet
+            unblock(currentVertex);
         } else {
-            for (Edge<Integer> e : vertex.getEdges()) {
+            //if no cycle is found with current vertex then don't unblock it. But find all its neighbors and add this
+            //vertex to their blockedMap. If any of those neighbors ever get unblocked then unblock current vertex as well.
+            for (Edge<Integer> e : currentVertex.getEdges()) {
                 Vertex<Integer> w = e.getVertex2();
                 Set<Vertex<Integer>> bSet = getBSet(w);
-                bSet.add(vertex);
+                bSet.add(currentVertex);
             }
         }
+        //remove vertex from the stack.
         stack.pop();
         return foundCycle;
     }
 
     private Set<Vertex<Integer>> getBSet(Vertex<Integer> v) {
-        return blockedNodes.computeIfAbsent(v, (key) ->
+        return blockedMap.computeIfAbsent(v, (key) ->
             new HashSet<>() );
     }
 
@@ -138,42 +154,23 @@ public class AllCyclesinDirectedGraphJohnson {
     }
 
     public static void main(String args[]) {
-        AllCyclesinDirectedGraphJohnson johnson = new AllCyclesinDirectedGraphJohnson();
+        AllCyclesInDirectedGraphJohnson johnson = new AllCyclesInDirectedGraphJohnson();
         Graph<Integer> graph = new Graph<>(true);
-        /*graph.addEdge(0, 1);
-        graph.addEdge(1, 4);
-        graph.addEdge(1, 7);
-        graph.addEdge(1, 6);
-        graph.addEdge(4, 2);
-        graph.addEdge(4, 3);
-        graph.addEdge(2, 4);
+        graph.addEdge(1, 2);
+        graph.addEdge(1, 8);
+        graph.addEdge(1, 5);
+        graph.addEdge(2, 9);
         graph.addEdge(2, 7);
-        graph.addEdge(2, 6);
-        graph.addEdge(7, 8);
-        graph.addEdge(7, 5);
-        graph.addEdge(5, 2);
-        graph.addEdge(5, 3);
-        graph.addEdge(3, 7);
+        graph.addEdge(2, 3);
+        graph.addEdge(3, 1);
+        graph.addEdge(3, 2);
         graph.addEdge(3, 6);
         graph.addEdge(3, 4);
-        graph.addEdge(6, 5);
-        graph.addEdge(6, 8);*/
-
-        graph.addEdge(0, 1);
-        graph.addEdge(1, 2);
-        graph.addEdge(2, 0);
-        graph.addEdge(2, 1);
-        graph.addEdge(2, 3);
-        graph.addEdge(3, 4);
+        graph.addEdge(6, 4);
         graph.addEdge(4, 5);
-        graph.addEdge(5, 1);
-        graph.addEdge(0, 5);
-        graph.addEdge(2, 4);
-        graph.addEdge(0, 6);
-        graph.addEdge(1, 7);
-        graph.addEdge(6, 7);
-        graph.addEdge(7, 6);
-        graph.addEdge(1, 9);
+        graph.addEdge(5, 2);
+        graph.addEdge(8, 9);
+        graph.addEdge(9, 8);
 
         List<List<Vertex<Integer>>> allCycles = johnson.simpleCyles(graph);
         allCycles.forEach(cycle -> {

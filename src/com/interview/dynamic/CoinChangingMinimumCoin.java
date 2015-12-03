@@ -6,8 +6,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * Date 08/12/2013
+ * @author Tushar Roy
+ *
  * Given a total and coins of certain denomination with infinite supply, what is the minimum number
  * of coins it takes to form this total.
+ *
+ * Time complexity - O(coins.size * total)
+ * Space complexity - O(coins.size * total)
+ *
+ * Youtube video -
+ * Topdown DP - https://youtu.be/Kf_M7RdHr1M
+ * Bottom up DP - https://youtu.be/Y0ZqKpToTic
  */
 public class CoinChangingMinimumCoin {
 
