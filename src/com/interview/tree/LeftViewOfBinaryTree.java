@@ -31,6 +31,8 @@ package com.interview.tree;
  */
 
 class BNode{
+
+
     int data;
     BNode left;
     BNode right;
@@ -39,6 +41,7 @@ class BNode{
         n.left = null;
         n.right = null;
         n.data = data;
+        //s
         return n;
     }
 
