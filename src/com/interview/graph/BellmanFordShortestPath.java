@@ -4,60 +4,69 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- http://www.geeksforgeeks.org/dynamic-programming-set-23-bellman-ford-algorithm/
+ * Date 11/05/2015
+ * @author Tushar Roy
+ *
+ * Write program for Bellman Ford algorithm to find single source shortest path in directed graph.
+ * Bellman ford works with negative edges as well unlike Dijksra's algorithm. If there is negative
+ * weight cycle it detects it.
+ *
+ * Time complexity - O(EV)
+ * Space complexity - O(V)
+ *
+ * References
+ * https://en.wikipedia.org/wiki/Bellman%E2%80%93Ford_algorithm
+ * http://www.geeksforgeeks.org/dynamic-programming-set-23-bellman-ford-algorithm/
  */
 
 public class BellmanFordShortestPath {
 
-    @SuppressWarnings("serial")
-    class CycleException extends RuntimeException{
-        
+    private static int INFINITY = 10000000;
+
+    class CycleException extends RuntimeException {
     }
     
     public Map<Vertex<Integer>, Integer> getShortestPath(Graph<Integer> graph,
             Vertex<Integer> startVertex) {
-        Map<Vertex<Integer>, Integer> distance = new HashMap<Vertex<Integer>, Integer>();
+        Map<Vertex<Integer>, Integer> distance = new HashMap<>();
+        Map<Vertex<Integer>, Vertex<Integer>> predecessor = new HashMap<>();
+
+        for(Vertex<Integer> v : graph.getAllVertex()) {
+            distance.put(v, INFINITY);
+            predecessor.put(v, null);
+        }
+
         distance.put(startVertex, 0);
-        
-        for(int i=0; i < graph.getAllVertex().size() -1 ; i++){
-            for(Edge<Integer> edge : graph.getAllEdges()){
+
+        int totalVertices = graph.getAllVertex().size() - 1;
+
+        //relax edges repeatedly
+        for (int i = 0; i < totalVertices ; i++) {
+            for (Edge<Integer> edge : graph.getAllEdges()) {
                 Vertex<Integer> u = edge.getVertex1();
                 Vertex<Integer> v = edge.getVertex2();
-                if(getDistance(u,distance) > getDistance(v,distance) + edge.getWeight()){
-                    distance.put(u, getDistance(v,distance) + edge.getWeight());
-                }
-                if(getDistance(v,distance) > getDistance(u,distance) + edge.getWeight()){
-                    distance.put(v, getDistance(u,distance) + edge.getWeight());
+                //if we get better distance to v via u then use this distance
+                //and set u as predecessor of v.
+                if (distance.get(u) + edge.getWeight() < distance.get(v)) {
+                    distance.put(v, distance.get(u) + edge.getWeight());
+                    predecessor.put(v, u);
                 }
             }
         }
-        
-        for(Edge<Integer> edge : graph.getAllEdges()){
+
+        //relax all edges again. If we still get better distance it means
+        //there is negative weight cycle in the graph. Throw exception in that
+        //case
+        for (Edge<Integer> edge : graph.getAllEdges()) {
             Vertex<Integer> u = edge.getVertex1();
             Vertex<Integer> v = edge.getVertex2();
-            if(getDistance(u,distance) > getDistance(v,distance) + edge.getWeight()){
+            if (distance.get(u) + edge.getWeight() < distance.get(v)) {
                 throw new CycleException();
             }
-            if(getDistance(v,distance) > getDistance(u,distance) + edge.getWeight()){
-                throw new CycleException();
-            }
-            
         }
-        
         return distance;
-
     }
 
-    private int getDistance(Vertex<Integer> v,
-            Map<Vertex<Integer>, Integer> distance) {
-        if (distance.containsKey(v)) {
-            return distance.get(v);
-        } else {
-            return 10000;
-        }
-    }
-    
-    
     public static void main(String args[]){
         
         Graph<Integer> graph = new Graph<Integer>(false);
@@ -74,7 +83,6 @@ public class BellmanFordShortestPath {
         BellmanFordShortestPath shortestPath = new BellmanFordShortestPath();
         Vertex<Integer> startVertex = graph.getAllVertex().iterator().next();
         Map<Vertex<Integer>,Integer> distance = shortestPath.getShortestPath(graph, startVertex);
-        System.out.println(startVertex);
         System.out.println(distance);
     }
 
