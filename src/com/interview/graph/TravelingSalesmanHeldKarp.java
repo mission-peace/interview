@@ -30,7 +30,6 @@ public class TravelingSalesmanHeldKarp {
 
             if (vertex != index.vertex) return false;
             return !(vertexSet != null ? !vertexSet.equals(index.vertexSet) : index.vertexSet != null);
-
         }
 
         @Override
@@ -107,9 +106,7 @@ public class TravelingSalesmanHeldKarp {
         }
 
         parent.put(Index.createIndex(0, set), prevVertex);
-
         printTour(parent, distance.length);
-
         return min;
     }
 
