@@ -13,7 +13,9 @@ import java.util.*;
  *
  * https://en.wikipedia.org/wiki/Held%E2%80%93Karp_algorithm
  */
-public class HeldKarpTravelingSalesman {
+public class TravelingSalesmanHeldKarp {
+
+    private static int INFINITY = 100000000;
 
     private static class Index {
         int vertex;
@@ -37,6 +39,13 @@ public class HeldKarpTravelingSalesman {
             result = 31 * result + (vertexSet != null ? vertexSet.hashCode() : 0);
             return result;
         }
+
+        private static Index createIndex(int vertex, Set<Integer> vertexSet) {
+            Index i = new Index();
+            i.vertex = vertex;
+            i.vertexSet = vertexSet;
+            return i;
+        }
     }
 
     private static class SetSizeComparator implements Comparator<Set<Integer>>{
@@ -51,38 +60,33 @@ public class HeldKarpTravelingSalesman {
     }
 
     public int minCost(int[][] distance) {
-        Map<Index, Integer> dp = new HashMap<>();
+        Map<Index, Integer> minCostDP = new HashMap<>();
         Map<Index, Integer> parent = new HashMap<>();
 
-        for(int i = 1; i < distance.length; i++) {
-            Index index = createIndex(i, new HashSet<>());
-            dp.put(index, distance[i][0]);
-            parent.put(index, 1);
-        }
-
-        int input[] = new int[distance.length - 1];
-        for(int i = 0; i < input.length; i++) {
-            input[i] = i+1;
-        }
-        List<Set<Integer>> allSets = generateCombination(input);
+        List<Set<Integer>> allSets = generateCombination(distance.length - 1);
 
         for(Set<Integer> set : allSets) {
-            for(int i = 1; i < distance.length; i++) {
-                if(set.contains(i)) {
+            for(int vertex = 1; vertex < distance.length; vertex++) {
+                if(set.contains(vertex)) {
                     continue;
                 }
-                Index index = createIndex(i, set);
-                int min = Integer.MAX_VALUE;
-                int minK = -1;
-                for(int k : set) {
-                    int val = distance[i][k] + get(set, k, dp);
-                    if(val < min) {
-                        min = val;
-                        minK = k;
+                Index index = Index.createIndex(vertex, set);
+                int minCost = INFINITY;
+                int minPrevVertex = 0;
+                //to avoid ConcurrentModificationException copy set into another set while iterating
+                Set<Integer> copySet = new HashSet<>(set);
+                for(int prevVertex : set) {
+                    int cost = getCost(copySet, prevVertex, minCostDP);
+                    if(cost < minCost) {
+                        minCost = cost;
+                        minPrevVertex = prevVertex;
                     }
                 }
-                dp.put(index, min);
-                parent.put(index, minK);
+                if(set.size() == 0) {
+                    minCost = 0;
+                }
+                minCostDP.put(index, minCost + distance[minPrevVertex][vertex]);
+                parent.put(index, minPrevVertex);
             }
         }
 
@@ -91,27 +95,22 @@ public class HeldKarpTravelingSalesman {
             set.add(i);
         }
         int min = Integer.MAX_VALUE;
-        int minK = -1;
+        int prevVertex = -1;
+        //to avoid ConcurrentModificationException copy set into another set while iterating
+        Set<Integer> copySet = new HashSet<>(set);
         for(int k : set) {
-            int val = distance[0][k] + get(set, k, dp);
-            if(val < min) {
-                min = val;
-                minK = k;
+            int cost = distance[k][0] + getCost(copySet, k, minCostDP);
+            if(cost < min) {
+                min = cost;
+                prevVertex = k;
             }
         }
 
-        parent.put(createIndex(0, set), minK);
+        parent.put(Index.createIndex(0, set), prevVertex);
 
         printTour(parent, distance.length);
 
         return min;
-    }
-
-    private static Index createIndex(int vertex, Set<Integer> vertexSet) {
-        Index i = new Index();
-        i.vertex = vertex;
-        i.vertexSet = vertexSet;
-        return i;
     }
 
     private void printTour(Map<Index, Integer> parent, int totalVertices) {
@@ -119,38 +118,35 @@ public class HeldKarpTravelingSalesman {
         for(int i=0; i < totalVertices; i++) {
             set.add(i);
         }
-        int start = 0;
+        Integer start = 0;
         Deque<Integer> stack = new LinkedList<>();
-        while(set.size() > 0) {
+        while(true) {
             stack.push(start);
             set.remove(start);
-            start = parent.get(createIndex(start, set));
-            if(start == 0) {
+            start = parent.get(Index.createIndex(start, set));
+            if(start == null) {
                 break;
             }
         }
         StringJoiner joiner = new StringJoiner("->");
-        stack.push(0);
-        stack.forEach(v ->
-                        joiner.add(String.valueOf(v))
-        );
+        stack.forEach(v -> joiner.add(String.valueOf(v)));
         System.out.println("\nTSP tour");
-        System.out.print(joiner.toString());
+        System.out.println(joiner.toString());
     }
 
-    private int get(Set<Integer> set, int k, Map<Index, Integer> dp) {
-        Set<Integer> newSet = new HashSet<>();
-        for(int i : set) {
-            if(i == k) {
-                continue;
-            }
-            newSet.add(i);
+    private int getCost(Set<Integer> set, int prevVertex, Map<Index, Integer> minCostDP) {
+        set.remove(prevVertex);
+        Index index = Index.createIndex(prevVertex, set);
+        int cost = minCostDP.get(index);
+        set.add(prevVertex);
+        return cost;
+    }
+
+    private List<Set<Integer>> generateCombination(int n) {
+        int input[] = new int[n];
+        for(int i = 0; i < input.length; i++) {
+            input[i] = i+1;
         }
-        Index index = createIndex(k, newSet);
-        return dp.get(index);
-    }
-
-    private List<Set<Integer>> generateCombination(int input[]) {
         List<Set<Integer>> allSets = new ArrayList<>();
         int result[] = new int[input.length];
         generateCombination(input, 0, 0, allSets, result);
@@ -159,16 +155,11 @@ public class HeldKarpTravelingSalesman {
     }
 
     private void generateCombination(int input[], int start, int pos, List<Set<Integer>> allSets, int result[]) {
-
         if(pos == input.length) {
             return;
         }
-
         Set<Integer> set = createSet(result, pos);
-        if(set != null) {
-            allSets.add(set);
-        }
-
+        allSets.add(set);
         for(int i=start; i < input.length; i++) {
             result[pos] = input[i];
             generateCombination(input, i+1, pos+1, allSets, result);
@@ -177,7 +168,7 @@ public class HeldKarpTravelingSalesman {
 
     private static Set<Integer> createSet(int input[], int pos) {
         if(pos == 0) {
-            return null;
+            return new HashSet<>();
         }
         Set<Integer> set = new HashSet<>();
         for(int i = 0; i < pos; i++) {
@@ -188,14 +179,15 @@ public class HeldKarpTravelingSalesman {
 
     public static void main(String args[]) {
 
-        HeldKarpTravelingSalesman ht = new HeldKarpTravelingSalesman();
-        int distance[][] = {{0, 2, 9, 10},
-                    {1, 0, 6, 4},
-                    {15, 7, 0, 8},
-                    {6, 3, 12, 0},
-                };
+        TravelingSalesmanHeldKarp ht = new TravelingSalesmanHeldKarp();
+        int distance[][] = {{0, 1, 15, 6},
+                            {2, 0, 7, 3},
+                            {9, 6, 0, 12},
+                            {10, 4, 8, 0},
+        };
 
-        ht.minCost(distance);
+        int minCost = ht.minCost(distance);
+        System.out.println("Min cost is " + minCost);
     }
 }
 
