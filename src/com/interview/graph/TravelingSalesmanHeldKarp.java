@@ -18,7 +18,7 @@ public class TravelingSalesmanHeldKarp {
     private static int INFINITY = 100000000;
 
     private static class Index {
-        int vertex;
+        int currentVertex;
         Set<Integer> vertexSet;
 
         @Override
@@ -28,20 +28,20 @@ public class TravelingSalesmanHeldKarp {
 
             Index index = (Index) o;
 
-            if (vertex != index.vertex) return false;
+            if (currentVertex != index.currentVertex) return false;
             return !(vertexSet != null ? !vertexSet.equals(index.vertexSet) : index.vertexSet != null);
         }
 
         @Override
         public int hashCode() {
-            int result = vertex;
+            int result = currentVertex;
             result = 31 * result + (vertexSet != null ? vertexSet.hashCode() : 0);
             return result;
         }
 
         private static Index createIndex(int vertex, Set<Integer> vertexSet) {
             Index i = new Index();
-            i.vertex = vertex;
+            i.currentVertex = vertex;
             i.vertexSet = vertexSet;
             return i;
         }
@@ -59,32 +59,35 @@ public class TravelingSalesmanHeldKarp {
     }
 
     public int minCost(int[][] distance) {
+
+        //stores intermediate values in map
         Map<Index, Integer> minCostDP = new HashMap<>();
         Map<Index, Integer> parent = new HashMap<>();
 
         List<Set<Integer>> allSets = generateCombination(distance.length - 1);
 
         for(Set<Integer> set : allSets) {
-            for(int vertex = 1; vertex < distance.length; vertex++) {
-                if(set.contains(vertex)) {
+            for(int currentVertex = 1; currentVertex < distance.length; currentVertex++) {
+                if(set.contains(currentVertex)) {
                     continue;
                 }
-                Index index = Index.createIndex(vertex, set);
+                Index index = Index.createIndex(currentVertex, set);
                 int minCost = INFINITY;
                 int minPrevVertex = 0;
                 //to avoid ConcurrentModificationException copy set into another set while iterating
                 Set<Integer> copySet = new HashSet<>(set);
                 for(int prevVertex : set) {
-                    int cost = getCost(copySet, prevVertex, minCostDP);
+                    int cost = distance[prevVertex][currentVertex] + getCost(copySet, prevVertex, minCostDP);
                     if(cost < minCost) {
                         minCost = cost;
                         minPrevVertex = prevVertex;
                     }
                 }
+                //this happens for empty subset
                 if(set.size() == 0) {
-                    minCost = 0;
+                    minCost = distance[0][currentVertex];
                 }
-                minCostDP.put(index, minCost + distance[minPrevVertex][vertex]);
+                minCostDP.put(index, minCost);
                 parent.put(index, minPrevVertex);
             }
         }
