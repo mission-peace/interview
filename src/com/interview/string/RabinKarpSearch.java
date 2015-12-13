@@ -22,12 +22,10 @@ public class RabinKarpSearch {
         int patternHash = createHash(pattern, m - 1);
         int textHash = createHash(text, m - 1);
         for (int i = 1; i <= n - m; i++) {
-            if(patternHash == textHash) {
-                if(checkEqual(text, i - 1, i + m - 2, pattern, 0, m - 1)) {
-                    return i - 1;
-                }
+            if(patternHash == textHash && checkEqual(text, i - 1, i + m - 2, pattern, 0, m - 1)) {
+                return i - 1;
             }
-            textHash = recalculateHash(text, i - 1 , i + pattern.length - 1, textHash);
+            textHash = recalculateHash(text, i - 1 , i + m - 1, textHash);
         }
         return patternHash == textHash && checkEqual(text, n - m, n - 1,pattern, 0, m - 1)? n - m : -1;
     }
