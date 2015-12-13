@@ -19,6 +19,10 @@ import java.util.Map;
  */
 public class FloydWarshallAllPairShortestPath {
 
+    class NegativeWeightCycleException extends RuntimeException {
+
+    }
+
     private static final int INF = 1000000;
 
     public int[][] allPairShortestPath(int[][] distanceMatrix) {
@@ -27,7 +31,7 @@ public class FloydWarshallAllPairShortestPath {
         int path[][] = new int[distanceMatrix.length][distanceMatrix.length];
 
         for (int i=0; i < distanceMatrix.length; i++) {
-            for (int j=0; j< distanceMatrix.length; j++){
+            for (int j=0; j< distanceMatrix[i].length; j++){
                 distance[i][j] = distanceMatrix[i][j];
                 if (distanceMatrix[i][j] != INF && i != j) {
                     path[i][j] = i;
@@ -48,6 +52,15 @@ public class FloydWarshallAllPairShortestPath {
                         path[i][j] = path[k][j];
                     }
                 }
+            }
+        }
+
+        //look for negative weight cycle in the graph
+        //if values on diagonal of distance matrix is negative
+        //then there is negative weight cycle in the graph.
+        for(int i = 0; i < distance.length; i++) {
+            if(distance[i][i] < 0) {
+                throw new NegativeWeightCycleException();
             }
         }
 
