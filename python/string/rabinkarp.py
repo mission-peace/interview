@@ -19,9 +19,6 @@ def pattern_matching(text, pattern):
             return n - m
     return -1;
     
-    
-            
-
 def check_equal(str1, str2):
     if len(str1) != len(str2):
         return False;
