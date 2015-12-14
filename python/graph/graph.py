@@ -74,7 +74,7 @@ class Vertex(object):
     def __repr__(self):
         return self.__str__();
 
-def test():             
+if __name__ == '__main__':            
     g = Graph(False)
     g.add_edge(1,2,10)
     g.add_edge(2,3,5)
