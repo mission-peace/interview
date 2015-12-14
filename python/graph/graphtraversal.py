@@ -33,11 +33,11 @@ def bfs(graph):
                         visited.add(adj)
                     
                 
-   
-g = Graph(False)
-g.add_edge(1,2,10)
-g.add_edge(2,3,5)
-g.add_edge(1,4,6)
+if __name__ == '__main__':   
+    g = Graph(False)
+    g.add_edge(1,2,10)
+    g.add_edge(2,3,5)
+    g.add_edge(1,4,6)
 
-dfs(g)
-bfs(g)
+    dfs(g)
+    bfs(g)
