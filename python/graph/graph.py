@@ -8,7 +8,6 @@ class Graph(object):
         self.all_vertex = {}
         self.is_directed = is_directed
 
-        
     def add_edge(self, id1, id2):
         add_edge(id1, id2, 0)
 
@@ -33,6 +32,7 @@ class Graph(object):
 
  
 class Edge(object):
+    
     def __init__(self, vertex1, vertex2, is_directed, weight):
         self.vertex1 = vertex1
         self.vertex2 = vertex2
@@ -42,8 +42,11 @@ class Edge(object):
     def __eq__(self, other):
         return self.vertex1.id == other.vertex1.id and self.vertex2.id == other.vertex2.id
 
+    def __hash(self):
+        return hash(vertex1) + hash(vertex2)
+    
     def __str__(self):
-        return str(self.vertex1.id) + " " + str(self.vertex2.id) + " " + str(self.weight)
+        return str(self.vertex1) + " " + str(self.vertex2) + " " + str(self.weight)
     
 class Vertex(object):
 
@@ -62,20 +65,26 @@ class Vertex(object):
     def __eq__(self, other):
         return self.id == other.id
 
+    def __hash__(self):
+        return hash(self.id)
+
     def __str__(self):
-        return str(id)
-             
+        return str(self.id)
 
-g = Graph(False)
-g.add_edge(1,2,10)
-g.add_edge(2,3,5)
-g.add_edge(1,4,6)
+    def __repr__(self):
+        return self.__str__();
 
-for edge in g.all_edges:
-    print(edge)
+def test():             
+    g = Graph(False)
+    g.add_edge(1,2,10)
+    g.add_edge(2,3,5)
+    g.add_edge(1,4,6)
 
-for vertex in g.all_vertex:
-    print("Vertex " + str(vertex))
-    for edge in g.all_vertex[vertex].edges:
-        print("Edge " + str(edge))
+    for edge in g.all_edges:
+        print(edge)
+
+    for vertex in g.all_vertex:
+        print("Vertex " + str(g.all_vertex[vertex]))
+        for edge in g.all_vertex[vertex].edges:
+            print("Edge " + str(edge))
 
