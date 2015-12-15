@@ -34,6 +34,24 @@ public class CoinChanging {
     }
 
     /**
+     * Space efficient DP solution
+     */
+    public int numberOfSolutionsOnSpace(int total, int arr[]){
+
+        int temp[] = new int[total+1];
+
+        temp[0] = 1;
+        for(int i=0; i < arr.length; i++){
+            for(int j=1; j <= total ; j++){
+                if(j >= arr[i]){
+                    temp[j] += temp[j-arr[i]];
+                }
+            }
+        }
+        return temp[total];
+    }
+
+    /**
      * This method actually prints all the combination. It takes exponential time.
      */
     public void printCoinChangingSolution(int total,int coins[]){
@@ -57,25 +75,6 @@ public class CoinChanging {
         }
     }
 
-    /**
-     * Space efficient DP solution
-     */
-    public int numberOfSolutionsOnSpace(int total, int arr[]){
-        
-        int temp[] = new int[total+1];
-        
-        temp[0] = 1;
-        for(int i=0; i < arr.length; i++){
-            for(int j=1; j <= total ; j++){
-                if(j >= arr[i]){
-                    temp[j] += temp[j-arr[i]];
-                }
-            }
-        }
-        return temp[total];
-    }
-    
-    
     public static void main(String args[]){
         CoinChanging cc = new CoinChanging();
         int total = 15;
