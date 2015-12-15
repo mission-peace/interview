@@ -10,7 +10,7 @@ def pattern_matching(text, pattern):
 
     for i in range(1, n - m + 2):
         if pattern_hash == text_hash:
-            if check_equal(text[i-1:i+m-1], pattern[0:m]) is True:
+            if check_equal(text[i-1:i+m-1], pattern[0:]) is True:
                 return i - 1;
         if i < n - m + 1:    
             text_hash = recalculate_hash(text,i-1,i+m-1,text_hash)
