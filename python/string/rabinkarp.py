@@ -8,15 +8,12 @@ def pattern_matching(text, pattern):
     pattern_hash = create_hash(pattern, m - 1)
     text_hash = create_hash(text, m - 1)
 
-    for i in range(1, n - m + 1):
+    for i in range(1, n - m + 2):
         if pattern_hash == text_hash:
-            if check_equal(text[i-1:i+m-2], pattern[0:m-1]) is True:
+            if check_equal(text[i-1:i+m-1], pattern[0:m]) is True:
                 return i - 1;
-        text_hash = recalculate_hash(text,i-1,i+m-1,text_hash)
-
-    if pattern_hash == text_hash: 
-        if check_equal(text[n-m:n-1],pattern[0:m-1]) is True:
-            return n - m
+        if i < n - m + 1:    
+            text_hash = recalculate_hash(text,i-1,i+m-1,text_hash)
     return -1;
     
 def check_equal(str1, str2):
@@ -47,7 +44,7 @@ index = pattern_matching("TusharRoy", "sharRoy")
 print("Index ", index)
 index = pattern_matching("TusharRoy", "Roy")
 print("Index ", index)
-index = pattern_matching("TusharRoy", "shas")
+index = pattern_matching("TusharRoy", "shar")
 print("Index ", index)
 index = pattern_matching("TusharRoy", "usha")
 print("Index ", index)
