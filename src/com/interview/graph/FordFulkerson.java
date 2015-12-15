@@ -1,99 +1,86 @@
 package com.interview.graph;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Queue;
+import java.util.*;
 
 /**
- http://www.geeksforgeeks.org/ford-fulkerson-algorithm-for-maximum-flow-problem/
+ * Date 04/14/2014
+ * @author Tushar Roy
+ *
+ * Ford fulkerson method edmonds karp algorithm for finding max flow
+ *
+ * Time complexity is O(VE^2)
+ *
+ * References:
+ * http://www.geeksforgeeks.org/ford-fulkerson-algorithm-for-maximum-flow-problem/
+ * https://en.wikipedia.org/wiki/Edmonds%E2%80%93Karp_algorithm
  */
-public class FordFulkerson<T> {
+public class FordFulkerson {
 
-    public int maxFlow(Graph<T> graph, Vertex<T> s, Vertex<T>  t){
-        
-        int[][] matrix = new int[graph.getAllVertex().size()][graph.getAllVertex().size()];
-        for(Edge<T> edge : graph.getAllEdges()){
-            matrix[(int)edge.getVertex1().getId()][(int)edge.getVertex2().getId()] = edge.getWeight();
-        }
-        
-        
-        Map<Integer,Integer> parent = new HashMap<Integer,Integer>();
-        
-        int max_flow = 0;
-        while(BFS(matrix,parent,(int)s.getId(),(int)t.getId())){
-            
-            int min_flow = 10000;
-            int v = (int)t.getId();
-            while(parent.containsKey(v)){
-                int u = parent.get(v);
-                if(min_flow > matrix[u][v]){
-                    min_flow = matrix[u][v];
-                }
-                v = u;
+    public int maxFlow(int capacity[][], int s, int t){
+        int flow[][] = new int[capacity.length][capacity[0].length];
+        Map<Integer,Integer> parent = new HashMap<>();
+        int maxFlow = 0;
+        while(true){
+            int minCapacity = BFS(capacity, flow, parent, s, t);
+            if(minCapacity == 0) {
+                break;
             }
-            
-            max_flow += min_flow;
-            
-            v = (int)t.getId();
-            while(parent.containsKey(v)){
+            maxFlow += minCapacity;
+
+            int v = t;
+            while(v != s){
                 int u = parent.get(v);
-                matrix[u][v] -= min_flow;
-                matrix[v][u] += min_flow;
+                flow[u][v] += minCapacity;
+                flow[v][u] -= minCapacity;
                 v = u;
             }
         }
-        return max_flow;
+        return maxFlow;
     }
     
-    private boolean BFS(int[][] matrix, Map<Integer,Integer> parent,
+    private int BFS(int[][] capacity, int[][] flow, Map<Integer,Integer> parent,
             int s, int t){
-        
-        Map<Integer,Boolean> visited = new HashMap<Integer,Boolean>();
-        Queue<Integer> queue = new LinkedList<Integer>();
+
+        Set<Integer> visited = new HashSet<>();
+        Queue<Integer> queue = new LinkedList<>();
         queue.add(s);
-        visited.put(s, true);
-        while(queue.size() != 0){
+        visited.add(s);
+        int minCapacity = Integer.MAX_VALUE;
+        while(!queue.isEmpty()){
             int u = queue.poll();
-            for(int v =0 ; v < matrix.length; v++){
-                if(!visited.containsKey(v) && matrix[u][v] > 0){
+            for(int v = 0; v < flow.length; v++){
+                if(!visited.contains(v) && capacity[u][v] - flow[u][v] > 0){
                     parent.put(v, u);
-                    if(v == t){
-                        return true;
+                    if (minCapacity > capacity[u][v] - flow[u][v]) {
+                        minCapacity = capacity[u][v] - flow[u][v];
                     }
-                    visited.put(v, true);
+                    if(v == t){
+                        return minCapacity;
+                    }
+                    visited.add(v);
                     queue.add(v);
                 }
             }
         }
-        return false;
+        return 0;
     }
     
     public static void main(String args[]){
-        
-        Graph<Integer> graph = new Graph<Integer>(true);
-        
-        Vertex<Integer> s = graph.addSingleVertex(0);
-        Vertex<Integer> t = graph.addSingleVertex(7);
-        graph.addEdge(0, 1,10);
-        graph.addEdge(1, 2,9);
-        graph.addEdge(2, 7,10);
-        graph.addEdge(0, 3,5);
-        graph.addEdge(3, 4,8);
-        graph.addEdge(4, 7,10);
-        graph.addEdge(0, 5,15);
-        graph.addEdge(5, 6,16);
-        graph.addEdge(6, 7,10);
-        graph.addEdge(1, 3,4);
-        graph.addEdge(3, 5,4);
-        graph.addEdge(1, 4,15);
-        graph.addEdge(2, 4,15);
-        graph.addEdge(6, 3,6);
-        graph.addEdge(4, 6,15);
-        
-        
-        FordFulkerson<Integer> ff = new FordFulkerson<Integer>();
-        int result = ff.maxFlow(graph, s, t);
-        System.out.print(result);
+        FordFulkerson ff = new FordFulkerson();
+        int[][] capacity = {{0, 3, 0, 3, 0, 0, 0},
+                            {0, 0, 4, 0, 0, 0, 0},
+                            {3, 0, 0, 1, 2, 0, 0},
+                            {0, 0, 0, 0, 2, 6, 0},
+                            {0, 1, 0, 0, 0, 0, 1},
+                            {0, 0, 0, 0, 0, 0, 9},
+                            {0, 0, 0, 0, 0, 0, 0}};
+
+        int [][] capacity1 = {{0, 16, 13, 0, 0, 0},
+                            {0, 0, 10, 12, 0, 0},
+                            {0, 4, 0, 0, 14, 0},
+                            {0, 0, 9, 0, 0, 20},
+                            {0, 0, 0, 7, 0, 4},
+                            {0, 0, 0, 0, 0, 0}};
+        System.out.print("Maximum capacity " + ff.maxFlow(capacity1, 0, 5));
     }
 }
