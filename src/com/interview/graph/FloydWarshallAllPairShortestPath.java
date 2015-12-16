@@ -68,21 +68,21 @@ public class FloydWarshallAllPairShortestPath {
         return distance;
     }
 
-    public void printPath(int[][] path, int i, int j) {
-        if(i < 0 || j < 0 || i >= path.length || j >= path.length) {
+    public void printPath(int[][] path, int start, int end) {
+        if(start < 0 || end < 0 || start >= path.length || end >= path.length) {
             throw new IllegalArgumentException();
         }
 
-        System.out.println("Actual path - between " + i + " " + j);
+        System.out.println("Actual path - between " + start + " " + end);
         Deque<Integer> stack = new LinkedList<>();
-        stack.addFirst(j);
+        stack.addFirst(end);
         while (true) {
-            j = path[i][j];
-            if(j == -1) {
+            end = path[start][end];
+            if(end == -1) {
                 return;
             }
-            stack.addFirst(j);
-            if(j == i) {
+            stack.addFirst(end);
+            if(end == start) {
                 break;
             }
         }
