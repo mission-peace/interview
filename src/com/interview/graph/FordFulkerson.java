@@ -43,19 +43,23 @@ public class FordFulkerson {
 
         Set<Integer> visited = new HashSet<>();
         Queue<Integer> queue = new LinkedList<>();
+        Map<Integer, Integer> minCapacity = new HashMap<>();
         queue.add(s);
         visited.add(s);
-        int minCapacity = Integer.MAX_VALUE;
+        minCapacity.put(s, Integer.MAX_VALUE);
         while(!queue.isEmpty()){
             int u = queue.poll();
             for(int v = 0; v < flow.length; v++){
-                if(!visited.contains(v) && capacity[u][v] - flow[u][v] > 0){
+                int residualCapacity = capacity[u][v] - flow[u][v];
+                if(!visited.contains(v) &&  residualCapacity > 0){
                     parent.put(v, u);
-                    if (minCapacity > capacity[u][v] - flow[u][v]) {
-                        minCapacity = capacity[u][v] - flow[u][v];
+                    if (residualCapacity < minCapacity.get(u)) {
+                        minCapacity.put(v, residualCapacity);
+                    } else {
+                        minCapacity.put(v, minCapacity.get(u));
                     }
                     if(v == t){
-                        return minCapacity;
+                        return minCapacity.get(t);
                     }
                     visited.add(v);
                     queue.add(v);

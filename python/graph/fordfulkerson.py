@@ -28,16 +28,20 @@ def bfs(capacity, flow, s, t):
     queue.put(s)
     visited.add(s)
     parent = {}
-    min_capacity = sys.maxsize
+    min_capacity = {}
+    min_capacity[s] = sys.maxsize;
     while not queue.empty():
         u = queue.get()
         for v in range(len(capacity)):
-            if v not in visited and capacity[u][v] - flow[u][v] > 0:
+            residual_capacity = capacity[u][v] - flow[u][v]
+            if v not in visited and residual_capacity > 0:
                 parent[v] = u
-                if min_capacity > capacity[u][v] - flow[u][v]:
-                    min_capacity = capacity[u][v] - flow[u][v]
+                if (residual_capacity < min_capacity[u]):
+                    min_capacity[v] = residual_capacity
+                else:
+                    min_capacity[v] = min_capacity[u] 
                 if v == t:
-                    return (parent, min_capacity)
+                    return (parent, min_capacity[v])
                 visited.add(v)
                 queue.put(v)
     return (parent, 0)
