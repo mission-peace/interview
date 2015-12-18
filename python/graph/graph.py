@@ -46,7 +46,10 @@ class Edge(object):
         return hash(vertex1) + hash(vertex2)
     
     def __str__(self):
-        return str(self.vertex1) + " " + str(self.vertex2) + " " + str(self.weight)
+        return "Edge " + str(self.vertex1) + " " + str(self.vertex2) + " Weight-" + str(self.weight)
+
+    def __repr__(self):
+        return self.__str__()
     
 class Vertex(object):
 
@@ -69,10 +72,16 @@ class Vertex(object):
         return hash(self.id)
 
     def __str__(self):
-        return str(self.id)
+        return str("Vertex-" + str(self.id))
 
     def __repr__(self):
         return self.__str__();
+
+    def __lt__(self, other):
+        return self.id < other.id
+                    
+    def __gt__(self, other):
+        return self.id > other.id
 
 if __name__ == '__main__':            
     g = Graph(False)

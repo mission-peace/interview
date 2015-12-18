@@ -5,8 +5,6 @@
 from heapq import *
 
 class PriorityQueue(object):
-
-    REMOVED = 'task-removed'
     
     def __init__(self, is_min_heap):
         self.pq = []
@@ -21,11 +19,16 @@ class PriorityQueue(object):
             return True
         else:
             return False
+
+    def get_task_priority(self, task):
+        if task in self.entry_finder:
+            return (self.entry_finder[task])[0]
+        raise ValueError("task does not exist")
         
     def add_task(self, priority, task):
         if task in self.entry_finder:
             raise KeyError("Key already exists")
-        entry = [self.mul*priority, task]
+        entry = [self.mul*priority, False, task]
         self.entry_finder[task] = entry
         heappush(self.pq, entry)
 
@@ -33,27 +36,27 @@ class PriorityQueue(object):
         if task not in self.entry_finder:
             raise KeyError("Task not found")
         self.remove_task(task)
-        entry = [self.mul*priority, task]
+        entry = [self.mul*priority, False, task]
         self.entry_finder[task] = entry
         heappush(self.pq, entry)
  
     def remove_task(self, task):
         entry = self.entry_finder.pop(task)
-        entry[-1] = PriorityQueue.REMOVED
-        
+        entry[1] = True
+
     def pop_task(self):
         while self.pq:
-            priority, task = heappop(self.pq)
-            if task is not PriorityQueue.REMOVED:
+            priority, removed, task = heappop(self.pq)
+            if removed is False:
                 del self.entry_finder[task]
                 return task
         raise KeyError("pop from an empty priority queue")
 
     def peek_task(self):
         while self.pq:
-            priority, task = heappop(self.pq)
-            if task is not PriorityQueue.REMOVED:
-                 heappush(self.pq, [priority, task])
+            priority, removed, task = tuple(heappop(self.pq))
+            if removed is False:
+                 heappush(self.pq, [priority, False, task])
                  return task
         raise KeyError("pop from an empty priority queue")
 
@@ -63,6 +66,10 @@ class PriorityQueue(object):
             return False
         except KeyError:
             return True
+
+    def __str__(self):
+        return str(self.entry_finder) + " " + str(self.pq)
+        
 
 if __name__ == '__main__':
     task1 = "Tushar"
@@ -75,6 +82,9 @@ if __name__ == '__main__':
     min_pq.add_task(3, task2)
     min_pq.add_task(6, task3)
     min_pq.add_task(7, task4)
+    print(min_pq.contains_task(task3))
+    print(min_pq.get_task_priority(task3))
+    print(min_pq)
     while min_pq.is_empty() is False:
         print(min_pq.pop_task())
 
