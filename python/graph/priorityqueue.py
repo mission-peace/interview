@@ -4,15 +4,18 @@
 
 from heapq import *
 
-class MinPriorityQueue(object):
+class PriorityQueue(object):
 
     REMOVED = 'task-removed'
-
-    def __init__(self):
+    
+    def __init__(self, is_min_heap):
         self.pq = []
         self.entry_finder = {}
-        self.REMOVED = 'task-removed'
-
+        if(is_min_heap is True):
+            self.mul = 1
+        else :
+            self.mul = -1
+         
     def contains_task(self, task):
         if task in self.entry_finder:
             return True
@@ -22,7 +25,7 @@ class MinPriorityQueue(object):
     def add_task(self, priority, task):
         if task in self.entry_finder:
             raise KeyError("Key already exists")
-        entry = [priority, task]
+        entry = [self.mul*priority, task]
         self.entry_finder[task] = entry
         heappush(self.pq, entry)
 
@@ -30,18 +33,18 @@ class MinPriorityQueue(object):
         if task not in self.entry_finder:
             raise KeyError("Task not found")
         self.remove_task(task)
-        entry = [priority, task]
+        entry = [self.mul*priority, task]
         self.entry_finder[task] = entry
         heappush(self.pq, entry)
  
     def remove_task(self, task):
         entry = self.entry_finder.pop(task)
-        entry[-1] = MinPriorityQueue.REMOVED
+        entry[-1] = PriorityQueue.REMOVED
         
     def pop_task(self):
         while self.pq:
             priority, task = heappop(self.pq)
-            if task is not MinPriorityQueue.REMOVED:
+            if task is not PriorityQueue.REMOVED:
                 del self.entry_finder[task]
                 return task
         raise KeyError("pop from an empty priority queue")
@@ -49,7 +52,7 @@ class MinPriorityQueue(object):
     def peek_task(self):
         while self.pq:
             priority, task = heappop(self.pq)
-            if task is not MinPriorityQueue.REMOVED:
+            if task is not PriorityQueue.REMOVED:
                  heappush(self.pq, [priority, task])
                  return task
         raise KeyError("pop from an empty priority queue")
@@ -67,18 +70,20 @@ if __name__ == '__main__':
     task3 = "is"
     task4 = "coder"
 
-    pq = MinPriorityQueue()
-    pq.add_task(1, task1)
-    pq.add_task(3, task2)
-    pq.add_task(6, task3)
-    pq.add_task(7, task4)
-    pq.change_task_priority(-1, task1)
-    print(pq.remove_task(task1))
-    print(pq.is_empty())
-    print(pq.pop_task())
-    pq.add_task(10, task1)
-    print(pq.peek_task())
-    pq.change_task_priority(-10, task1)
-    print(pq.peek_task())
-    print(pq.contains_task(task1))    
-    
+    min_pq = PriorityQueue(True)
+    min_pq.add_task(1, task1)
+    min_pq.add_task(3, task2)
+    min_pq.add_task(6, task3)
+    min_pq.add_task(7, task4)
+    while min_pq.is_empty() is False:
+        print(min_pq.pop_task())
+
+    max_pq = PriorityQueue(False)
+    max_pq.add_task(1, task1)
+    max_pq.add_task(3, task2)
+    max_pq.add_task(6, task3)
+    max_pq.add_task(7, task4)
+    while max_pq.is_empty() is False:
+        print(max_pq.pop_task())
+
+        
