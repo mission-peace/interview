@@ -8,10 +8,7 @@ class Graph(object):
         self.all_vertex = {}
         self.is_directed = is_directed
 
-    def add_edge(self, id1, id2):
-        add_edge(id1, id2, 0)
-
-    def add_edge(self, id1, id2, weight):
+    def add_edge(self, id1, id2, weight=0):
         if id1 in self.all_vertex:
             vertex1 = self.all_vertex[id1]
         else:
