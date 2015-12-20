@@ -4,19 +4,21 @@
 from disjointset import *
 from graph import *
 
+def get_key(edge):
+    return edge.weight
+
 def minimum_spanning_tree(graph):
 
-    all_edges = graph.all_edges
-
     disjoint_set = DisjointSet()
+    sorted_edges = sorted(graph.all_edges, key = get_key)
+    print(sorted_edges)
 
-    #TODO sort the edges
     for vertex in graph.all_vertex.values():
         disjoint_set.make_set(vertex.id)
 
     result_edge = []
 
-    for edge in all_edges:
+    for edge in sorted_edges:
         root1 = disjoint_set.find_set(edge.vertex1.id)
         root2 = disjoint_set.find_set(edge.vertex2.id)
 
@@ -31,15 +33,15 @@ def minimum_spanning_tree(graph):
 if __name__ == '__main__':
     graph = Graph(False)
     graph.add_edge(1,3,1)
-    graph.add_edge(2,5,1)
-    graph.add_edge(2,4,2)
-    graph.add_edge(6,5,2)
-    graph.add_edge(4,7,2)
-    graph.add_edge(2,6,3)
-    graph.add_edge(6,4,3)
     graph.add_edge(1,2,4)
+    graph.add_edge(2,4,2)
+    graph.add_edge(2,5,1)
+    graph.add_edge(2,6,3)
     graph.add_edge(3,4,5)
     graph.add_edge(3,7,8)
+    graph.add_edge(4,7,2)
+    graph.add_edge(6,5,2)
+    graph.add_edge(6,4,3)
 
     result = minimum_spanning_tree(graph)
     for edge in result:
