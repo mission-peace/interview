@@ -1,5 +1,8 @@
 package com.interview.dynamic;
 
+import java.util.Deque;
+import java.util.LinkedList;
+
 /**
  * Date 12/22/2015
  * @author Tushar Roy
@@ -24,12 +27,47 @@ public class StockBuySellKTransactions {
                 maxDiff = Math.max(maxDiff, T[i-1][j] - prices[j]);
             }
         }
+        printActualSolution(T, prices);
         return T[K][prices.length-1];
+    }
+
+    public void printActualSolution(int T[][], int prices[]) {
+        int i = T.length - 1;
+        int j = T[0].length - 1;
+
+        Deque<Integer> stack = new LinkedList<>();
+        while(true) {
+            if(i == 0 || j == 0) {
+                break;
+            }
+            if (T[i][j] == T[i][j-1]) {
+                j = j - 1;
+            } else {
+                stack.addFirst(j);
+                int maxDiff = T[i][j] - prices[j];
+                for (int k = j-1; k >= 0; k--) {
+                    if (T[i-1][k] - prices[k] == maxDiff) {
+                        i = i - 1;
+                        j = k;
+                        stack.addFirst(j);
+                        break;
+                    }
+                }
+            }
+        }
+
+        while(!stack.isEmpty()) {
+            System.out.println("Buy at price " + prices[stack.pollFirst()]);
+            System.out.println("Sell at price " + prices[stack.pollFirst()]);
+        }
+
     }
 
     public static void main(String args[]) {
         StockBuySellKTransactions sbt = new StockBuySellKTransactions();
         int prices[] = {3, 2, 4, 5, 1, 5, 2, 3};
-        System.out.print(sbt.maxProfit(prices, 3));
+        int prices1[] = {1, 4, 6, 5, 7};
+
+        System.out.print("Max profit " + sbt.maxProfit(prices, 3));
     }
 }
