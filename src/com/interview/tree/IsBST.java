@@ -47,7 +47,7 @@ public class IsBST {
 		}
 		Deque<Node> stack = new LinkedList<Node>();
 		Node node = root;
-		int prev = node.data;
+		int prev = -999999;
 		int current = 0;
 		while ( true ) {
 			if (node != null) {
@@ -59,11 +59,11 @@ public class IsBST {
 				}
 				node = stack.pollFirst();
 				current = node.data;
-				prev = node.data;
-				node = node.right;
-				if (current > prev) {
+				if (current < prev) {
 					return false;
 				}
+				prev = node.data;
+				node = node.right;
 			}
 		}
 		return true;
@@ -81,7 +81,7 @@ public class IsBST {
 
 		IsBST isBST = new IsBST();
 		//assert isBST.isBST(root);
-		if (isBST.isBST(root)) { // Similarly we can use isBST.isBSTIterative(root)
+		if (isBST.isBSTIterative(root)) { // Similarly we can use isBST.isBSTIterative(root)
 			System.out.println("BST");
 		} else {
 			System.out.println("NOT A BST");
