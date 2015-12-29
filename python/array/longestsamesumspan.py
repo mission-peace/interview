@@ -1,4 +1,5 @@
 # http://www.geeksforgeeks.org/longest-span-sum-two-binary-arrays/
+# java code https://github.com/mission-peace/interview/blob/master/src/com/interview/array/LongestSameSumSpan.java
 
 def longest_span(input1, input2):
     if len(input1) != len(input2):
