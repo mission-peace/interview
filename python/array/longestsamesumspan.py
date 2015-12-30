@@ -21,8 +21,8 @@ def longest_span(input1, input2):
     return max_span
 
 if __name__ == '__main__':
-    input1 = [0, 1, 0, 1, 1, 1, 1]
-    input2 = [1, 1, 1, 1, 1, 0, 1]
+    input1 = [1, 0, 0, 1, 1, 0]
+    input2 = [0, 1, 1, 0, 1 ,1]
 
     print(longest_span(input1, input2))
     
