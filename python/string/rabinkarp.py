@@ -1,7 +1,7 @@
 #Rabin Karp algorithm
 # Java code https://github.com/mission-peace/interview/blob/master/src/com/interview/string/RabinKarpSearch.java
 
-prime = 11
+prime = 101
 def pattern_matching(text, pattern):
     m = len(pattern)
     n = len(text)
@@ -13,7 +13,7 @@ def pattern_matching(text, pattern):
             if check_equal(text[i-1:i+m-1], pattern[0:]) is True:
                 return i - 1;
         if i < n - m + 1:    
-            text_hash = recalculate_hash(text,i-1,i+m-1,text_hash)
+            text_hash = recalculate_hash(text, i-1, i+m-1, text_hash, m)
     return -1;
     
 def check_equal(str1, str2):
@@ -32,12 +32,11 @@ def create_hash(input, end):
         hash = hash + ord(input[i])*pow(prime, i)
     return hash
 
-def recalculate_hash(input, old_index, new_index, hash):
-    size = new_index - old_index
-    hash -= ord(input[old_index])
-    hash = hash/prime
-    hash += ord(input[new_index])*pow(prime, size - 1)
-    return hash;
+def recalculate_hash(input, old_index, new_index, old_hash, pattern_len):
+    new_hash = old_hash - ord(input[old_index])
+    new_hash = new_hash/prime
+    new_hash += ord(input[new_index])*pow(prime, pattern_len - 1)
+    return new_hash;
 
 
 index = pattern_matching("TusharRoy", "sharRoy")

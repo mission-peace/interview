@@ -14,34 +14,33 @@ package com.interview.string;
  */
 public class RabinKarpSearch {
 
-    private int prime = 11;
+    private int prime = 101;
     
     public int patternSearch(char[] text, char[] pattern){
         int m = pattern.length;
         int n = text.length;
-        int patternHash = createHash(pattern, m - 1);
-        int textHash = createHash(text, m - 1);
+        long patternHash = createHash(pattern, m - 1);
+        long textHash = createHash(text, m - 1);
         for (int i = 1; i <= n - m + 1; i++) {
             if(patternHash == textHash && checkEqual(text, i - 1, i + m - 2, pattern, 0, m - 1)) {
                 return i - 1;
             }
             if(i < n - m + 1) {
-                textHash = recalculateHash(text, i - 1, i + m - 1, textHash);
+                textHash = recalculateHash(text, i - 1, i + m - 1, textHash, m);
             }
         }
         return -1;
     }
     
-    private int recalculateHash(char[] str,int oldIndex, int newIndex,int hash) {
-        int size = newIndex - oldIndex;
-        hash -= str[oldIndex];
-        hash = hash/prime;
-        hash += str[newIndex]*Math.pow(prime, size-1);
-        return hash;
+    private long recalculateHash(char[] str,int oldIndex, int newIndex,long oldHash, int patternLen) {
+        long newHash = oldHash - str[oldIndex];
+        newHash = newHash/prime;
+        newHash += str[newIndex]*Math.pow(prime, patternLen - 1);
+        return newHash;
     }
     
-    private int createHash(char[] str, int end){
-        int hash = 0;
+    private long createHash(char[] str, int end){
+        long hash = 0;
         for (int i = 0 ; i <= end; i++) {
             hash += str[i]*Math.pow(prime,i);
         }
