@@ -9,6 +9,7 @@ def longest_span(input1, input2):
     prefix1 = 0
     prefix2 = 0
     max_span = 0
+    diff[0] = -1
     for i in range(len(input1)):
         prefix1 += input1[i]
         prefix2 += input2[i]

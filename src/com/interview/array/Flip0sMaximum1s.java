@@ -25,6 +25,7 @@ public class Flip0sMaximum1s {
             } else {
                 if (countZero < flipsAllowed) {
                     countZero++;
+                    result = Math.max(result, i - windowStart + 1);
                 } else {
                     while(true) {
                         if (input[windowStart] == 0) {

@@ -24,6 +24,7 @@ public class LongestSameSumSpan {
         Map<Integer, Integer> diff = new HashMap<>();
         int prefix1 = 0, prefix2 = 0;
         int maxSpan = 0;
+        diff.put(0, -1);
         for (int i = 0; i < input1.length ; i++) {
             prefix1 += input1[i];
             prefix2 += input2[i];
@@ -38,9 +39,8 @@ public class LongestSameSumSpan {
     }
 
     public static void main(String args[]) {
-        int input1[] = {0, 1, 0, 1, 1, 1, 1};
-        int input2[] = {1, 1, 1, 1, 1, 0, 1};
-
+        int input1[] = {1, 0, 0, 1, 1, 0};
+        int input2[] = {0, 1, 1, 0, 1 ,1};
         LongestSameSumSpan lsss = new LongestSameSumSpan();
         System.out.print(lsss.longestSpan(input1, input2));
     }

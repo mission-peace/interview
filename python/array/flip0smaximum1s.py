@@ -10,6 +10,7 @@ def flip_0s_to_maximize_consecutive_1s(input, flips_allowed):
         else:
             if count_zero < flips_allowed:
                 count_zero = count_zero + 1
+                result = max(result, i - window_start + 1)
             else:
                 while True:
                     if input[window_start] == 0:
