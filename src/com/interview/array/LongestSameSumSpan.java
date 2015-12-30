@@ -40,7 +40,7 @@ public class LongestSameSumSpan {
 
     public static void main(String args[]) {
         int input1[] = {1, 0, 0, 1, 1, 0};
-        int input2[] = {0, 1, 1, 0, 1 ,1};
+        int input2[] = {0, 1, 1, 0, 1, 1};
         LongestSameSumSpan lsss = new LongestSameSumSpan();
         System.out.print(lsss.longestSpan(input1, input2));
     }
