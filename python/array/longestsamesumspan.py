@@ -22,7 +22,7 @@ def longest_span(input1, input2):
 
 if __name__ == '__main__':
     input1 = [1, 0, 0, 1, 1, 0]
-    input2 = [0, 1, 1, 0, 1 ,1]
+    input2 = [0, 1, 1, 0, 1, 1]
 
     print(longest_span(input1, input2))
     
