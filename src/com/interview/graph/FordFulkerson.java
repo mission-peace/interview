@@ -86,6 +86,7 @@ public class FordFulkerson {
      * Prints all the augmented path which contribute to max flow
      */
     private void printAugmentedPaths(List<List<Integer>> augmentedPaths) {
+        System.out.println("Augmented paths");
         augmentedPaths.forEach(path -> {
             path.forEach(i -> System.out.print(i + " "));
             System.out.println();
@@ -134,6 +135,6 @@ public class FordFulkerson {
                             {0, 0, 0, 0, 0, 0, 9},
                             {0, 0, 0, 0, 0, 0, 0}};
 
-        System.out.println("Maximum capacity " + ff.maxFlow(capacity, 0, 6));
+        System.out.println("\nMaximum capacity " + ff.maxFlow(capacity, 0, 6));
     }
 }
