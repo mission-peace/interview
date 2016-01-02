@@ -13,22 +13,22 @@ def max_flow(capacity, source, sink):
             break
         augmented_path = []
         v = sink
-        min_capacity = sys.maxsize
+        flow = sys.maxsize
         while not v == source:
             augmented_path.append(v)
             u = parent[v]
-            if min_capacity > residual_capacity[u][v]:
-                min_capacity = residual_capacity[u][v]
+            if flow > residual_capacity[u][v]:
+                flow = residual_capacity[u][v]
             v = u
         augmented_path.append(source)
         augmented_paths.append(augmented_path[::-1])
-        max_flow += min_capacity
+        max_flow += flow
 
         v = sink
         while not v == source:
              u = parent[v]
-             residual_capacity[u][v] -= min_capacity
-             residual_capacity[v][u] += min_capacity
+             residual_capacity[u][v] -= flow
+             residual_capacity[v][u] += flow
              v = u
 
     print("Augmented path")

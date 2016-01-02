@@ -39,25 +39,19 @@ public class FordFulkerson {
 
         //max flow we can get in this network
         int maxFlow = 0;
-        while(true){
-            //see if we can find augmented path using BFS
-            boolean foundAugmentedPath = BFS(residualCapacity, parent, source, sink);
 
-            //if no augmented path is found then break out of loop
-            if (!foundAugmentedPath) {
-                break;
-            }
-
+        //see if augmented path can be found from source to sink.
+        while(BFS(residualCapacity, parent, source, sink)){
             List<Integer> augmentedPath = new ArrayList<>();
-            int v = sink;
-            int minCapacity = Integer.MAX_VALUE;
+            int flow = Integer.MAX_VALUE;
             //find minimum residual capacity in augmented path
             //also add vertices to augmented path list
+            int v = sink;
             while(v != source){
                 augmentedPath.add(v);
                 int u = parent.get(v);
-                if (minCapacity > residualCapacity[u][v]) {
-                    minCapacity = residualCapacity[u][v];
+                if (flow > residualCapacity[u][v]) {
+                    flow = residualCapacity[u][v];
                 }
                 v = u;
             }
@@ -66,15 +60,15 @@ public class FordFulkerson {
             augmentedPaths.add(augmentedPath);
 
             //add min capacity to max flow
-            maxFlow += minCapacity;
+            maxFlow += flow;
 
             //decrease residual capacity by min capacity from u to v in augmented path
             // and increase residual capacity by min capacity from v to u
             v = sink;
             while(v != source){
                 int u = parent.get(v);
-                residualCapacity[u][v] -= minCapacity;
-                residualCapacity[v][u] += minCapacity;
+                residualCapacity[u][v] -= flow;
+                residualCapacity[v][u] += flow;
                 v = u;
             }
         }
@@ -93,6 +87,9 @@ public class FordFulkerson {
         });
     }
 
+    /**
+     * Breadth first search to find augmented path
+     */
     private boolean BFS(int[][] residualCapacity, Map<Integer,Integer> parent,
             int source, int sink){
         Set<Integer> visited = new HashSet<>();
