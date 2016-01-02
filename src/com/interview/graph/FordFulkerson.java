@@ -6,7 +6,7 @@ import java.util.*;
  * Date 04/14/2014
  * @author Tushar Roy
  *
- * Ford fulkerson method edmonds karp algorithm for finding max flow
+ * Ford fulkerson method Edmonds Karp algorithm for finding max flow
  *
  * Capacity - Capacity of an edge to carry units from source to destination vertex
  * Flow - Actual flow of units from source to destination vertex of an edge

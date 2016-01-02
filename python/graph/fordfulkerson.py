@@ -1,4 +1,4 @@
-#ford fulkerson method edomonds karp algorithm
+#ford fulkerson method Edomonds Karp algorithm for finding max flow
 # java code https://github.com/mission-peace/interview/blob/master/src/com/interview/graph/FordFulkerson.java
 from queue import Queue
 import sys
