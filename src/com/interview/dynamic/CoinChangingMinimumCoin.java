@@ -23,6 +23,7 @@ public class CoinChangingMinimumCoin {
 
     /**
      * Top down dynamic programing. Using map to store intermediate results.
+     * Returns Integer.MAX_VALUE if total cannot be formed with given coins
      */
     public int minimumCoinTopDown(int total, int coins[], Map<Integer, Integer> map) {
 
@@ -65,6 +66,7 @@ public class CoinChangingMinimumCoin {
      * Bottom up way of solving this problem.
      * Keep input sorted. Otherwise temp[j-arr[i]) + 1 can become Integer.Max_value + 1 which
      * can be very low negative number
+     * Returns Integer.MAX_VALUE if solution is not possible.
      */
     public int minimumCoinBottomUp(int total, int arr[]){
         int temp[] = new int[total+1];
