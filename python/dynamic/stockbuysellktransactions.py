@@ -1,6 +1,9 @@
 # buy sell stocks to maximize profit with at most k transactions
 
 def max_profit(prices, K):
+    if K == 0 or len(prices) == 0:
+        return 0
+
     T = [[0 for x in range(len(prices))] for y in range(K+1)]
 
     for i in range(1, len(T)):
@@ -11,6 +14,23 @@ def max_profit(prices, K):
     
     print_actual_solution(T, prices)
     return T[K][len(prices) -1]
+
+def max_profit_slow_solution(prices, K):
+    if K == 0 or len(prices) == 0:
+        return 0
+
+    T = [[0 for x in range(len(prices))] for y in range(K+1)]
+
+    for i in range(1, len(T)):
+        for j in range(1, len(T[0])):
+            max_val = 0
+            for m in range(0, j):
+                max_val = max(max_val, prices[j] - prices[m] + T[i-1][m])
+            T[i][j] = max(T[i][j-1], max_val)
+
+    print_actual_solution(T, prices)
+    return T[K][len(prices) -1]
+                       
 
 def print_actual_solution(T, prices):
     i = len(T) - 1
@@ -38,6 +58,7 @@ def print_actual_solution(T, prices):
                 
 
 if __name__ == '__main__':
-    prices = [3, 2, 4, 5, 1, 5, 2, 3]
-    prices1 = [1, 4, 6, 5, 7];
+    prices = [2, 5, 7, 1, 4, 3, 1, 3]
     print(max_profit(prices, 3))
+    print(max_profit_slow_solution(prices, 3))
+    
