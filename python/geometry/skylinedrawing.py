@@ -35,7 +35,7 @@ def get_skyline(buildings):
     queue = {}
     queue[0] = 1
     prev_max_height = 0
-    critical_points = []
+    result = []
     for building_point in building_points:
         if building_point.is_start:
             if building_point.height in queue:
@@ -52,11 +52,11 @@ def get_skyline(buildings):
         current_max_height = max(queue.keys())
 
         if prev_max_height != current_max_height:
-            critical_points.append([building_point.point, current_max_height])
+            result.append([building_point.point, current_max_height])
             prev_max_height = current_max_height
-    return critical_points
+    return result
 
 if __name__ == '__main__':
-    buildings = [[0, 3, 3], [1, 5, 3], [2, 4, 3], [3, 7, 3]]
+    buildings = [[1, 3, 4], [3, 4, 4], [2, 6, 2], [8, 11, 4], [7, 9, 3], [10, 11, 2]]
     print(get_skyline(buildings))
     
