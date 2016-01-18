@@ -32,6 +32,7 @@ public class BalancedParanthesis {
         return result;
     }
 
+    
     public void dfs(ArrayList<String> result, String s, int left, int right) {
         if (left > right)
             return;
