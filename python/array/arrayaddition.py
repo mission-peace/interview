@@ -43,5 +43,4 @@ def add(arr1, arr2):
 arr1 = [9, 9, 9, 9, 9, 9, 9]
 arr2 = [1, 6, 8, 2, 6, 7]
 result = add(arr1, arr2)
-for i in range(len(result)):
-    print(" ", result[i], end='')
+print(result)
