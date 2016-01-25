@@ -6,7 +6,7 @@ import java.util.Queue;
 enum Cell{
 	SPACE,
 	BLOCK,
-	GUARD;
+	GUARD
 }
 
 class Point{

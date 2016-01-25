@@ -42,7 +42,7 @@ public class BoundaryTraversal {
             return;
         }
         if(root.left != null){
-            printLeftSide(root.left);;
+            printLeftSide(root.left);
         }else{
             printRightSide(root.right);
         }

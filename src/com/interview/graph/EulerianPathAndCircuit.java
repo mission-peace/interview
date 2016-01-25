@@ -9,7 +9,7 @@ public class EulerianPathAndCircuit<T> {
         NOT_EULERIAN,
         EULERIAN,
         SEMIEULERIAN
-    };
+    }
     
     private boolean isConnected(Graph<T> graph){
         
