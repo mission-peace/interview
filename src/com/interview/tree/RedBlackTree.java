@@ -25,7 +25,7 @@ public class RedBlackTree {
 
     public enum Color {
         RED,
-        BLACK;
+        BLACK
     }
 
     public static class Node {
