@@ -45,8 +45,8 @@ public class StringPermutation {
             if(count[i] == 0) {
                 continue;
             }
-            count[i]--;
             result[level] = str[i];
+            count[i]--;
             permuteUtil(str, count, result, level + 1);
             count[i]++;
         }
