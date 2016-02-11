@@ -4,43 +4,35 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * References
  * http://www.geeksforgeeks.org/length-of-the-longest-substring-without-repeating-characters/
- * Test cases
- * All unique characters
- * all repetitions
- * combination of unique and reps
+ * https://leetcode.com/problems/longest-substring-without-repeating-characters/
  */
 public class LongestSubstringWithoutRepetingCharacter {
 
-    public int longestSubstring(char str[]){
-        int maxLen = -1 ;
-        int len =0;
-        int start=0;
-        Set<Character> visited = new HashSet<Character>();
-        for(int i=0; i < str.length; i++){
-            //if visited contains current character 
-            //remove all characters from start till previous version of current
-            //character if found.
-            if(visited.contains(str[i])){
-                if(len > maxLen){
-                    maxLen = len;
+    public int lengthOfLongestSubstring(String s) {
+        Set<Character> uniqueSet = new HashSet<>();
+        int maxSize = 0;
+        int start = 0;
+        for(int i = 0; i < s.length(); i++) {
+            if(!uniqueSet.contains(s.charAt(i))) {
+                uniqueSet.add(s.charAt(i));
+                if(uniqueSet.size() > maxSize) {
+                    maxSize = uniqueSet.size();
                 }
-                do{
-                    visited.remove(str[start]);
+            } else {
+                while (s.charAt(start) != s.charAt(i)) {
+                    uniqueSet.remove(s.charAt(start));
                     start++;
-                    len--;
-                }while(str[start-1] != str[i]);
+                }
+                start++;
             }
-            //this needs to be done always no matter character is found in visisted
-            //or not
-            visited.add(str[i]);
-            len++;
         }
-        return Math.max(len, maxLen);
+        return maxSize;
     }
     
     public static void main(String args[]){
         LongestSubstringWithoutRepetingCharacter lsw = new LongestSubstringWithoutRepetingCharacter();
-        System.out.println(lsw.longestSubstring("ABCDECAMNCZB".toCharArray()));
+        System.out.println(lsw.lengthOfLongestSubstring("ABCDECAMNCZB"));
     }
 }

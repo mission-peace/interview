@@ -1,6 +1,8 @@
 package com.interview.string;
 
 /**
+ * References
+ * https://leetcode.com/problems/minimum-window-substring/
  * http://www.geeksforgeeks.org/find-the-smallest-window-in-a-string-containing-all-characters-of-another-string/
  */
 import java.util.HashMap;
@@ -8,83 +10,99 @@ import java.util.Map;
 
 public class SmallestWindowContaingAllCharacters {
 
-    private void updateMap(Map<Character, Integer> map, Character ch) {
-        int count = 1;
-        if (map.containsKey(ch)) {
-            count = map.get(ch);
-            count++;
+    public String minWindow(String s, String t) {
+        Map<Character, Integer> countMap = new HashMap<>();
+        for (char s1 : t.toCharArray()) {
+            countMap.compute(s1, (key, val) -> {
+                if (val == null) {
+                    return 1;
+                }
+                return val + 1;
+            });
         }
-        map.put(ch, count);
+
+        Map<Character, Integer> foundMap = new HashMap<>();
+        for (char s1 : t.toCharArray()) {
+            foundMap.put(s1, 0);
+        }
+
+        int startWindow;
+        int charsFound = 0;
+        for (startWindow = 0; startWindow < s.length(); startWindow++) {
+            if (countMap.containsKey(s.charAt(startWindow))) {
+                break;
+            }
+        }
+        int minWindowStart = Integer.MIN_VALUE;
+        int minWindowEnd = -1;
+        int totalCharacters = t.length();
+        for (int i = startWindow; i < s.length(); i++) {
+            char ch = s.charAt(i);
+            Integer count = countMap.get(ch);
+            if (count != null) {
+                Integer actualCount = foundMap.get(ch);
+                foundMap.put(ch, actualCount + 1);
+                if (actualCount < count) {
+                    charsFound++;
+                    if (charsFound == totalCharacters) {
+                        if (i - startWindow < minWindowEnd - minWindowStart) {
+                            minWindowStart = startWindow;
+                            minWindowEnd = i;
+                        }
+                        ShrinkResult sr = shrinkWindow(countMap, foundMap, startWindow, s, i);
+                        if (sr.fullStartWindow != -1) {
+                            if (i - sr.fullStartWindow < minWindowEnd - minWindowStart) {
+                                minWindowStart = sr.fullStartWindow;
+                                minWindowEnd = i;
+                            }
+                        }
+                        startWindow = sr.startWindow;
+                        charsFound--;
+                    }
+                }
+            }
+        }
+        if (minWindowEnd == -1) {
+            return "";
+        } else {
+            return s.substring(minWindowStart, minWindowEnd + 1);
+        }
     }
 
-    private void updateMapDecreaseCount(Map<Character, Integer> map, Character ch) {
-        int count = map.get(ch);
-        count--;
-        map.put(ch, count);
+    class ShrinkResult {
+        int startWindow;
+        int fullStartWindow;
     }
 
-    public int smallestWindow(char[] str, char[] subString) {
-
-        Map<Character, Integer> subStringVisited = new HashMap<Character, Integer>();
-        Map<Character, Integer> mainStringVisited = new HashMap<Character, Integer>();
-        for (int i = 0; i < subString.length; i++) {
-            updateMap(subStringVisited, subString[i]);
-        }
-        int i = 0;
-        int startIndex = -1;
-        int count = 0;
-        // initial big window
-        for (; i < str.length; i++) {
-            if (subStringVisited.containsKey(str[i])) {
-                if (startIndex == -1) {
-                    startIndex = i;
+    private ShrinkResult shrinkWindow(Map<Character, Integer> countMap, Map<Character, Integer> foundMap,
+                                      int startWindow, String s, int end) {
+        boolean firstViolation = false;
+        int diff = -1;
+        int i;
+        for(i = startWindow; i <= end; i++) {
+            if(!firstViolation) {
+                diff = i;
+            }
+            char ch = s.charAt(i);
+            Integer count = countMap.get(ch);
+            if (count != null) {
+                int actualCount = foundMap.get(ch);
+                if (firstViolation) {
+                    if (actualCount <= count) {
+                        break;
+                    }
+                } else {
+                    if (actualCount == count) {
+                        firstViolation = true;
+                    }
                 }
-                updateMap(mainStringVisited, str[i]);
-                if (mainStringVisited.get(str[i]) == subStringVisited
-                        .get(str[i])) {
-                    count += mainStringVisited.get(str[i]);
-                }
-                if (count == subString.length) {
-                    break;
-                }
+                foundMap.compute(ch, (key, val) -> val - 1);
             }
         }
-        int endIndex = i;
-        System.out.println(startIndex + " " + i);
-
-        i = trimWindow(startIndex,str,endIndex,mainStringVisited,subStringVisited);
-            
-        System.out.print(i + " " + endIndex);
-        int minWindow = endIndex - i +1;
-        startIndex =i;
-        for(i = endIndex+1 ; i < str.length; i++){
-            if(subStringVisited.containsKey(str[i])){
-                updateMap(mainStringVisited,str[i]);
-            }
-            if(str[startIndex] == str[i]){
-                startIndex =trimWindow(startIndex,str,i,mainStringVisited,subStringVisited);
-                if(minWindow > i - startIndex + 1){
-                    minWindow = i-startIndex +1;
-                }
-            }
-        }
-        return minWindow;
-    }
-    
-    private int trimWindow(int startIndex, char[] str, int endIndex,Map<Character,Integer> mainStringVisited, Map<Character,Integer> subStringVisited){
-        int i=0;
-        for (i = startIndex; i <= endIndex; i++) {
-
-            if (mainStringVisited.containsKey(str[i])){
-                if(mainStringVisited.get(str[i]) > subStringVisited
-                            .get(str[i])) {
-                    updateMapDecreaseCount(mainStringVisited, str[i]);
-                }else{
-                    break;
-                }
-            }
-        }
-        return i;
+        ShrinkResult sr = new ShrinkResult();
+        sr.fullStartWindow = diff;
+        sr.startWindow = i;
+        return sr;
     }
 
     public static void main(String args[]) {
@@ -92,8 +110,8 @@ public class SmallestWindowContaingAllCharacters {
         String str = "Tsuaosyogrlmnsluuorjkoruost";
         String subString = "soor";
         SmallestWindowContaingAllCharacters swcac = new SmallestWindowContaingAllCharacters();
-        int minWindow = swcac.smallestWindow(str.toCharArray(), subString.toCharArray());
-        System.out.println(minWindow);
+        String result = swcac.minWindow(str, subString);
+        System.out.println(result);
     }
 
 }
