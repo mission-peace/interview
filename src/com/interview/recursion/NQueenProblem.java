@@ -68,7 +68,5 @@ public class NQueenProblem {
             });
             System.out.print("\n");
         });
-
-
     }
 }
