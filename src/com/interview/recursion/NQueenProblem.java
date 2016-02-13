@@ -23,7 +23,7 @@ public class NQueenProblem {
         return result;
     }
 
-    public boolean solve(int current, Position[] positions, List<List<String>> result, int n) {
+    public void solve(int current, Position[] positions, List<List<String>> result, int n) {
         if (n == current) {
             StringBuffer buff = new StringBuffer();
             List<String> oneResult = new ArrayList<>();
@@ -40,7 +40,7 @@ public class NQueenProblem {
 
             }
             result.add(oneResult);
-            return true;
+            return;
         }
 
         for (int i = 0; i < n; i++) {
@@ -53,12 +53,9 @@ public class NQueenProblem {
             }
             if (foundSafe) {
                 positions[current] = new Position(current, i);
-                if (solve(current + 1, positions, result, n)) {
-                    continue;
-                }
+                solve(current + 1, positions, result, n);
             }
         }
-        return false;
     }
 
     public static void main(String args[]) {
