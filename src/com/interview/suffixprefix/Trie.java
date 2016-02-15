@@ -1,103 +1,63 @@
 package com.interview.suffixprefix;
+class TrieNode {
+    TrieNode[] child = new TrieNode[26];
+    boolean isWord;
+    public TrieNode() {
+
+    }
+}
 
 public class Trie {
+    private TrieNode root;
 
-    private Node root = new Node();
-    private static int NUM_OF_CHAR = 256;
-    static class Node{
-        Node[] child = new Node[NUM_OF_CHAR];
-        boolean isWord;
+    public Trie() {
+        root = new TrieNode();
     }
-    
-    public void insert(char[] str){
-        
-        Node start = root;
-        for(char ch : str){
-            if(start.child[ch] != null){
-                start = start.child[ch];
-            }else{
-                start.child[ch] = new Node();
-                start = start.child[ch];
+
+    // Inserts a word into the trie.
+    public void insert(String word) {
+        TrieNode current = root;
+        for (int i = 0; i < word.length(); i++) {
+            char ch = (char)(word.charAt(i) - 'a');
+
+            if (current.child[ch] == null) {
+                current.child[ch] = new TrieNode();
             }
+            current = current.child[ch];
         }
-        start.isWord = true;
+        current.isWord = true;
     }
-    
-    public void delete(char[] str){
-        
-        deleteRecursively(root, str, 0);
-    }
-    
-    public boolean deleteRecursively(Node root,char[] str,int pos){
-        
-        if(pos == str.length){
-            if(root.isWord){
-                root.isWord = false;
-                boolean hasChild = hasAnyOtherChild(root);
-                if(!hasChild){
-                    return true;
-                }
-            }
-            return false;
-        }
-        
-        if(root == null){
-            return false;
-        }
-        
-        boolean r = deleteRecursively(root.child[str[pos]], str, pos+1);
-        if(r == false){
-            return false;
-        }
-        root.child[str[pos]] = null;
-        
-        boolean hasChild = hasAnyOtherChild(root);
-        return !hasChild && !root.isWord;
-    }
-    
-    public boolean hasAnyOtherChild(Node root){
-        for(int i=0; i < NUM_OF_CHAR; i++){
-            if(root.child[i] != null){
-                return true;
-            }
-        }
-        return false;
-    }
-    
-    public boolean search(char[] key){
-        
-        Node start = root;
-        for(char ch : key){
-            if(start.child[ch] == null){
+
+    // Returns if the word is in the trie.
+    public boolean search(String word) {
+        TrieNode current = root;
+        for (int i = 0; i < word.length(); i++) {
+            char ch = (char)(word.charAt(i) - 'a');
+            if (current.child[ch] == null) {
                 return false;
             }
-            start = start.child[ch];
+            current = current.child[ch];
         }
-        
+        return current.isWord;
+    }
+
+    // Returns if there is any word in the trie
+    // that starts with the given prefix.
+    public boolean startsWith(String prefix) {
+        TrieNode current = root;
+        for (int i = 0; i < prefix.length(); i++) {
+            char ch = (char)(prefix.charAt(i) - 'a');
+            if (current.child[ch] == null) {
+                return false;
+            }
+            current = current.child[ch];
+        }
         return true;
     }
-    
-    private void displayTrie(Node root){
-        Node start = root;
-        System.out.println(root.isWord);
-        for(int i=0; i < NUM_OF_CHAR ; i++){
-            if(start.child[i] != null){
-                System.out.println((char)i);
-                displayTrie(start.child[i]);
-            }
-        }
-    }
-    
-    public static void main(String args[]){
+
+    public static void main(String args[]) {
         Trie t = new Trie();
-        t.insert("A".toCharArray());
-        t.insert("Tushar".toCharArray());
-        t.insert("TusharRoy".toCharArray());
-        t.insert("Anisweta".toCharArray());
-        t.insert("AniswetaS".toCharArray());
-        t.displayTrie(t.root);
-        t.delete("TusharRoy".toCharArray());
-        t.displayTrie(t.root);
+        t.insert("hello");
+        System.out.println(t.startsWith("hell"));
     }
-    
 }

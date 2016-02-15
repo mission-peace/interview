@@ -4,77 +4,89 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- http://www.geeksforgeeks.org/dynamic-programming-set-23-bellman-ford-algorithm/
+ * Date 11/05/2015
+ * @author Tushar Roy
+ *
+ * Write program for Bellman Ford algorithm to find single source shortest path in directed graph.
+ * Bellman ford works with negative edges as well unlike Dijksra's algorithm. If there is negative
+ * weight cycle it detects it.
+ *
+ * Time complexity - O(EV)
+ * Space complexity - O(V)
+ *
+ * References
+ * https://en.wikipedia.org/wiki/Bellman%E2%80%93Ford_algorithm
+ * http://www.geeksforgeeks.org/dynamic-programming-set-23-bellman-ford-algorithm/
  */
 
 public class BellmanFordShortestPath {
 
-    @SuppressWarnings("serial")
-    class CycleException extends RuntimeException{
-        
+    //some random big number is treated as infinity. I m not taking INTEGER_MAX as infinity because
+    //doing any addition on that causes integer overflow
+    private static int INFINITY = 10000000;
+
+    class NegativeWeightCycleException extends RuntimeException {
     }
     
     public Map<Vertex<Integer>, Integer> getShortestPath(Graph<Integer> graph,
-            Vertex<Integer> startVertex) {
-        Map<Vertex<Integer>, Integer> distance = new HashMap<Vertex<Integer>, Integer>();
-        distance.put(startVertex, 0);
-        
-        for(int i=0; i < graph.getAllVertex().size() -1 ; i++){
-            for(Edge<Integer> edge : graph.getAllEdges()){
+            Vertex<Integer> sourceVertex) {
+
+        Map<Vertex<Integer>, Integer> distance = new HashMap<>();
+        Map<Vertex<Integer>, Vertex<Integer>> parent = new HashMap<>();
+
+        //set distance of every vertex to be infinity initially
+        for(Vertex<Integer> v : graph.getAllVertex()) {
+            distance.put(v, INFINITY);
+            parent.put(v, null);
+        }
+
+        //set distance of source vertex to be 0
+        distance.put(sourceVertex, 0);
+
+        int V = graph.getAllVertex().size();
+
+        //relax edges repeatedly V - 1 times
+        for (int i = 0; i < V - 1 ; i++) {
+            for (Edge<Integer> edge : graph.getAllEdges()) {
                 Vertex<Integer> u = edge.getVertex1();
                 Vertex<Integer> v = edge.getVertex2();
-                if(getDistance(u,distance) > getDistance(v,distance) + edge.getWeight()){
-                    distance.put(u, getDistance(v,distance) + edge.getWeight());
-                }
-                if(getDistance(v,distance) > getDistance(u,distance) + edge.getWeight()){
-                    distance.put(v, getDistance(u,distance) + edge.getWeight());
+                //relax the edge
+                //if we get better distance to v via u then use this distance
+                //and set u as parent of v.
+                if (distance.get(u) + edge.getWeight() < distance.get(v)) {
+                    distance.put(v, distance.get(u) + edge.getWeight());
+                    parent.put(v, u);
                 }
             }
         }
-        
-        for(Edge<Integer> edge : graph.getAllEdges()){
+
+        //relax all edges again. If we still get lesser distance it means
+        //there is negative weight cycle in the graph. Throw exception in that
+        //case
+        for (Edge<Integer> edge : graph.getAllEdges()) {
             Vertex<Integer> u = edge.getVertex1();
             Vertex<Integer> v = edge.getVertex2();
-            if(getDistance(u,distance) > getDistance(v,distance) + edge.getWeight()){
-                throw new CycleException();
+            if (distance.get(u) + edge.getWeight() < distance.get(v)) {
+                throw new NegativeWeightCycleException();
             }
-            if(getDistance(v,distance) > getDistance(u,distance) + edge.getWeight()){
-                throw new CycleException();
-            }
-            
         }
-        
         return distance;
-
     }
 
-    private int getDistance(Vertex<Integer> v,
-            Map<Vertex<Integer>, Integer> distance) {
-        if (distance.containsKey(v)) {
-            return distance.get(v);
-        } else {
-            return 10000;
-        }
-    }
-    
-    
     public static void main(String args[]){
         
-        Graph<Integer> graph = new Graph<Integer>(false);
-        graph.addEdge(1, 4,4);
-        graph.addEdge(1, 2,3);
-        graph.addEdge(2, 4,2);
-        graph.addEdge(2, 3,3);
-        graph.addEdge(3, 4,1);
-        graph.addEdge(5, 4,1);
-        graph.addEdge(3, 5,2);
-        graph.addEdge(3, 6,1);
-        graph.addEdge(5, 6,2);
-        
+        Graph<Integer> graph = new Graph<>(false);
+        graph.addEdge(0, 3, 8);
+        graph.addEdge(0, 1, 4);
+        graph.addEdge(0, 2, 5);
+        graph.addEdge(1, 2, -3);
+        graph.addEdge(2, 4, 4);
+        graph.addEdge(3, 4, 2);
+        graph.addEdge(4, 3, 1);
+
         BellmanFordShortestPath shortestPath = new BellmanFordShortestPath();
         Vertex<Integer> startVertex = graph.getAllVertex().iterator().next();
         Map<Vertex<Integer>,Integer> distance = shortestPath.getShortestPath(graph, startVertex);
-        System.out.println(startVertex);
         System.out.println(distance);
     }
 

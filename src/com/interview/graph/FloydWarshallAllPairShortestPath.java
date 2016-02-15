@@ -1,154 +1,115 @@
 package com.interview.graph;
 
+import java.util.Deque;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 /**
- * http://www.geeksforgeeks.org/dynamic-programming-set-16-floyd-warshall-algorithm/
+ * Date 11/02/2015
+ * @author Tushar Roy
+ *
+ * Floyd-Warshall Algorithm for finding all pair shortest path.
+ *
+ * Time complexity - O(V^3)
+ * Space complexity - O(V^2)
+ *
+ * References
+ * https://en.wikipedia.org/wiki/Floyd%E2%80%93Warshall_algorithm
  */
 public class FloydWarshallAllPairShortestPath {
 
-    public int[][] allPairShortestPath(int[][] graph){
+    class NegativeWeightCycleException extends RuntimeException {
+
+    }
+
+    private static final int INF = 1000000;
+
+    public int[][] allPairShortestPath(int[][] distanceMatrix) {
         
-        int distance[][] = new int[graph.length][graph.length];
-        
-        for(int i=0; i < graph.length; i++){
-            for(int j=0; j< graph.length; j++){
-                distance[i][j] = graph[i][j];
+        int distance[][] = new int[distanceMatrix.length][distanceMatrix.length];
+        int path[][] = new int[distanceMatrix.length][distanceMatrix.length];
+
+        for (int i=0; i < distanceMatrix.length; i++) {
+            for (int j=0; j< distanceMatrix[i].length; j++){
+                distance[i][j] = distanceMatrix[i][j];
+                if (distanceMatrix[i][j] != INF && i != j) {
+                    path[i][j] = i;
+                } else {
+                    path[i][j] = -1;
+                }
             }
-                
         }
-        
-        for(int i=0; i < graph.length; i++){
-            for(int j=0; j < graph.length; j++){
-                for(int k=0; k < graph.length; k++){
+
+        for(int k=0; k < distanceMatrix.length; k++){
+            for(int i=0; i < distanceMatrix.length; i++){
+                for(int j=0; j < distanceMatrix.length; j++){
+                    if(distance[i][k] == INF || distance[k][j] == INF) {
+                        continue;
+                    }
                     if(distance[i][j] > distance[i][k] + distance[k][j]){
                         distance[i][j] = distance[i][k] + distance[k][j];
+                        path[i][j] = path[k][j];
                     }
                 }
             }
         }
-        return distance;
-    }
-    class Pair{
-        Vertex<Integer> v1;
-        Vertex<Integer> v2;
-        @Override
-        public int hashCode() {
-            final int prime = 31;
-            int result = 1;
-            result = prime * result + getOuterType().hashCode();
-            result = prime * result + ((v1 == null) ? 0 : v1.hashCode());
-            result = prime * result + ((v2 == null) ? 0 : v2.hashCode());
-            return result;
-        }
-        @Override
-        public boolean equals(Object obj) {
-            if (this == obj)
-                return true;
-            if (obj == null)
-                return false;
-            if (getClass() != obj.getClass())
-                return false;
-            Pair other = (Pair) obj;
-            if (!getOuterType().equals(other.getOuterType()))
-                return false;
-            if (v1 == null) {
-                if (other.v1 != null)
-                    return false;
-            } else if (!v1.equals(other.v1))
-                return false;
-            if (v2 == null) {
-                if (other.v2 != null)
-                    return false;
-            } else if (!v2.equals(other.v2))
-                return false;
-            return true;
-        }
-        private FloydWarshallAllPairShortestPath getOuterType() {
-            return FloydWarshallAllPairShortestPath.this;
-        }
-        
-        public String toString(){
-            return v1.getId() + " " + v2.getId();
-        }
-    }
-    public Map<Pair,Integer> allPairShortestPath(Graph<Integer> graph){
-        Map<Pair,Integer> distance = new HashMap<Pair,Integer>();
-        for(Edge<Integer> e : graph.getAllEdges()){
-            updateDistance(e.getVertex1(), e.getVertex2(), distance, e.getWeight());
-        }
-        
-        for(Vertex<Integer> v : graph.getAllVertex()){
-            updateDistance(v,v,distance,0);
-        }
-        
-        for (Vertex<Integer> v : graph.getAllVertex()) {
-            for (Vertex<Integer> u : graph.getAllVertex()) {
-                for(Vertex<Integer> v1 : graph.getAllVertex()){
-                    if (getDistance(u, v1, distance) > getDistance(
-                            u, v, distance)
-                            + getDistance(v, v1, distance)) {
-                        updateDistance(
-                                u,
-                                v1,
-                                distance,
-                                getDistance(u, v, distance)
-                                        + getDistance(v, v1,
-                                                distance));
-                    }
-                }
+
+        //look for negative weight cycle in the graph
+        //if values on diagonal of distance matrix is negative
+        //then there is negative weight cycle in the graph.
+        for(int i = 0; i < distance.length; i++) {
+            if(distance[i][i] < 0) {
+                throw new NegativeWeightCycleException();
             }
         }
+
+        printPath(path, 3, 2);
         return distance;
     }
-    private void updateDistance(Vertex<Integer> v1,Vertex<Integer> v2,Map<Pair,Integer> distance,int weight){
-        Pair p = new Pair();
-        p.v1 = v1;
-        p.v2 = v2;
-        distance.put(p, weight);
+
+    public void printPath(int[][] path, int start, int end) {
+        if(start < 0 || end < 0 || start >= path.length || end >= path.length) {
+            throw new IllegalArgumentException();
+        }
+
+        System.out.println("Actual path - between " + start + " " + end);
+        Deque<Integer> stack = new LinkedList<>();
+        stack.addFirst(end);
+        while (true) {
+            end = path[start][end];
+            if(end == -1) {
+                return;
+            }
+            stack.addFirst(end);
+            if(end == start) {
+                break;
+            }
+        }
+
+        while (!stack.isEmpty()) {
+            System.out.print(stack.pollFirst() + " ");
+        }
+
+        System.out.println();
     }
-    
-    private int getDistance(Vertex<Integer> v1,Vertex<Integer> v2,Map<Pair,Integer> distance){
-        Pair p = new Pair();
-        p.v1 = v1;
-        p.v2 = v2;
-        return distance.get(p) != null ? distance.get(p) : 1000;
-    }
-    
-    
-    
+
     public static void main(String args[]){
         int[][] graph = {
-                            {0,2,1000,1,1000},
-                            {1000,0,3,1,1000},
-                            {1000,1000,0,1000,1000},
-                            {3,1000,3,0,2},
-                            {1000,1000,3,1000,0},
-                        };  
-                    
+                {0,   3,   6,   15},
+                {INF, 0,  -2,   INF},
+                {INF, INF, 0,   2},
+                {1,   INF, INF, 0}
+        };
+
         FloydWarshallAllPairShortestPath shortestPath = new FloydWarshallAllPairShortestPath();
         int[][] distance = shortestPath.allPairShortestPath(graph);
+        System.out.println("Minimum Distance matrix");
         for(int i=0; i < distance.length; i++){
             for(int j=0; j < distance.length; j++){
                 System.out.print(distance[i][j] + " ");
             }
             System.out.println("");
         }
-        
-        Graph<Integer> rGraph = new Graph<Integer>(true);
-        rGraph.addEdge(0, 1, 2);
-        rGraph.addEdge(0, 3, 1);
-        rGraph.addEdge(1, 2, 3);
-        rGraph.addEdge(1, 3, 1);
-        rGraph.addEdge(3, 0, 3);
-        rGraph.addEdge(3, 2, 3);
-        rGraph.addEdge(3, 4, 2);
-        rGraph.addEdge(4, 2, 3);
-        Map<Pair,Integer> rdistance = shortestPath.allPairShortestPath(rGraph);
-        for(Pair p : rdistance.keySet()){
-            System.out.println(p + " " + rdistance.get(p));
-        }
-                    
     }
 }

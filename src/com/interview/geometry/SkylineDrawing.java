@@ -3,179 +3,108 @@ package com.interview.geometry;
 import java.util.*;
 
 /**
- * Created by tushar_v_roy on 11/19/15.
+ * Date 01/07/2016
+ * @author Tushar Roy
+ *
+ * Given skyline of a city merge the buildings
+ *
+ * Time complexity is O(nlogn)
+ * Space complexity is O(n)
+ *
+ * References
+ * https://leetcode.com/problems/the-skyline-problem/
+ * https://leetcode.com/discuss/67091/once-for-all-explanation-with-clean-java-code-nlog-time-space
  */
 public class SkylineDrawing {
 
-    static class Position {
-        int pos;
-        int height;
-    }
-
-    static class CriticalPoint implements Comparable<CriticalPoint> {
-        int point;
+    /**
+     * Represents either start or end of building
+     */
+    static class BuildingPoint implements Comparable<BuildingPoint> {
+        int x;
         boolean isStart;
-        Interval interval;
+        int height;
 
         @Override
-        public int compareTo(CriticalPoint o) {
-
-            if(this.point < o.point) {
-                return -1;
-            } else if(this.point > o.point) {
-                return 1;
+        public int compareTo(BuildingPoint o) {
+            //first compare by x.
+            //If they are same then use this logic
+            //if two starts are compared then higher height building should be picked first
+            //if two ends are compared then lower height building should be picked first
+            //if one start and end is compared then start should appear before end
+            if (this.x != o.x) {
+                return this.x - o.x;
             } else {
-                if(this.isStart && !o.isStart) {
-                    return -1;
-                } else if(!this.isStart && o.isStart) {
-                    return 1;
-                } else if(this.isStart && o.isStart) {
-                    if(this.interval.height >= o.interval.height) {
-                        return -1;
-                    } else {
-                        return 1;
-                    }
-                } else {
-                    if(this.interval.height <= o.interval.height) {
-                        return -1;
-                    } else {
-                        return 1;
-                    }
-                }
+                return (this.isStart ? -this.height : this.height) - (o.isStart ? -o.height : o.height);
             }
         }
-
-
      }
 
-    static class Interval {
-        int start;
-        int end;
-        int height;
+    public List<int[]> getSkyline(int[][] buildings) {
 
-        public Interval(int start, int end, int height) {
-            this.start = start;
-            this.end = end;
-            this.height = height;
-        }
-
-        public String toString() {
-            return start + " " + end + " " + height;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-
-            Interval interval = (Interval) o;
-
-            if (start != interval.start) return false;
-            if (end != interval.end) return false;
-            return height == interval.height;
-
-        }
-
-        @Override
-        public int hashCode() {
-            int result = start;
-            result = 31 * result + end;
-            result = 31 * result + height;
-            return result;
-        }
-    }
-
-    class HeightComparator implements Comparator<CriticalPoint> {
-        @Override
-        public int compare(CriticalPoint o1, CriticalPoint o2) {
-            if(o1.interval.height < o2.interval.height) {
-                return -1;
-            } else if(o1.interval.height > o2.interval.height) {
-                return 1;
-            } else {
-                if(o1.interval.start == o2.interval.start && o1.interval.end == o2.interval.end) {
-                    return 0;
-                } else if(o1.interval.start < o2.interval.start) {
-                    return -1;
-                } else if(o1.interval.start > o2.interval.start){
-                    return 1;
-                } else if(o1.interval.end < o2.interval.end) {
-                    return -1;
-                } else {
-                    return 1;
-                }
-            }
-        }
-    }
-    public List<Position> mapSkyline(Interval[] intervals) {
-        Set<Interval> uniqueInterval = new HashSet<>();
-        uniqueInterval.addAll(Arrays.asList(intervals));
-
-        CriticalPoint[] criticalPoints = new CriticalPoint[uniqueInterval.size()*2];
+        //for all start and end of building put them into List of BuildingPoint
+        BuildingPoint[] buildingPoints = new BuildingPoint[buildings.length*2];
         int index = 0;
-        for(Interval interval : uniqueInterval) {
-            criticalPoints[index] = new CriticalPoint();
-            criticalPoints[index].point = interval.start;
-            criticalPoints[index].isStart = true;
-            criticalPoints[index].interval = interval;
+        for(int building[] : buildings) {
+            buildingPoints[index] = new BuildingPoint();
+            buildingPoints[index].x = building[0];
+            buildingPoints[index].isStart = true;
+            buildingPoints[index].height = building[2];
 
-            criticalPoints[index + 1] = new CriticalPoint();
-            criticalPoints[index + 1].point = interval.end;
-            criticalPoints[index + 1].isStart = false;
-            criticalPoints[index + 1].interval = interval;
-
+            buildingPoints[index + 1] = new BuildingPoint();
+            buildingPoints[index + 1].x = building[1];
+            buildingPoints[index + 1].isStart = false;
+            buildingPoints[index + 1].height = building[2];
             index += 2;
         }
-        Arrays.sort(criticalPoints);
+        Arrays.sort(buildingPoints);
 
-        TreeSet<CriticalPoint> treeSet = new TreeSet<>(new HeightComparator());
-        List<Position> finalResult = new ArrayList<>();
-        for(CriticalPoint cp : criticalPoints) {
-            if(cp.isStart) {
-                if(treeSet.isEmpty() || treeSet.last().interval.height < cp.interval.height) {
-                    finalResult.add(createPosition(cp.point, cp.interval.height));
-                }
-                treeSet.add(cp);
-            } else {
-                treeSet.remove(cp);
-                if(treeSet.isEmpty()) {
-                    finalResult.add(createPosition(cp.point, 0));
-                } else if(treeSet.last().interval.height < cp.interval.height) {
-                    finalResult.add(createPosition(cp.point, treeSet.last().interval.height));
-                }
+        //using TreeMap because it gives log time performance.
+        //PriorityQueue in java does not support remove(object) operation in log time.
+        TreeMap<Integer, Integer> queue = new TreeMap<>();
+        //PriorityQueue<Integer> queue1 = new PriorityQueue<>(Collections.reverseOrder());
+        queue.put(0, 1);
+        //queue1.add(0);
+        int prevMaxHeight = 0;
+        List<int[]> result = new ArrayList<>();
+        for(BuildingPoint buildingPoint : buildingPoints) {
+            //if it is start of building then add the height to map. If height already exists then increment
+            //the value
+            if (buildingPoint.isStart) {
+                queue.compute(buildingPoint.height, (key, value) -> {
+                    if (value != null) {
+                        return value + 1;
+                    }
+                    return 1;
+                });
+              //  queue1.add(cp.height);
+            } else { //if it is end of building then decrement or remove the height from map.
+                queue.compute(buildingPoint.height, (key, value) -> {
+                    if (value == 1) {
+                        return null;
+                    }
+                    return value - 1;
+                });
+               // queue1.remove(cp.height);
+            }
+            //peek the current height after addition or removal of building x.
+            int currentMaxHeight = queue.lastKey();
+            //int currentMaxHeight = queue1.peek();
+            //if height changes from previous height then this building x becomes critcal x.
+            // So add it to the result.
+            if (prevMaxHeight != currentMaxHeight) {
+                result.add(new int[]{buildingPoint.x, currentMaxHeight});
+                prevMaxHeight = currentMaxHeight;
             }
         }
-        return finalResult;
-    }
-
-    Position createPosition(int pos, int height) {
-        Position p = new Position();
-        p.pos = pos;
-        p.height = height;
-        return p;
+        return result;
     }
 
     public static void main(String args[]) {
-       /* Interval interval0 = new Interval(0, 4, 5);
-        Interval interval1 = new Interval(6, 9, 2);
-        Interval interval2 = new Interval(1, 3, 4);
-        Interval interval3 = new Interval(3, 5, 4);
-        Interval interval4 = new Interval(7, 8, 6);
-        Interval[] intervals = new Interval[5];
-        intervals[0] = interval1;
-        intervals[1] = interval0;
-        intervals[2] = interval2;
-        intervals[3] = interval3;
-        intervals[4] = interval4;*/
-
-        //int[][] buildings = {{1,2,1},{1,2,2},{1,2,3}};
-        int [][] buildings = {{0,3,3},{1,5,3},{2,4,3},{3,7,3}};
-        Interval[] intervals = new Interval[buildings.length];
-        for(int i=0; i < buildings.length; i++) {
-            intervals[i] = new Interval(buildings[i][0], buildings[i][1], buildings[i][2]);
-        }
+        int [][] buildings = {{1,3,4},{3,4,4},{2,6,2},{8,11,4}, {7,9,3},{10,11,2}};
         SkylineDrawing sd = new SkylineDrawing();
-        List<Position> finalResult = sd.mapSkyline(intervals);
+        List<int[]> criticalPoints = sd.getSkyline(buildings);
+        criticalPoints.forEach(cp -> System.out.println(cp[0] + " " + cp[1]));
 
     }
 }

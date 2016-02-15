@@ -18,12 +18,12 @@ public class ArrayAddition {
         while(i>=0){
             r = arr1[i--] + c;
             c = r/10;
-            result[l--] = r%10;;
+            result[l--] = r%10;
         }
         while(j>=0){
             r = arr2[j--] + c;
             c = r/10;
-            result[l--] = r%10;;
+            result[l--] = r%10;
         }
         if(c != 0){
             int[] newResult = new int[result.length+1];

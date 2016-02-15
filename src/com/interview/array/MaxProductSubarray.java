@@ -1,34 +1,40 @@
 package com.interview.array;
 
 /**
+ * Date 12/31/2015
+ * @author Tushar Roy
+ *
+ * Given an array of postive and negative numbers find max product subarray.
+ *
+ * Time complexity is O(n)
+ * Space complexity is O(1)
+ *
  * http://www.geeksforgeeks.org/maximum-product-subarray/
  */
 public class MaxProductSubarray {
 
     public int maxProduct(int input[]){
-        int max = -1;
-        int maxNeg = 1;
+        int maxEnding = 1;
+        int minEnding = 1;
         int maxSoFar = 1;
-        for(int i =0; i < input.length; i++){
-            if(input[i] == 0){
-                maxNeg = 1;
-                maxSoFar = 1;
-                continue;
+        for (int i = 0; i < input.length; i++) {
+            if (input[i] > 0) {
+                maxEnding = maxEnding*input[i];
+                minEnding = Math.min(minEnding*input[i], 1);
+            } else if (input[i] == 0) {
+                maxEnding = 1;
+                minEnding = 1;
+            } else {
+                int t = maxEnding;
+                maxEnding = Math.max(minEnding*input[i], 1);
+                minEnding = t * input[i];
             }
-            if(input[i] < 0){
-                maxSoFar = 1;
-            }else{
-                maxSoFar = maxSoFar * input[i];
-            }
-            maxNeg = maxNeg*input[i];
-            if(max < maxNeg){
-                max = maxNeg;
-            }
-            if(max < maxSoFar){
-                max = maxSoFar;
+
+            if (maxSoFar < maxEnding) {
+                maxSoFar = maxEnding;
             }
         }
-        return max;
+        return maxSoFar;
     }
     
     public static void main(String args[]){

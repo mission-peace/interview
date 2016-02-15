@@ -6,3 +6,5 @@ target/
 .project
 .settings/
 /bin/
+.DS_Store
+python/graph/__pycache__/

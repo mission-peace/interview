@@ -4,34 +4,58 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * @Date 08/01/2014
  * @author Tushar Roy
- http://www.geeksforgeeks.org/dynamic-programming-set-7-coin-change/
+ *
+ * Given a total and coins of certain denominations find number of ways total
+ * can be formed from coins assuming infinity supply of coins
+ *
+ * References:
+ * http://www.geeksforgeeks.org/dynamic-programming-set-7-coin-change/
  */
 public class CoinChanging {
 
-    public int numberOfSolutions(int total, int arr[]){
-        
-        int temp[][] = new int[arr.length+1][total+1];
-        
-        for(int i=0; i <= arr.length; i++){
+    public int numberOfSolutions(int total, int coins[]){
+        int temp[][] = new int[coins.length+1][total+1];
+        for(int i=0; i <= coins.length; i++){
             temp[i][0] = 1;
         }
-        
-        for(int i=1; i <= arr.length; i++){
+        for(int i=1; i <= coins.length; i++){
             for(int j=1; j <= total ; j++){
-                if(arr[i-1] > j){
+                if(coins[i-1] > j){
                     temp[i][j] = temp[i-1][j];
                 }
                 else{
-                    temp[i][j] = temp[i][j-arr[i-1]] + temp[i-1][j];
+                    temp[i][j] = temp[i][j-coins[i-1]] + temp[i-1][j];
                 }
             }
         }
-        return temp[arr.length][total];
+        return temp[coins.length][total];
     }
-    
+
+    /**
+     * Space efficient DP solution
+     */
+    public int numberOfSolutionsOnSpace(int total, int arr[]){
+
+        int temp[] = new int[total+1];
+
+        temp[0] = 1;
+        for(int i=0; i < arr.length; i++){
+            for(int j=1; j <= total ; j++){
+                if(j >= arr[i]){
+                    temp[j] += temp[j-arr[i]];
+                }
+            }
+        }
+        return temp[total];
+    }
+
+    /**
+     * This method actually prints all the combination. It takes exponential time.
+     */
     public void printCoinChangingSolution(int total,int coins[]){
-        List<Integer> result = new ArrayList<Integer>();
+        List<Integer> result = new ArrayList<>();
         printActualSolution(result, total, coins, 0);
     }
     
@@ -51,71 +75,11 @@ public class CoinChanging {
         }
     }
 
-    public int numberOfSolutionsOnSpace(int total, int arr[]){
-        
-        int temp[] = new int[total+1];
-        
-        temp[0] = 1;
-        for(int i=0; i < arr.length; i++){
-            for(int j=1; j <= total ; j++){
-                if(j >= arr[i]){
-                    temp[j] += temp[j-arr[i]];
-                }
-            }
-        }
-        return temp[total];
-    }
-    
-    
-    /**
-     * Keep input sorted. Otherwise temp[j-arr[i]) + 1 can become Integer.Max_value + 1 which
-     * can be very low negative number
-     */
-    public int minCoinChangeInfinteSupply(int total, int arr[]){
-        int temp[] = new int[total+1];
-        temp[0] = 0;
-        for(int i=1; i <= total; i++){
-            temp[i] = Integer.MAX_VALUE-1;
-        }
-        for(int i=0; i < arr.length; i++){
-            for(int j=1; j <= total; j++){
-                if(j >= arr[i]){
-                    //be careful here. Max_val + 1 can result in very small negative number.
-                    temp[j] = Math.min(temp[j], temp[j-arr[i]] +1);
-                }
-            }
-        }
-        return temp[total];
-    }
-
-    /**
-     * Recursive solution 
-     */
-    public int minCoinChangeInfinteSupplyRec(int total, int coins[]){
-        return minCoinChangeInfinteSupplyRec(total, coins, 0);
-    }
-    
-    private int minCoinChangeInfinteSupplyRec(int total, int coins[], int count){
-        if(total == 0){
-            return count;
-        }
-        int min = Integer.MAX_VALUE;
-        for(int i=0; i < coins.length; i++){
-            if(coins[i] <= total){
-                int sum = minCoinChangeInfinteSupplyRec(total - coins[i], coins, count+1);
-                if(min > sum){
-                    min = sum;
-                }
-            }
-        }
-        return min;
-    }
-
     public static void main(String args[]){
         CoinChanging cc = new CoinChanging();
         int total = 15;
         int coins[] = {3,4,6,7,9};
-        System.out.println(cc.minCoinChangeInfinteSupply(total, coins));
-        System.out.println(cc.minCoinChangeInfinteSupplyRec(total, coins));
+        System.out.println(cc.numberOfSolutions(total, coins));
+
     }
 }

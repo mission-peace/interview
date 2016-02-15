@@ -1,99 +1,137 @@
 package com.interview.graph;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Queue;
+import java.util.*;
 
 /**
- http://www.geeksforgeeks.org/ford-fulkerson-algorithm-for-maximum-flow-problem/
+ * Date 04/14/2014
+ * @author Tushar Roy
+ *
+ * Ford fulkerson method Edmonds Karp algorithm for finding max flow
+ *
+ * Capacity - Capacity of an edge to carry units from source to destination vertex
+ * Flow - Actual flow of units from source to destination vertex of an edge
+ * Residual capacity - Remaining capacity on this edge i.e capacity - flow
+ * AugmentedPath - Path from source to sink which has residual capacity greater than 0
+ *
+ * Time complexity is O(VE^2)
+ *
+ * References:
+ * http://www.geeksforgeeks.org/ford-fulkerson-algorithm-for-maximum-flow-problem/
+ * https://en.wikipedia.org/wiki/Edmonds%E2%80%93Karp_algorithm
  */
-public class FordFulkerson<T> {
+public class FordFulkerson {
 
-    public int maxFlow(Graph<T> graph, Vertex<T> s, Vertex<T>  t){
-        
-        int[][] matrix = new int[graph.getAllVertex().size()][graph.getAllVertex().size()];
-        for(Edge<T> edge : graph.getAllEdges()){
-            matrix[(int)edge.getVertex1().getId()][(int)edge.getVertex2().getId()] = edge.getWeight();
+    public int maxFlow(int capacity[][], int source, int sink){
+
+        //declare and initialize residual capacity as total avaiable capacity initially.
+        int residualCapacity[][] = new int[capacity.length][capacity[0].length];
+        for (int i = 0; i < capacity.length; i++) {
+            for (int j = 0; j < capacity[0].length; j++) {
+                residualCapacity[i][j] = capacity[i][j];
+            }
         }
-        
-        
-        Map<Integer,Integer> parent = new HashMap<Integer,Integer>();
-        
-        int max_flow = 0;
-        while(BFS(matrix,parent,(int)s.getId(),(int)t.getId())){
-            
-            int min_flow = 10000;
-            int v = (int)t.getId();
-            while(parent.containsKey(v)){
+
+        //this is parent map for storing BFS parent
+        Map<Integer,Integer> parent = new HashMap<>();
+
+        //stores all the augmented paths
+        List<List<Integer>> augmentedPaths = new ArrayList<>();
+
+        //max flow we can get in this network
+        int maxFlow = 0;
+
+        //see if augmented path can be found from source to sink.
+        while(BFS(residualCapacity, parent, source, sink)){
+            List<Integer> augmentedPath = new ArrayList<>();
+            int flow = Integer.MAX_VALUE;
+            //find minimum residual capacity in augmented path
+            //also add vertices to augmented path list
+            int v = sink;
+            while(v != source){
+                augmentedPath.add(v);
                 int u = parent.get(v);
-                if(min_flow > matrix[u][v]){
-                    min_flow = matrix[u][v];
+                if (flow > residualCapacity[u][v]) {
+                    flow = residualCapacity[u][v];
                 }
                 v = u;
             }
-            
-            max_flow += min_flow;
-            
-            v = (int)t.getId();
-            while(parent.containsKey(v)){
+            augmentedPath.add(source);
+            Collections.reverse(augmentedPath);
+            augmentedPaths.add(augmentedPath);
+
+            //add min capacity to max flow
+            maxFlow += flow;
+
+            //decrease residual capacity by min capacity from u to v in augmented path
+            // and increase residual capacity by min capacity from v to u
+            v = sink;
+            while(v != source){
                 int u = parent.get(v);
-                matrix[u][v] -= min_flow;
-                matrix[v][u] += min_flow;
+                residualCapacity[u][v] -= flow;
+                residualCapacity[v][u] += flow;
                 v = u;
             }
         }
-        return max_flow;
+        printAugmentedPaths(augmentedPaths);
+        return maxFlow;
     }
-    
-    private boolean BFS(int[][] matrix, Map<Integer,Integer> parent,
-            int s, int t){
-        
-        Map<Integer,Boolean> visited = new HashMap<Integer,Boolean>();
-        Queue<Integer> queue = new LinkedList<Integer>();
-        queue.add(s);
-        visited.put(s, true);
-        while(queue.size() != 0){
+
+    /**
+     * Prints all the augmented path which contribute to max flow
+     */
+    private void printAugmentedPaths(List<List<Integer>> augmentedPaths) {
+        System.out.println("Augmented paths");
+        augmentedPaths.forEach(path -> {
+            path.forEach(i -> System.out.print(i + " "));
+            System.out.println();
+        });
+    }
+
+    /**
+     * Breadth first search to find augmented path
+     */
+    private boolean BFS(int[][] residualCapacity, Map<Integer,Integer> parent,
+            int source, int sink){
+        Set<Integer> visited = new HashSet<>();
+        Queue<Integer> queue = new LinkedList<>();
+        queue.add(source);
+        visited.add(source);
+        boolean foundAugmentedPath = false;
+        //see if we can find augmented path from source to sink
+        while(!queue.isEmpty()){
             int u = queue.poll();
-            for(int v =0 ; v < matrix.length; v++){
-                if(!visited.containsKey(v) && matrix[u][v] > 0){
+            for(int v = 0; v < residualCapacity.length; v++){
+                //explore the vertex only if it is not visited and its residual capacity is
+                //greater than 0
+                if(!visited.contains(v) &&  residualCapacity[u][v] > 0){
+                    //add in parent map saying v got explored by u
                     parent.put(v, u);
-                    if(v == t){
-                        return true;
-                    }
-                    visited.put(v, true);
+                    //add v to visited
+                    visited.add(v);
+                    //add v to queue for BFS
                     queue.add(v);
+                    //if sink is found then augmented path is found
+                    if ( v == sink) {
+                        foundAugmentedPath = true;
+                        break;
+                    }
                 }
             }
         }
-        return false;
+        //returns if augmented path is found from source to sink or not
+        return foundAugmentedPath;
     }
     
     public static void main(String args[]){
-        
-        Graph<Integer> graph = new Graph<Integer>(true);
-        
-        Vertex<Integer> s = graph.addSingleVertex(0);
-        Vertex<Integer> t = graph.addSingleVertex(7);
-        graph.addEdge(0, 1,10);
-        graph.addEdge(1, 2,9);
-        graph.addEdge(2, 7,10);
-        graph.addEdge(0, 3,5);
-        graph.addEdge(3, 4,8);
-        graph.addEdge(4, 7,10);
-        graph.addEdge(0, 5,15);
-        graph.addEdge(5, 6,16);
-        graph.addEdge(6, 7,10);
-        graph.addEdge(1, 3,4);
-        graph.addEdge(3, 5,4);
-        graph.addEdge(1, 4,15);
-        graph.addEdge(2, 4,15);
-        graph.addEdge(6, 3,6);
-        graph.addEdge(4, 6,15);
-        
-        
-        FordFulkerson<Integer> ff = new FordFulkerson<Integer>();
-        int result = ff.maxFlow(graph, s, t);
-        System.out.print(result);
+        FordFulkerson ff = new FordFulkerson();
+        int[][] capacity = {{0, 3, 0, 3, 0, 0, 0},
+                            {0, 0, 4, 0, 0, 0, 0},
+                            {3, 0, 0, 1, 2, 0, 0},
+                            {0, 0, 0, 0, 2, 6, 0},
+                            {0, 1, 0, 0, 0, 0, 1},
+                            {0, 0, 0, 0, 0, 0, 9},
+                            {0, 0, 0, 0, 0, 0, 0}};
+
+        System.out.println("\nMaximum capacity " + ff.maxFlow(capacity, 0, 6));
     }
 }
