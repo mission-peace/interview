@@ -6,7 +6,7 @@ import java.util.Queue;
 /**
  * Youtube link - https://youtu.be/9PHkM0Jri_4
  * 
- * http://www.geeksforgeeks.org/level-order-traversal-in-spiral-form/
+ * http://www.geeksforgeeks.org/level-order-tree-traversal/ 
  * Test cases
  * Empty tree
  * Tree with only left side
@@ -18,6 +18,10 @@ import java.util.Queue;
 public class LevelOrderTraversal {
 
     public void levelOrder(Node root){
+        if(root == null){
+            System.out.println("Please enter a valid tree!");
+            return;
+        }
         Queue<Node> queue = new LinkedList<Node>();
         queue.offer(root);
         System.out.println();
