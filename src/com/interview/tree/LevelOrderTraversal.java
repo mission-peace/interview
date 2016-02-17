@@ -18,6 +18,10 @@ import java.util.Queue;
 public class LevelOrderTraversal {
 
     public void levelOrder(Node root){
+        if(root == null){
+            System.out.println("Please enter a valid tree!");
+            return;
+        }
         Queue<Node> queue = new LinkedList<Node>();
         queue.offer(root);
         System.out.println();
