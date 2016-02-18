@@ -23,7 +23,7 @@ def is_interleaved_recursive(str1, str2, str3, pos1, pos2, pos3):
 
 
 def is_interleaved(str1, str2, str3):
-    if len(str3) != len(str1) + len(str2):
+    if len(str3) != (len(str1) + len(str2)):
         return False
 
     cols = len(str1) + 1
