@@ -40,8 +40,8 @@ public class DivisionWithoutDivisionOperator {
                 currentDivisor *= 2;
                 quotient *= 2;
             }
-            currentDivisor /= 2;
-            quotient /= 2;
+            currentDivisor /= 2; // divison operation used here
+            quotient /= 2;  // and here
             divident = divident - currentDivisor;
             q += quotient;
         }
