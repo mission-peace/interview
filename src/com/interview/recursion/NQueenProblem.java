@@ -111,3 +111,4 @@ public class NQueenProblem {
         Arrays.stream(positions).forEach(position -> System.out.println(position.row + " " + position.col));
     }
 }
+
