@@ -16,7 +16,7 @@ public class MatrixOf0sAnd1s {
 		//else high is high/2. e.g high is 5 then high becomes 3 if high is 4
 		//high becomes 2
 		high = (int)Math.ceil(high*1.0/2);
-		while(r < high && r < high){
+		while(r < high){
 			
 			for(int i=r; i < m-r ; i++){
 				matrix[r][i] = ch;
