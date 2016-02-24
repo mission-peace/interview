@@ -5,17 +5,11 @@ package com.interview.recursion;
  */
 public class PrintAllPathFromTopLeftToBottomRight {
 
-    private void printArray(int arr[]){
-        for(int i=0; i < arr.length; i++){
-            System.out.print(arr[i] + " ");
-        }
-        System.out.print("\n");
-    }
-    
+
     public void print(int arr[][],int row, int col,int result[],int pos){
         if(row == arr.length-1 && col == arr[0].length-1){
             result[pos] = arr[row][col];
-            printArray(result);
+            System.out.println(Arrays.toString(result));
             return;
         }
         if(row >= arr.length || col >= arr[0].length){
