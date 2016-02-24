@@ -40,8 +40,8 @@ public class DivisionWithoutDivisionOperator {
                 currentDivisor *= 2;
                 quotient *= 2;
             }
-            currentDivisor /= 2;
-            quotient /= 2;
+            currentDivisor = currentDivisor >> 1;
+            quotient = quotient >> 1;
             divident = divident - currentDivisor;
             q += quotient;
         }
@@ -61,8 +61,8 @@ public class DivisionWithoutDivisionOperator {
             divisor = divisor*2;
             quotient *= 2;
         }
-        divisor /= 2;
-        quotient /= 2;
+        divisor = divisor >> 1;
+        quotient = quotient >> 1;
         return quotient + efficientDivideRec(divident - divisor, tempDivisor);
     }
     
