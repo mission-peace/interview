@@ -1,7 +1,7 @@
 package com.interview.dynamic;
 
 /**
- http://www.geeksforgeeks.org/longest-common-substring/
+ http://www.geeksforgeeks.org/dynamic-programming-set-4-longest-common-subsequence/
  */
 public class LongestCommonSubsequence {
 
