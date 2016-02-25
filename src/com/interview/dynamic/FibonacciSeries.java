@@ -28,15 +28,19 @@ public class FibonacciSeries {
      * calculate values
      */
     public int fibonacciSeries(int n){
-        int a = 1;
-        int b = 1;
-        int c = 1; 
-        for(int i=2; i <= n; i++){
-            c = a + b;
-            a = b;
-            b = c;
+        int n1 = 0, n2 = 1;
+        int sum;
+
+        if (n == n1 || n == n2) {
+            return n;
         }
-        return c;
+
+        for(int i=2; i <= n; i++){
+            sum = n1 + n2;
+            n1 = n2;
+            n2 = sum;
+        }
+        return n2;
     }
     
    
@@ -46,7 +50,7 @@ public class FibonacciSeries {
      */
     public int fibonacciSeriesRecursive(int n){
         if(n == 1 || n == 0){
-            return 1;
+            return n;
         }
         return fibonacciSeriesRecursive(n-1) + fibonacciSeriesRecursive(n-2);
     }
