@@ -1,6 +1,8 @@
 package com.interview.array;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * http://www.geeksforgeeks.org/find-a-triplet-that-sum-to-a-given-value/
@@ -40,6 +42,43 @@ public class TripletInArray {
             }
         }
         return null;
+    }
+
+    /**
+     * https://leetcode.com/problems/3sum/
+     */
+    public List<List<Integer>> threeSum(int[] nums) {
+        Arrays.sort(nums);
+        List<List<Integer>> result = new ArrayList<>();
+        for (int i = 0; i < nums.length - 2; i++) {
+            if (i != 0 && nums[i] == nums[i-1]) {
+                continue;
+            }
+            int start = i + 1;
+            int end = nums.length - 1;
+            while (start < end) {
+                if (nums[i] + nums[start] + nums[end] == 0) {
+                    List<Integer> r = new ArrayList<>();
+                    r.add(nums[i]);
+                    r.add(nums[start]);
+                    r.add(nums[end]);
+                    result.add(r);
+                    start++;
+                    end--;
+                    while(start < nums.length && nums[start] == nums[start - 1]) {
+                        start++;
+                    }
+                    while(end >= 0 && nums[end] == nums[end+1]) {
+                        end--;
+                    }
+                } else if (nums[i] + nums[start] + nums[end] < 0) {
+                    start++;
+                } else {
+                    end--;
+                }
+            }
+        }
+        return result;
     }
 
     public static void main(String args[]){
