@@ -1,5 +1,7 @@
 package com.interview.dynamic;
 
+import java.util.Arrays;
+
 /**
  * Date 06/12/2014 
  * @author tusroy
@@ -41,6 +43,30 @@ public class MinJumpToReachEnd {
         
         return jump[jump.length-1];
     }
+
+    /**
+     * https://leetcode.com/problems/jump-game-ii/
+     */
+    public int jump(int[] nums) {
+        if (nums.length == 1) {
+            return 0;
+        }
+        int count = 0;
+        int i = 0;
+        while (i + nums[i] < nums.length - 1) {
+            int maxVal = 0;
+            int maxValIndex = 0;
+            for (int j = 1; j <= nums[i]; j++) {
+                if (nums[j + i] + j > maxVal) {
+                    maxVal = nums[j + i] + j;
+                    maxValIndex = i + j;
+                }
+            }
+            i = maxValIndex;
+            count++;
+        }
+        return count + 1;
+    }
     
     public static void main(String args[]){
         MinJumpToReachEnd mj = new MinJumpToReachEnd();
@@ -49,9 +75,8 @@ public class MinJumpToReachEnd {
         int result = mj.minJump(arr,r);
         System.out.println(result);
         int i = arr.length-1;
-        while(i > 0){
-            System.out.println(r[i]);
-            i = r[i];
-        }
+        Arrays.toString(r);
+        int arr1[] = {2,3,1,1,4};
+        System.out.print(mj.jump(arr));
     }
 }
