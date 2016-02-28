@@ -76,6 +76,42 @@ public class GenerateSignature {
         return p;
     }
     
+    //https://learn.hackerearth.com/forum/182/lexicographically-smallest-permutation-given-a-signature/
+    //Alternative O(n) approach
+    int[] generate2(char[] input) {
+        int n = input.length+1;
+        int[] result = new int[n];
+        int i;
+        for (i = 0; i < n; i++) {
+            result[i] = i+1;
+        }
+        i = 0;
+        while(i < n-1) {
+            int start = -1, end = -1;
+            while(i < n-1 && input[i] == 'D') {
+                if(start == -1) start = i;
+                end = i;
+                i++;
+            }
+            if(start!=-1) reverse(result, start, end+1);
+            i++;
+        }
+        return result;
+    }
+
+    void reverse(int[] result, int start, int end) {
+
+        while(start < end) {
+            int tmp = result[start];
+            result[start] = result[end];
+            result[end] = tmp;
+            start++;
+            end--;
+        }
+    }
+    
+    //End of alternative approach
+    
     public static void main(String args[]){
         String input = "IIIDIIDDDDIIDDD";
         GenerateSignature gs = new GenerateSignature();
