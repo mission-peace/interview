@@ -1,5 +1,7 @@
 package com.interview.dynamic;
 
+import java.util.TreeMap;
+
 /**
  * http://www.geeksforgeeks.org/remove-minimum-elements-either-side-2min-max/
  */
@@ -56,6 +58,53 @@ public class RemoveFromEndToMake2IntoMinGreaterThanMax {
         }
         return T[0][input.length-1];
     }
+    
+    //O(nlogn) approach : Think of which elements will remain in the array
+    //Maintain a sliding window with a TreeMap that keeps count of the elements in the current interval
+    //If the condition holds for the window, then increment right pointer, if not increment left
+    //This method will return the max subarray that satisfies the given condition
+    //Our final answer would be size of array - max subarray
+    static int removeMinElements(int[] a) {
+        int n = a.length;
+        int i=0, j=0;
+        TreeMap<Integer, Integer> tree = new TreeMap<>();
+        int max = 1;
+        while (j<n) {
+            add(tree, a[j]);
+            if(works(tree)) {
+                j++;
+                continue;
+            }
+            max = Math.max(max, j-i);
+            while(!works(tree)) {
+                remove(tree, a[i]);
+                i++;
+            }
+            j++;
+        }
+        if(works(tree))
+            max = Math.max(max, j-i);
+        return n-max;
+    }
+
+    static void add(TreeMap<Integer, Integer> tree, int key) {
+        tree.put(key, tree.getOrDefault(key, 0)+1);
+    }
+
+    static void remove(TreeMap<Integer,Integer> tree, int key) {
+        if(tree.get(key)==1) tree.remove(key);
+        else tree.put(key, tree.get(key)-1);
+    }
+
+    static boolean works(TreeMap<Integer,Integer> tree) {
+        return 2*tree.firstKey() > tree.lastKey();
+    }
+    
+    // end of O(nlogn) approach
+    
+    
+    
+    
     public static void main(String args[]){
         int input[] = {5,1,3,1,3,8,3};
         RemoveFromEndToMake2IntoMinGreaterThanMax rme = new RemoveFromEndToMake2IntoMinGreaterThanMax();
