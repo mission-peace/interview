@@ -1,6 +1,8 @@
 package com.interview.recursion;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * http://www.careercup.com/question?id=4859932243394560
@@ -66,13 +68,34 @@ public class CombinationWithReptition {
         }
         System.out.println();
     }
+
+    public void combinationEasiest(char[] input) {
+        List<Character> r = new ArrayList<>();
+        Arrays.sort(input);
+        combinationEasiest(input, 0, r);
+    }
+
+    private void combinationEasiest(char[] input, int pos, List<Character> r) {
+
+        r.forEach(r1 -> System.out.print(r1 + " "));
+        System.out.println();
+        for (int i = pos; i < input.length; i++) {
+            if (i != pos && input[i] == input[i-1]) {
+                continue;
+            }
+            r.add(input[i]);
+            combinationEasiest(input, i + 1, r);
+            r.remove(r.size() - 1);
+        }
+    }
     
     public static void main(String args[]){
         CombinationWithReptition cwr = new CombinationWithReptition();
-        int count[] = {2,2,3};
+        int count[] = {3,2,3};
         cwr.combination("abc".toCharArray(), count);
         System.out.println();
         cwr.combination("aaabbccc".toCharArray());
-        cwr.combination("abc".toCharArray());
+        System.out.println();
+        cwr.combinationEasiest("aaabbccc".toCharArray());
     }
 }
