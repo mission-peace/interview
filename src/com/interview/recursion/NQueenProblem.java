@@ -36,23 +36,25 @@ public class NQueenProblem {
         }
     }
 
-    private boolean solveNQueenOneSolutionUtil(int n, int current, Position[] positions) {
-        if (n == current) {
+    private boolean solveNQueenOneSolutionUtil(int n, int row, Position[] positions) {
+        if (n == row) {
             return true;
         }
         int col;
         for (col = 0; col < n; col++) {
             boolean foundSafe = true;
-            for (int queen = 0; queen < current; queen++) {
-                if (positions[queen].col == col || positions[queen].row - positions[queen].col == current - col ||
-                        positions[queen].row + positions[queen].col == current + col) {
+
+            //check if this row and col is not under attack from any previous queen.
+            for (int queen = 0; queen < row; queen++) {
+                if (positions[queen].col == col || positions[queen].row - positions[queen].col == row - col ||
+                        positions[queen].row + positions[queen].col == row + col) {
                     foundSafe = false;
                     break;
                 }
             }
             if (foundSafe) {
-                positions[current] = new Position(current, col);
-                if (solveNQueenOneSolutionUtil(n, current + 1, positions)) {
+                positions[row] = new Position(row, col);
+                if (solveNQueenOneSolutionUtil(n, row + 1, positions)) {
                     return true;
                 }
             }
