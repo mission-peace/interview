@@ -7,13 +7,13 @@ import java.util.List;
 /**
  * Date 07/10/2015
  * @author Tushar Roy
- * 
+ *
  * Given an input and total print all combinations with repetitions in this input
  * which sums to given total.
  * e.g
  * input - {2,3,5}
  * total - 10
- * 
+ *
  * Output
  * [2,2,2,2,2],
  * [2,2,3,3],
@@ -36,9 +36,6 @@ public class PrintSumCombination {
     }
 
     private void combinationSumUtil(int[] candidates, int target, List<Integer> r, List<List<Integer>> rr, int pos) {
-        if (pos == candidates.length) {
-            return;
-        }
         if (target == 0) {
             List<Integer> r1 = new ArrayList<>();
             r1.addAll(r);
@@ -47,6 +44,10 @@ public class PrintSumCombination {
         }
 
         if (target < 0) {
+            return;
+        }
+
+        if (pos == candidates.length) {
             return;
         }
 
