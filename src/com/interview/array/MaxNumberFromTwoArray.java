@@ -4,13 +4,25 @@ import java.util.Arrays;
 import java.util.Deque;
 import java.util.LinkedList;
 
+/**
+ * Date 03/01/2016
+ * @author Tushar Roy
+ *
+ * Given two arrays of length m and n with digits 0-9 representing two numbers.
+ * Create the maximum number of length k <= m + n from digits of the two
+ *
+ * e.g
+ * nums1 = [3, 4, 6, 5]
+ * nums2 = [9, 1, 2, 5, 8, 3]
+ * k = 5
+ * return [9, 8, 6, 5, 3]
+ * 
+ * https://leetcode.com/problems/create-maximum-number/
+ */
 public class MaxNumberFromTwoArray {
     public int[] maxNumber(int[] nums1, int[] nums2, int k) {
 
         int[] result = new int[k];
-        if (nums1.length + nums2.length < k) {
-            k = nums1.length + nums2.length;
-        }
         //try k from nums1 and k - i from nums2.
         //Combine then by merge sort routine. And see that this result is bigger than
         //already stored result. If yes then store it as result.
