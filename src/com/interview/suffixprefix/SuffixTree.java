@@ -74,11 +74,9 @@ public class SuffixTree {
 
     public static void main(String args[]){
         SuffixTree st = new SuffixTree("mississippi".toCharArray());
-        
         st.build();
         st.dfsTraversal();
         System.out.println(st.validate());
-        
     }
     
     private SuffixNode root;
@@ -104,6 +102,10 @@ public class SuffixTree {
         //loop through string to start new phase
         for(int i=0; i < input.length; i++){
             startPhase(i);
+        }
+
+        if (remainingSuffixCount != 0) {
+            System.out.print("Something wrong happened");
         }
         //finally walk the tree again and set up the index.
         setIndexUsingDfs(root, 0, input.length);
@@ -149,7 +151,7 @@ public class SuffixTree {
                         walkDown(i);
                         break;
                     }
-                    else{
+                    else {
                         //next character is not same as current character so create a new internal node as per 
                         //rule 2 extension.
                         SuffixNode node = selectNode();
@@ -157,26 +159,26 @@ public class SuffixTree {
                         node.start = node.start + active.activeLength;
                         //create new internal node
                         SuffixNode newInternalNode = SuffixNode.createNode(oldStart, new End(oldStart + active.activeLength - 1));
-                        
+
                         //create new leaf node
                         SuffixNode newLeafNode = SuffixNode.createNode(i, this.end);
-                        
+
                         //set internal nodes child as old node and new leaf node.
                         newInternalNode.child[input[newInternalNode.start + active.activeLength]] = node;
                         newInternalNode.child[input[i]] = newLeafNode;
                         newInternalNode.index = -1;
                         active.activeNode.child[input[newInternalNode.start]] = newInternalNode;
-                        
+
                         //if another internal node was created in last extension of this phase then suffix link of that
                         //node will be this node.
-                        if(lastCreatedInternalNode != null){
+                        if (lastCreatedInternalNode != null) {
                             lastCreatedInternalNode.suffixLink = newInternalNode;
                         }
                         //set this guy as lastCreatedInternalNode and if new internalNode is created in next extension of this phase
                         //then point suffix of this node to that node. Meanwhile set suffix of this node to root.
                         lastCreatedInternalNode = newInternalNode;
                         newInternalNode.suffixLink = root;
-                        
+
                         //if active node is not root then follow suffix link
                         if(active.activeNode != root){
                             active.activeNode = active.activeNode.suffixLink;
@@ -190,11 +192,15 @@ public class SuffixTree {
                     }
            
                 } catch (EndOfPathException e) {
-                    
-                    //this happens when we are looking for new character from end of current path edge. Here we already have internal node so 
+
+                    //this happens when we are looking for new character from end of current path edge. Here we already have internal node so
                     //we don't have to create new internal node. Just create a leaf node from here and move to suffix new link.
                     SuffixNode node = selectNode();
                     node.child[input[i]] = SuffixNode.createNode(i, end);
+                    if (lastCreatedInternalNode != null) {
+                        lastCreatedInternalNode.suffixLink = node;
+                    }
+                    lastCreatedInternalNode = node;
                     //if active node is not root then follow suffix link
                     if(active.activeNode != root){
                         active.activeNode = active.activeNode.suffixLink;
@@ -239,7 +245,7 @@ public class SuffixTree {
             active.activeNode = node;
             active.activeLength = active.activeLength - diff(node) -1;
             active.activeEdge = active.activeEdge + diff(node)  +1;
-            return input[active.activeNode.child[input[active.activeEdge]].start + active.activeLength];
+            return nextChar(i);
         }
         
         throw new EndOfPathException();
