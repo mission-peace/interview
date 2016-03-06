@@ -1,5 +1,7 @@
 package com.interview.recursion;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -12,7 +14,7 @@ import java.util.TreeMap;
  */
 public class StringPermutation {
 
-    public void permute(char input[]) {
+    public List<String> permute(char input[]) {
         Map<Character, Integer> countMap = new TreeMap<>();
         for (char ch : input) {
             countMap.compute(ch, (key, val) -> {
@@ -31,13 +33,15 @@ public class StringPermutation {
             count[index] = entry.getValue();
             index++;
         }
+        List<String> resultList = new ArrayList<>();
         char result[] = new char[input.length];
-        permuteUtil(str, count, result, 0);
+        permuteUtil(str, count, result, 0, resultList);
+        return resultList;
     }
 
-    public void permuteUtil(char str[], int count[], char result[], int level) {
+    public void permuteUtil(char str[], int count[], char result[], int level, List<String> resultList) {
         if (level == result.length) {
-            printArray(result);
+            resultList.add(new String(result));
             return;
         }
 
@@ -47,7 +51,7 @@ public class StringPermutation {
             }
             result[level] = str[i];
             count[i]--;
-            permuteUtil(str, count, result, level + 1);
+            permuteUtil(str, count, result, level + 1, resultList);
             count[i]++;
         }
     }
@@ -61,6 +65,6 @@ public class StringPermutation {
 
     public static void main(String args[]) {
         StringPermutation sp = new StringPermutation();
-        sp.permute("AABC".toCharArray());
+        sp.permute("AABC".toCharArray()).forEach(s -> System.out.println(s));
     }
 }
