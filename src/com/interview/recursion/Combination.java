@@ -50,10 +50,10 @@ public class Combination {
     public void combinationEasy(char[] input) {
         List<Character> r = new ArrayList<>();
         Arrays.sort(input);
-        combinationEasiest(input, 0, r);
+        combinationEasy(input, 0, r);
     }
 
-    private void combinationEasiest(char[] input, int pos, List<Character> r) {
+    private void combinationEasy(char[] input, int pos, List<Character> r) {
 
         r.forEach(r1 -> System.out.print(r1 + " "));
         System.out.println();
@@ -62,7 +62,7 @@ public class Combination {
                 continue;
             }
             r.add(input[i]);
-            combinationEasiest(input, i + 1, r);
+            combinationEasy(input, i + 1, r);
             r.remove(r.size() - 1);
         }
     }
