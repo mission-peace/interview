@@ -8,6 +8,7 @@ import java.util.PriorityQueue;
  *
  * Find nth ugly number.
  *
+ * https://leetcode.com/problems/ugly-number-ii/
  * https://leetcode.com/problems/super-ugly-number/
  * http://www.geeksforgeeks.org/ugly-numbers/
  */
