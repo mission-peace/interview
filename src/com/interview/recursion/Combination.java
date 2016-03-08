@@ -1,28 +1,77 @@
 package com.interview.recursion;
 
+import java.util.*;
+
 public class Combination {
 
-    private void printArray(int arr[],int pos){
+   public void combination(char input[]){
+       Map<Character, Integer> countMap = new TreeMap<>();
+       for (char ch : input) {
+           countMap.compute(ch, (key, val) -> {
+               if (val == null) {
+                   return 1;
+               } else {
+                   return val + 1;
+               }
+           });
+       }
+       char str[] = new char[countMap.size()];
+       int count[] = new int[countMap.size()];
+       int index = 0;
+       for (Map.Entry<Character, Integer> entry : countMap.entrySet()) {
+           str[index] = entry.getKey();
+           count[index] = entry.getValue();
+           index++;
+       }
+       char[] output = new char[input.length];
+       combination(str, count, 0, output, 0);
+    }
+
+    private void combination(char input[],int count[],int pos, char output[],int len){
+        print(output, len);
+        for(int i=pos; i < input.length; i++){
+            if (count[i] == 0) {
+                continue;
+            }
+            output[len] = input[i];
+            count[i]--;
+            combination(input, count, i, output, len + 1);
+            count[i]++;
+        }
+    }
+
+    private void print(char result[],int pos){
         for(int i=0; i < pos; i++){
-            System.out.print(arr[i] + " ");
+            System.out.print(result[i] + " ");
         }
         System.out.println();
     }
-    
-    private void combination(int arr[],int pos,int start,int result[]){
-    
-        printArray(result,pos);
-        for(int i = start ; i < arr.length; i++){
-            result[pos] = arr[i];
-            combination(arr,pos+1,i+1,result);
+
+    public void combinationEasy(char[] input) {
+        List<Character> r = new ArrayList<>();
+        Arrays.sort(input);
+        combinationEasiest(input, 0, r);
+    }
+
+    private void combinationEasiest(char[] input, int pos, List<Character> r) {
+
+        r.forEach(r1 -> System.out.print(r1 + " "));
+        System.out.println();
+        for (int i = pos; i < input.length; i++) {
+            if (i != pos && input[i] == input[i-1]) {
+                continue;
+            }
+            r.add(input[i]);
+            combinationEasiest(input, i + 1, r);
+            r.remove(r.size() - 1);
         }
     }
-    
+
     public static void main(String args[]){
         Combination c = new Combination();
-        int arr[] = {1,2,3,4};
-        int result[] = new int[arr.length];
-        c.combination(arr, 0, 0, result);
+        c.combination("aabbc".toCharArray());
+        c.combinationEasy("aabbc".toCharArray());
+
     }
     
 }
