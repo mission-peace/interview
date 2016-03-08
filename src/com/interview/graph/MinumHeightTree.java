@@ -13,7 +13,7 @@ import java.util.*;
  *
  * https://leetcode.com/problems/minimum-height-trees/
  */
-public class MininumHeightTree {
+public class MinumHeightTree {
     public List<Integer> findMinHeightTrees(int n, int[][] edges) {
         if (n == 1) {
             return Collections.singletonList(0);
@@ -51,7 +51,7 @@ public class MininumHeightTree {
     }
 
     public static void main(String args[]) {
-        MininumHeightTree mht = new MininumHeightTree();
+        MinumHeightTree mht = new MinumHeightTree();
         int input[][] = {{1,0},{1,2},{1,3}};
         List<Integer> result = mht.findMinHeightTrees(4, input);
         result.forEach(r -> System.out.print(r + " "));
