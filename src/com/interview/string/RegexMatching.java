@@ -6,7 +6,6 @@ package com.interview.string;
  * Write a program to perform regex matching with * an . 
  * 
  * References : http://leetcode.com/2011/09/regular-expression-matching.html
- * Leetcode verified solution
  */
 public class RegexMatching {
 
@@ -44,7 +43,34 @@ public class RegexMatching {
         }
         return false;
     }
-    
+
+    public boolean matchDP(char[] str, char[] pattern) {
+        boolean T[][] = new boolean[str.length + 1][pattern.length + 1];
+
+        T[0][0] = true;
+        for (int i = 1; i < T[0].length; i++) {
+            if (pattern[i-1] == '*') {
+                T[0][i] = T[0][i - 2];
+            }
+        }
+
+        for (int i = 1; i < T.length; i++) {
+            for (int j = 1; j < T[0].length; j++) {
+                if (pattern[j-1] != '*') {
+                    if (pattern[j - 1] == '.' || pattern[j - 1] == str[i - 1]) {
+                        T[i][j] = T[i-1][j-1];
+                    }
+                } else {
+                    if (pattern[j-2] == '.' || pattern[j - 2] == str[i - 1]) {
+                        T[i][j] = T[i - 1][j];
+                    }
+                    T[i][j] = T[i][j] | T[i][j-2];
+                }
+            }
+        }
+        return T[str.length][pattern.length];
+    }
+
     public static void main(String args[]){
         RegexMatching rm = new RegexMatching();
         System.out.println(rm.match("Tushar".toCharArray(),"Tushar".toCharArray()));
@@ -56,5 +82,7 @@ public class RegexMatching {
         System.out.println(rm.match("abbbbccc".toCharArray(),".*bcc*".toCharArray()));
         System.out.println(rm.match("abbbbccc".toCharArray(),".*bcc*".toCharArray()));
         System.out.println(rm.match("aaa".toCharArray(),"ab*a*c*a".toCharArray()));
+
+        System.out.println(rm.matchDP("aa".toCharArray(), "a*".toCharArray()));
     }
 }
