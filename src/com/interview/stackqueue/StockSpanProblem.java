@@ -1,6 +1,7 @@
 package com.interview.stackqueue;
 
 import java.util.ArrayDeque;
+import java.util.Arrays;
 import java.util.Deque;
 
 /**
@@ -17,31 +18,27 @@ import java.util.Deque;
  */
 public class StockSpanProblem {
     public static int[] stockSpan(int[] prices){
-        Deque<Integer> stack=new ArrayDeque<>();
-        int[] stockSpan=new int[prices.length];
-        stockSpan[0]=1;
-        stack.push(0);
-        for(int i=1;i< prices.length;i++){
-            Integer j=stack.peek();
-            while(j!=null && prices[j]<prices[i]){
-                stack.pop();
-                j=stack.peek();
+        Deque<Integer> stack = new ArrayDeque<>();
+        int[] stockSpan = new int[prices.length];
+        stockSpan[0] = 1;
+        stack.offerFirst(0);
+        for (int i = 1; i < prices.length ; i++) {
+            while (!stack.isEmpty() && prices[stack.peekFirst()] < prices[i]) {
+                stack.pollFirst();
             }
-            if(j==null){
-                stockSpan[i]=i+1;
-            }else{
-                stockSpan[i]=i-stack.peek();
+            if (stack.isEmpty()) {
+                stockSpan[i] = i + 1;
+            } else {
+                stockSpan[i] = i - stack.peekFirst();
             }
-            stack.push(i);
+            stack.offerFirst(i);
         }
         return stockSpan;
     }
 
     public static void main(String[] args) {
-        int[] p={100, 80, 60, 70, 60, 75, 85};
-        int[] q=stockSpan(p);
-        for (int aQ : q) {
-            System.out.println(aQ);
-        }
+        int[] prices = {100, 80, 60, 70, 60, 75, 85};
+        int[] result = stockSpan(prices);
+        System.out.print(Arrays.toString(result));
     }
 }
