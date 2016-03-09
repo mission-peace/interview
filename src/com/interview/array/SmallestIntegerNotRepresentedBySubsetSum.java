@@ -25,9 +25,32 @@ public class SmallestIntegerNotRepresentedBySubsetSum {
         return result;
     }
 
+    /**
+     * Leetcode variation https://leetcode.com/problems/patching-array/
+     */
+    public int minPatches(int[] nums, int n) {
+        int patch = 0;
+        long t = 1;
+        int i = 0;
+        while(t <= n) {
+            if (i == nums.length || t < nums[i]) {
+                patch++;
+                t += t;
+            } else {
+                t = nums[i] + t;
+                i++;
+            }
+        }
+        return patch;
+    }
+
+
     public static void main(String args[]) {
         int input[] = {1, 2, 3, 8};
         SmallestIntegerNotRepresentedBySubsetSum ss = new SmallestIntegerNotRepresentedBySubsetSum();
-        System.out.print(ss.findSmallestInteger(input));
+        System.out.println(ss.findSmallestInteger(input));
+
+        int input1[] = {};
+        System.out.println(ss.minPatches(input1, 7));
     }
 }
