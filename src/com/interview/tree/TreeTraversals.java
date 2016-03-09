@@ -61,52 +61,6 @@ public class TreeTraversals {
         }
     }
     
-    public void morrisTraversalInOrder(Node root){
-        while(root != null){
-            if(root.left == null){
-                System.out.println(root.data);
-                root = root.right;
-            }
-            else{
-                Node pre = root.left;
-                while(pre.right != root && pre.right != null){
-                    pre = pre.right;
-                }
-                if(pre.right == root){
-                    pre.right = null;
-                    System.out.println(root.data);
-                    root = root.right;
-                }else{
-                    pre.right = root;
-                    root = root.left;
-                }
-            }
-        }
-    }
-
-    public void morrisTraversalPreOrder(Node root){
-        while(root != null){
-            if(root.left == null){
-                System.out.print(root.data + " ");
-                root = root.right;
-            }
-            else{
-                Node pre = root.left;
-                while(pre.right != root && pre.right != null){
-                    pre = pre.right;
-                }
-                if(pre.right == root){
-                    pre.right = null;
-                    root = root.right;
-                }else{
-                    System.out.print(root.data + " ");
-                    pre.right = root;
-                    root = root.left;
-                }
-            }
-        }
-    }
-
     public void preOrderItr(Node root){
         Deque<Node> stack = new LinkedList<Node>();
         stack.addFirst(root);
