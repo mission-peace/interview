@@ -11,7 +11,7 @@ import java.util.Map;
  *
  * Time complexity O(n)
  * Space complexity O(n)
- * 
+ *
  * Reference
  * https://leetcode.com/problems/longest-consecutive-sequence/
  */
@@ -33,5 +33,11 @@ public class LongestConsecutiveSubsequence {
             map.put(i + right, sum);
         }
         return result;
+    }
+
+    public static void main(String args[]) {
+        LongestConsecutiveSubsequence lcs = new LongestConsecutiveSubsequence();
+        int[] input = {100, 4, 200, 1, 3, 2};
+        System.out.println(lcs.longestConsecutive(input));
     }
 }
