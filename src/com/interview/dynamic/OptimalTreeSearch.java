@@ -15,7 +15,7 @@ public class OptimalTreeSearch {
             return 0;
         }
         
-        int min = Integer.MIN_VALUE;
+        int min = Integer.MAX_VALUE;
         for(int i=low; i <= high; i++){
             int val = minCostRec(input,freq,low,i-1,level+1) + 
                     minCostRec(input,freq,i+1,high,level+1)
