@@ -73,6 +73,6 @@ public class MaximumGap {
     public static void main(String args[]) {
         int[] input = {4, 3, 13, 2, 9, 7};
         MaximumGap mg = new MaximumGap();
-        System.out.println(mg.maxGap(input));
+        System.out.println(mg.maximumGap(input));
     }
 }
