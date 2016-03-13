@@ -50,7 +50,7 @@ public class SetPairTogether {
             int val2 = findMinimumSwapsUtil(input, pair, index, current + 2);
             swap(index, input, idx1, idx4);
 
-            return 1 + Math.max(val1, val2);
+            return 1 + Math.min(val1, val2);
         }
     }
 
