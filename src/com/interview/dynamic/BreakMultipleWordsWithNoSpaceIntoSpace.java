@@ -1,7 +1,6 @@
 package com.interview.dynamic;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Date 08/01/2014
@@ -104,6 +103,45 @@ public class BreakMultipleWordsWithNoSpaceIntoSpace {
         }
         
         return buffer.toString();
+    }
+
+    /**
+     * Prints all the words possible instead of just one combination.
+     * Reference
+     * https://leetcode.com/problems/word-break-ii/
+     */
+    public List<String> wordBreakTopDown(String s, Set<String> wordDict) {
+        Map<Integer, List<String>> dp = new HashMap<>();
+        int max = 0;
+        for (String s1 : wordDict) {
+            max = Math.max(max, s1.length());
+        }
+        return wordBreakUtil(s, wordDict, dp, 0, max);
+    }
+
+    private List<String> wordBreakUtil(String s, Set<String> dict, Map<Integer, List<String>> dp, int start, int max) {
+        if (start == s.length()) {
+            return Collections.singletonList("");
+        }
+
+        if (dp.containsKey(start)) {
+            return dp.get(start);
+        }
+
+        List<String> words = new ArrayList<>();
+        for (int i = start; i < start + max && i < s.length(); i++) {
+            String newWord = s.substring(start, i + 1);
+            if (!dict.contains(newWord)) {
+                continue;
+            }
+            List<String> result = wordBreakUtil(s, dict, dp, i + 1, max);
+            for (String word : result) {
+                String extraSpace = word.length() == 0 ? "" : " ";
+                words.add(newWord + extraSpace + word);
+            }
+        }
+        dp.put(start, words);
+        return words;
     }
 
     
