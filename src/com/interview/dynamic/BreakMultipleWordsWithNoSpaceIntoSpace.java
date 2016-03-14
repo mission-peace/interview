@@ -144,6 +144,43 @@ public class BreakMultipleWordsWithNoSpaceIntoSpace {
         return words;
     }
 
+    /**
+     * Check if any one solution exists.
+     * https://leetcode.com/problems/word-break/
+     */
+    public boolean wordBreakTopDownOneSolution(String s, Set<String> wordDict) {
+        Map<Integer, Boolean> dp = new HashMap<>();
+        int max = 0;
+        for (String s1 : wordDict) {
+            max = Math.max(max, s1.length());
+        }
+        return wordBreakTopDownOneSolutionUtil(s, wordDict, 0, max, dp);
+
+    }
+
+    private boolean wordBreakTopDownOneSolutionUtil(String s, Set<String> dict, int start, int max, Map<Integer, Boolean> dp) {
+        if (start == s.length()) {
+            return true;
+        }
+
+        if (dp.containsKey(start)) {
+            return dp.get(start);
+        }
+
+        for (int i = start; i < start + max && i < s.length(); i++) {
+            String newWord = s.substring(start, i + 1);
+            if (!dict.contains(newWord)) {
+                continue;
+            }
+            if (wordBreakTopDownOneSolutionUtil(s, dict, i + 1, max, dp)) {
+                dp.put(start, true);
+                return true;
+            }
+        }
+        dp.put(start, false);
+        return false;
+    }
+
     
     public static void main(String args[]){
         Set<String> dictionary = new HashSet<String>();
