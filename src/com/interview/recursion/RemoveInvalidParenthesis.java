@@ -3,7 +3,14 @@ package com.interview.recursion;
 import java.util.*;
 
 /**
- * Created by tushar_v_roy on 2/23/16.
+ * Date 03/03/2016
+ * @author Tushar Roy
+ * 
+ * Remove the minimum number of invalid parentheses in order to make the input string valid.
+ * Return all possible results
+ *
+ * Reference
+ * https://leetcode.com/problems/remove-invalid-parentheses/
  */
 public class RemoveInvalidParenthesis {
 
