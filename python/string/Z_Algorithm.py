@@ -6,9 +6,6 @@
 
 #Link to theory: http://www.geeksforgeeks.org/z-algorithm-linear-time-pattern-searching-algorithm/
 
-
-
-
 def z_algo(arr):
     z = [0 for i in range(len(arr))]
     left , right = 0 , 0
@@ -48,10 +45,10 @@ def makepattern(string , pattern):
         if z_values[i] == m:
             result.append(i - m - 1)
     print result
-    
 
 
-string = 'abcdeabcd'
-pattern = 'abc'
 
-makepattern(string , pattern)
+if __name__ == '__main__':
+    string = 'abcdeabcd'
+    pattern = 'abc'
+    makepattern(string , pattern)
