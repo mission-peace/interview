@@ -1,7 +1,5 @@
 package com.interview.linklist;
 
-import com.interview.array.Solution;
-
 /**
  * Date 03/24/2016
  * @author Tushar Roy
