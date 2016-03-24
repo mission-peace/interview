@@ -1,79 +1,80 @@
 package com.interview.linklist;
 
+import com.interview.array.Solution;
+
 /**
- * http://www.geeksforgeeks.org/a-linked-list-with-next-and-arbit-pointer/
- * Empty list
- * 1 or more nodes list
+ * Date 03/24/2016
+ * @author Tushar Roy
+ *
+ * A linked list is given such that each node contains an additional random pointer which could point
+ * to any node in the list or null. Return a deep copy of the list.
+ *
+ * Time complexity is O(n)
+ * Space complexity is O(1)
+ *
+ * https://leetcode.com/problems/copy-list-with-random-pointer/
  */
 public class CopyLinkListWIthArbitPointer {
 
-    public Node copy(Node head){
-        if(head == null){
+    static class RandomListNode {
+        int label;
+        RandomListNode next, random;
+        RandomListNode(int x) { this.label = x; }
+    }
+
+    public RandomListNode copyRandomList(RandomListNode head) {
+        if (head == null) {
             return null;
         }
-        
-        Node current = head;
-        //create new node with same value as current and insert it after current
-        while(current != null){
-            Node newNode = Node.newNode(current.data);
+
+        RandomListNode current = head;
+        while (current != null) {
+            RandomListNode newNode = new RandomListNode(current.label);
             newNode.next = current.next;
-            newNode.child = current.child;
+            newNode.random = current.random;
             current.next = newNode;
             current = newNode.next;
         }
-        //copy arbit position of current for the copy
+
         current = head;
-        while(current != null){
-            current.next.child = current.child.next;
+        while (current != null) {
+            RandomListNode next = current.next;
+            if (next.random != null) {
+                next.random = next.random.next;
+            }
             current = current.next.next;
         }
-        
-        //now separate copy from the main list
-        Node newHead = null;
-        Node newCurrent = null;
+
         current = head;
-        while(current != null){
-            if(newHead == null){
-                newHead = current.next;
-                current.next = current.next.next;
-                newCurrent = newHead;
-            }else{
-                newCurrent.next = current.next;
-                current.next = current.next.next;
-                newCurrent = newCurrent.next;
-            }
+        RandomListNode dummy = new RandomListNode(0);
+        RandomListNode newCurrent = dummy;
+        while (current != null) {
+            newCurrent.next = current.next;
+            newCurrent = newCurrent.next;
+            current.next = current.next.next;
             current = current.next;
         }
-        return newHead;
+
+        return dummy.next;
     }
-    
-    public void printList(Node head){
-        while(head != null){
-            System.out.println(head.data + " " + head.child.data);
-            head = head.next;
-        }
-    }
-    
+
     public static void main(String args[]){
-        LinkList ll = new LinkList();
-        Node head = null;
-        head = ll.addNode(1, head);
-        head = ll.addNode(2, head);
-        head = ll.addNode(3, head);
-        head = ll.addNode(4, head);
-        Node n1 = ll.find(head,1);
-        Node n2 = ll.find(head,2);
-        Node n3 = ll.find(head,3);
-        Node n4 = ll.find(head,4);
-        
-        n1.child = n2;
-        n2.child = n4;
-        n3.child = n1;
-        n4.child = n1;
-        
+
         CopyLinkListWIthArbitPointer cll = new CopyLinkListWIthArbitPointer();
-        Node newHead = cll.copy(head);
-        cll.printList(head);
-        cll.printList(newHead);
+
+        RandomListNode randomListNode = new RandomListNode(-1);
+        RandomListNode randomListNode1 = new RandomListNode(4);
+        RandomListNode randomListNode2 = new RandomListNode(8);
+        RandomListNode randomListNode3 = new RandomListNode(-3);
+        RandomListNode randomListNode4 = new RandomListNode(7);
+        randomListNode.next = randomListNode1;
+        randomListNode1.next = randomListNode2;
+        randomListNode2.next = randomListNode3;
+        randomListNode3.next = randomListNode4;
+
+        randomListNode.random = randomListNode1;
+        randomListNode2.random = randomListNode3;
+        randomListNode1.random = randomListNode;
+        cll.copyRandomList(randomListNode);
     }
 }
