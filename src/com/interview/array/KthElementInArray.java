@@ -1,5 +1,7 @@
 package com.interview.array;
 
+import java.util.Arrays;
+
 /**
  * Kth largest element in an array.
  * Use quickselect of quicksort to find the solution in hopefully O(nlogn) time.
@@ -18,11 +20,11 @@ public class KthElementInArray {
             if(pos == (k+low)){
                 return arr[pos];
             }
-            if(pos > k){
+            if(pos > k + low){
                 high = pos-1;
             }else{
+                k = k - (pos - low + 1);
                 low = pos+1;
-                k = k - low;
             }
         }
     }
@@ -54,9 +56,10 @@ public class KthElementInArray {
     }
     
     public static void main(String args[]){
-        int arr[] = {3,6,9,1,2};
+        int arr[] = {6, 2, 1, 6, 8, 9, 6};
         KthElementInArray kthElement = new KthElementInArray();
-        System.out.print(kthElement.kthElement(arr, 0));
+        System.out.print(kthElement.kthElement(arr, arr.length/2));
+        System.out.print(Arrays.toString(arr));
     }
     
 }
