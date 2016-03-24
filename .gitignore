@@ -2,6 +2,8 @@ interview.iml
 interview.ipr
 interview.iws
 target/
+.idea/
+python/.idea/
 .classpath
 .project
 .settings/
