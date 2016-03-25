@@ -29,7 +29,7 @@ def give_freq(string):
             freq_map[s] = 1
     return [freq_map[s] for s in unique_string], unique_string
 
-
-original_string = "AABC"
-freq_array, unique_string = give_freq(original_string)
-string_permutations(unique_string, freq_array, [""] * len(original_string), 0)
+if __name__ == "__main__":
+    original_string = "AABC"
+    freq_array, unique_string = give_freq(original_string)
+    string_permutations(unique_string, freq_array, [""] * len(original_string), 0)

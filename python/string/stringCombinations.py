@@ -24,6 +24,7 @@ def give_freq(string):
     return [freq_map[s] for s in unique_string], unique_string
 
 
-original_string = "AABC"
-freq_array, unique_string = give_freq(original_string)
-string_combinations(unique_string, freq_array, 0, [""] * len(original_string), 0)
+if __name__ == "__main__":
+    original_string = "AABC"
+    freq_array, unique_string = give_freq(original_string)
+    string_combinations(unique_string, freq_array, 0, [""] * len(original_string), 0)
