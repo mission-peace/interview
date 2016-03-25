@@ -30,5 +30,5 @@ def wordPattern(str, pattern):
 
     return True
 
-
-print wordPattern("red black red", "aba")
+if __name__ == '__main__':
+    print wordPattern("red black red", "aba")
