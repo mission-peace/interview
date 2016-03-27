@@ -11,6 +11,7 @@ import java.util.Arrays;
  * Time complexity O(n) - This depends on KthElementInArray time
  * Space complexity O(1)
  *
+ * https://leetcode.com/problems/wiggle-sort/
  * https://leetcode.com/problems/wiggle-sort-ii/
  */
 public class WiggleSort {
@@ -36,6 +37,16 @@ public class WiggleSort {
             }
             else {
                 j++;
+            }
+        }
+    }
+
+    public void wiggleSort1(int[] nums) {
+        for (int i=1; i<nums.length; i++) {
+            int a = nums[i-1];
+            if ((i%2 == 1) == (a > nums[i])) {
+                nums[i-1] = nums[i];
+                nums[i] = a;
             }
         }
     }
