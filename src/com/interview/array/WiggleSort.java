@@ -41,6 +41,7 @@ public class WiggleSort {
         }
     }
 
+    //in this version we are looking for nums[0] <= nums[1] >= nums[2] <= nums[3] and so on.
     public void wiggleSort1(int[] nums) {
         for (int i=1; i<nums.length; i++) {
             int a = nums[i-1];
