@@ -43,8 +43,9 @@ public class DisjointSet {
     /**
      * Combines two sets together to one.
      * Does union by rank
+     * @return true if data1 and data2 are in different set before union else false.
      */
-    public void union(long data1, long data2){
+    public boolean union(long data1, long data2){
         Node node1 = map.get(data1);
         Node node2 = map.get(data2);
         
@@ -53,7 +54,7 @@ public class DisjointSet {
         
         //if they are part of same set do nothing
         if(parent1.data == parent2.data){
-            return;
+            return false;
         }
         
         //else whoever's rank is higher becomes parent of other
@@ -64,6 +65,7 @@ public class DisjointSet {
         } else{
             parent1.parent = parent2;
         }
+        return true;
     }
     
     /**
