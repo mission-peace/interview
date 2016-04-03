@@ -1,7 +1,5 @@
 package com.interview.bits;
 
-import sun.java2d.xr.GrowableRectArray;
-
 import java.util.LinkedList;
 import java.util.List;
 
