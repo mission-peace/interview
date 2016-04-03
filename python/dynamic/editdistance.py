@@ -11,8 +11,12 @@ Video
 
 Analysis
 --------
-* Runtime : O(len(str1) * len(str2))
+* DP Runtime : O(len(str1) * len(str2))
+* Recursive Solution: Exponential (O(3^(m+n-1)))
 
+Reference
+---------
+* https://www.clear.rice.edu/comp130/12spring/editdist/
 """
 
 
@@ -58,6 +62,16 @@ def min_edit_distance(str1, str2):
     print_edits(T, str1, str2)
     return T[rows - 1][cols - 1]
 
+def min_edit_distance_recursive(str1, str2):
+    i = len(str1)
+    j = len(str2)
+
+    if i == 0: return j
+    if j == 0: return i
+
+    return min(min_edit_distance_recursive(str1[:i - 1], str2) + 1,
+               min_edit_distance_recursive(str1, str2[:j - 1]) + 1,
+               min_edit_distance_recursive(str1[:i - 1], str2[:j - 1]) + (1 if str1[i - 1] != str2[j - 1] else 0))
 
 if __name__ == '__main__':
     str1 = "azced"
@@ -65,3 +79,4 @@ if __name__ == '__main__':
     expected = 3
     assert expected == min_edit_distance(str1, str2)
     assert expected == min_edit_distance(str2, str1)
+    assert expected == min_edit_distance_recursive(str1, str2)
