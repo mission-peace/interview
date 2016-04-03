@@ -3,9 +3,6 @@ package com.interview.array;
 import org.junit.Assert;
 import org.junit.Test;
 
-/**
- * Created by tushar_v_roy on 4/2/16.
- */
 public class ArrayAdditionTest {
 
     @Test
@@ -17,5 +14,4 @@ public class ArrayAdditionTest {
         int[] expected = {1, 0, 1, 6, 8, 2, 6, 6};
         Assert.assertArrayEquals(expected, result);
     }
-
 }
