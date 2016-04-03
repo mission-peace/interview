@@ -1,7 +1,8 @@
 interview.iml
 interview.ipr
 interview.iws
-target/
+build/
+.gradle/
 .classpath
 .project
 .settings/
