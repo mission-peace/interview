@@ -25,7 +25,7 @@ public class NumberOfTrianglesInUnsortedArray {
     }
     
     public static void main(String args[]){
-        int input[] = {3,4,5,6,8,9,15};
+        int input[] = {3, 4, 5, 6, 8, 9, 15};
         NumberOfTrianglesInUnsortedArray not = new NumberOfTrianglesInUnsortedArray();
         System.out.println(not.numberOfTriangles(input));
     }
