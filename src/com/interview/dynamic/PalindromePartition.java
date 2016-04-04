@@ -8,43 +8,36 @@ import java.util.*;
  * Date 04/03/2016
  * @author Tushar Roy
  *
- * http://www.geeksforgeeks.org/dynamic-programming-set-17-palindrome-partitioning/
+ * Partitioning the string into palindromes.
+ *
  * https://leetcode.com/problems/palindrome-partitioning/
+ * https://leetcode.com/problems/palindrome-partitioning-ii/
  */
 public class PalindromePartition {
 
-    public int minCuts(char[] str){
-        
-        int T[][] = new int[str.length][str.length];
-        boolean P[][] = new boolean[str.length][str.length];
-        
-        for(int i=0; i < P.length; i++){
-            P[i][i] = true;
+    /*
+     * Given a string s, partition s such that every substring of the partition is a palindrome.
+     * Return the minimum cuts needed for a palindrome partitioning of s.
+     * https://leetcode.com/problems/palindrome-partitioning-ii/
+     */
+    public int minCut(String str){
+        if (str.length() == 0) {
+            return 0;
         }
-        
-        for(int l= 2; l <= str.length; l++){
-            for(int i = 0; i <= str.length - l; i++){
-                int j = i + l-1;
-                if(l == 2){
-                    P[i][j] = str[i] == str[j];
-                }else{
-                    P[i][j] = (str[i] == str[j]) && P[i+1][j-1];
-                }
-                if(P[i][j]){
-                    T[i][j] = 0;
-                }else{
-                    T[i][j] = 10000;
-                    int r = 0;
-                    for(int k = i; k < j; k++){
-                        r = T[i][k] + T[k+1][j] +1 ;
-                        if(r < T[i][j]){
-                            T[i][j] = r;
-                        }
-                    }
+
+        int[] cut = new int[str.length()];
+        boolean isPal[][] = new boolean[str.length()][str.length()];
+        for (int i = 1; i < str.length(); i++) {
+            int min = i;
+            for (int j = 0; j <= i; j++) {
+                if (str.charAt(i) == str.charAt(j) && (i <= j + 1 || isPal[i - 1][j + 1])) {
+                    isPal[i][j] = true;
+                    min = Math.min(min, j == 0 ? 0 : 1 + cut[j - 1]);
                 }
             }
+            cut[i] = min;
         }
-        return T[0][T.length-1];
+        return cut[str.length() - 1];
     }
 
     /**

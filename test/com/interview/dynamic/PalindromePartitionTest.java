@@ -33,6 +33,9 @@ public class PalindromePartitionTest {
     @Test
     public void palindromePartitionMinCuts() {
         PalindromePartition palindromePartition = new PalindromePartition();
-        Assert.assertEquals(3, palindromePartition.minCuts("ABCCDCCLMLCCD".toCharArray()));
+        Assert.assertEquals(3, palindromePartition.minCut("ABCCDCCLMLCCD"));
+        Assert.assertEquals(0, palindromePartition.minCut("bb"));
+        Assert.assertEquals(0, palindromePartition.minCut("b"));
+
     }
 }
