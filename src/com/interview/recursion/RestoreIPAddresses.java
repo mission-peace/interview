@@ -1,4 +1,4 @@
-package com.interview.dynamic;
+package com.interview.recursion;
 
 import java.util.*;
 
