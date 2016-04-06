@@ -50,11 +50,7 @@ public class TravelingSalesmanHeldKarp {
     private static class SetSizeComparator implements Comparator<Set<Integer>>{
         @Override
         public int compare(Set<Integer> o1, Set<Integer> o2) {
-            if(o1.size() <= o2.size()) {
-                return -1;
-            } else {
-                return 1;
-            }
+            return o1.size() - o2.size();
         }
     }
 
@@ -175,19 +171,6 @@ public class TravelingSalesmanHeldKarp {
             set.add(input[i]);
         }
         return set;
-    }
-
-    public static void main(String args[]) {
-
-        TravelingSalesmanHeldKarp ht = new TravelingSalesmanHeldKarp();
-        int distance[][] = {{0, 1, 15, 6},
-                            {2, 0, 7, 3},
-                            {9, 6, 0, 12},
-                            {10, 4, 8, 0},
-        };
-
-        int minCost = ht.minCost(distance);
-        System.out.println("Min cost is " + minCost);
     }
 }
 
