@@ -15,11 +15,12 @@ public class RestoreIPAddressesTest {
         List<String> expected = new ArrayList<>();
         expected.add("255.255.11.135");
         expected.add("255.255.111.35");
-        TestUtil.compareList(expected, result);
+        TestUtil<String> t = new TestUtil<>();
+        t.compareList(expected, result);
 
         List<String> result1 = restoreIPAddresses.restoreIpAddresses("0000");
         expected = new ArrayList<>();
         expected.add("0.0.0.0");
-        TestUtil.compareList(expected, result1);
+        t.compareList(expected, result1);
     }
 }

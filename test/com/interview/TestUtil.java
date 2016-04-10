@@ -4,11 +4,11 @@ import org.junit.Assert;
 
 import java.util.List;
 
-public class TestUtil {
-    public static void compareList(List<String> expected, List<String> actual) {
+public class TestUtil<T> {
+    public void compareList(List<T> expected, List<T> actual) {
         int i = 0;
-        for (String str : expected) {
-            Assert.assertEquals(str, actual.get(i++));
+        for (T str : expected) {
+            Assert.assertEquals("Failed at index " + i, str, actual.get(i++));
         }
     }
 }
