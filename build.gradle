@@ -1,6 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'eclipse'
+apply plugin: "jacoco"
 
 sourceCompatibility = '1.8'
 targetCompatibility = '1.8'
@@ -24,5 +25,13 @@ sourceSets {
         java {
             srcDir 'test'
         }
+    }
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled false
+        csv.enabled false
+        html.destination "${buildDir}/jacocoHtml"
     }
 }
