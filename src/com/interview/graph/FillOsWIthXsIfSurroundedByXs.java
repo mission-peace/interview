@@ -1,69 +1,64 @@
 package com.interview.graph;
 
 /**
- * http://www.careercup.com/question?id=5727310284062720
+ * Date 04/17/2016
+ * @author Tushar Roy
+ *
+ * Given a 2D board containing 'X' and 'O', capture all regions surrounded by 'X'.
+ * A region is captured by flipping all 'O's into 'X's in that surrounded region.
+ *
+ * Reference
+ * https://leetcode.com/problems/surrounded-regions/
  */
 public class FillOsWIthXsIfSurroundedByXs {
 
-    public void fill(char board[][]){
-        for(int i = 0; i < board.length; i++){
-            if(board[i][0] == 'O'){
-                markNotFill(board,i,0);
-            }
+    public void solve(char[][] board) {
+        if (board.length == 0 || board[0].length == 0) {
+            return;
         }
-        for(int i = 0; i < board.length; i++){
-            if(board[i][board.length-1] == 'O'){
-                markNotFill(board,i,board.length-1);
-            }
+        for (int i = 0; i < board.length; i++) {
+            dfs(board, i, 0);
+            dfs(board, i, board[0].length - 1);
         }
-        for(int i = 0; i < board[0].length; i++){
-            if(board[0][i] == 'O'){
-                markNotFill(board,0,i);
-            }
+
+        for (int i = 0; i < board[0].length; i++) {
+            dfs(board, 0, i);
+            dfs(board, board.length - 1, i);
         }
-        for(int i = 0; i < board[0].length; i++){
-            if(board[board.length-1][i] == 'O'){
-                markNotFill(board,board.length-1,i);
-            }
-        }
-        
-        for(int i=0; i < board.length; i++){
-            for(int j=0; j < board[0].length; j++){
-                if(board[i][j] == 'O'){
+
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                if (board[i][j] == 'O') {
                     board[i][j] = 'X';
                 }
-                else if(board[i][j] == '-'){
+                else if (board[i][j] == '1') {
                     board[i][j] = 'O';
                 }
             }
         }
     }
-    
-    private void markNotFill(char board[][],int i,int j){
-        
-        if(i < 0 || i >= board.length || j < 0 || j > board[i].length){
+
+    private void dfs(char[][] board, int i, int j) {
+        if (i < 0 || i >= board.length || j < 0 || j >= board[0].length) {
             return;
         }
-        if(board[i][j] == 'X' || board[i][j] == '-'){
+
+        if (board[i][j] != 'O') {
             return;
         }
-        board[i][j] = '-';
-        for(int k = i-1; k <= i+1; k++){
-            for(int l=j-1; l <= j+1; l++){
-                if(k == i && j == l){
-                    continue;
-                }
-                markNotFill(board,k,l);
-            }
+
+        board[i][j] = '1';
+        if (i < board.length - 2) {
+            dfs(board, i + 1, j);
         }
-    }
-    
-    void printArray(char[][] board){
-        for(int i=0; i < board.length; i++){
-            for(int j=0; j < board[i].length ; j++){
-                System.out.print(board[i][j] + " ");
-            }
-            System.out.println();
+        if (i > 1) {
+            dfs(board, i - 1, j);
+        }
+        if (j < board[0].length - 2) {
+            dfs(board, i, j + 1);
+        }
+        if (j > 1) {
+            dfs(board, i, j - 1);
         }
     }
     
@@ -74,7 +69,6 @@ public class FillOsWIthXsIfSurroundedByXs {
                           {'X','O','X','X'},
                           {'X','X','O','X'}};
         
-        fo.fill(board);
-        fo.printArray(board);
+        fo.solve(board);
     }
 }
