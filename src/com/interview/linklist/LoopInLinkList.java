@@ -1,10 +1,14 @@
 package com.interview.linklist;
 
 /**
+ * Date 04/17/2016
  * @author tusroy
  *
  * Given a linked list, determine if it has a cycle in it.
- * 
+ *
+ * Time complexity O(n)
+ * Space complexity O(1)
+ *
  * https://leetcode.com/problems/linked-list-cycle/
  */
 public class LoopInLinkList {
