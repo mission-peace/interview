@@ -1,31 +1,32 @@
 package com.interview.linklist;
 
 /**
- * Find if there is loop in linklist
- * Test cases
- * 0, 1 or more elements in linklist
- * even or odd size loops
  * @author tusroy
+ *
+ * Given a linked list, determine if it has a cycle in it.
+ * 
+ * https://leetcode.com/problems/linked-list-cycle/
  */
 public class LoopInLinkList {
 
-    public boolean loopExists(Node head){
-        if(head == null){
+    public boolean hasCycle(Node head){
+        if (head == null) {
             return false;
         }
         Node slow = head;
         Node fast = head.next;
-        while(slow != fast && fast != null && fast.next != null){
+        while (fast != null) {
+            if (slow == fast || fast.next == slow) {
+                return true;
+            }
             slow = slow.next;
-            fast = fast.next.next;
+            if (fast.next != null) {
+                fast = fast.next.next;
+            } else {
+                break;
+            }
         }
-        
-        if(slow == fast){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return false;
     }
     
     public static void main(String args[]){
@@ -43,13 +44,13 @@ public class LoopInLinkList {
         Node node2 = ll.find(head, 4);
         node1.next = node2;
         LoopInLinkList lll = new LoopInLinkList();
-        System.out.println(lll.loopExists(head));
+        System.out.println(lll.hasCycle(head));
         
         node2.next = null;
-        System.out.println(lll.loopExists(head));
+        System.out.println(lll.hasCycle(head));
     
         node1 = ll.find(head, 3);
         node2.next = node1;
-        System.out.println(lll.loopExists(head));
+        System.out.println(lll.hasCycle(head));
     }
 }
