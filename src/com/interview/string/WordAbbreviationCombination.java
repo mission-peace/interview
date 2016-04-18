@@ -1,36 +1,43 @@
 package com.interview.string;
 
+import java.util.*;
+
 /**
- * Date 07/08/2015
- * @author tushar_v_roy
- * 
- * Given a string like heads print all combination of abbreviation
- * Output should be
- * h1ads
- * h2ds
- * h3s
- * he1ds
- * he2s
- * hea1s
+ * Date 04/17/2106
+ * @author Tushar Roy
+ *
+ * Write a function to generate the generalized abbreviations of a word.
+ * Example:
+ * Given word = "word", return the following list (order does not matter):
+ * ["word", "1ord", "w1rd", "wo1d", "wor1", "2rd", "w2d", "wo2", "1o1d", "1or1", "w1r1", "1o2", "2r1", "3d", "w3", "4"]
+ *
+ * https://leetcode.com/problems/generalized-abbreviation/
  */
 public class WordAbbreviationCombination {
-    public void shorten(char input[]){
-        for(int i = 1; i < input.length-1; i++){
-            for(int j=i; j < input.length-1; j++){
-                for(int k=0; k < i; k++){
-                    System.out.print(input[k]);
-                }
-                System.out.print(j-i+1);
-                for(int k=j+1; k < input.length; k++){
-                    System.out.print(input[k]);
-                }
-                System.out.println();
+
+    public List<String> generateAbbreviations(String word) {
+        List<String> result = new ArrayList<>();
+        generateAbbreviationsUtil(word, result, "", 0, 0);
+        return result;
+    }
+
+    public void generateAbbreviationsUtil(String input, List<String> result, String current, int pos, int count) {
+        if (input.length() == pos) {
+            if (count > 0) {
+                result.add(current + count);
+            } else {
+                result.add(current);
             }
+            return;
         }
+
+        generateAbbreviationsUtil(input, result, current, pos + 1, count + 1);
+        generateAbbreviationsUtil(input, result, current + (count > 0 ? count : "") + input.charAt(pos), pos + 1, 0);
     }
 
     public static void main(String args[]) {
         WordAbbreviationCombination ssc = new WordAbbreviationCombination();
-        ssc.shorten("heading".toCharArray());
+        List<String> result = ssc.generateAbbreviations("word");
+        result.forEach(r -> System.out.println(r));
     }
 }
