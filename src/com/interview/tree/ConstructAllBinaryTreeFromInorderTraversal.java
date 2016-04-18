@@ -8,29 +8,34 @@ import java.util.List;
  * Date 11/07/2015
  * @author Tushar Roy
  *
- * Given an inorder traversal construct all binary search trees possible.
+ * Given n, generate all structurally unique BST's (binary search trees) that store values 1...n.
  * Total number of binary search tree possible is Catalan number.
+ *
+ * https://leetcode.com/problems/unique-binary-search-trees-ii/
  */
 public class ConstructAllBinaryTreeFromInorderTraversal {
 
-    public List<Node> construct(int inorder[]) {
-        return construct(inorder, 0, inorder.length - 1);
+    public List<Node> generateTrees(int n) {
+        if (n == 0) {
+            return Collections.emptyList();
+        }
+        return construct(1, n);
     }
 
-    private List<Node> construct(int inorder[], int start, int end) {
+    private List<Node> construct(int start, int end) {
         if (start > end) {
             return Collections.singletonList(null);
         }
         List<Node> allTrees = new ArrayList<>();
         for (int root = start; root <= end; root++) {
             //get all subtrees from left and right side.
-            List<Node> allLeftSubstrees = construct(inorder, start, root - 1);
-            List<Node> allRightSubstrees = construct(inorder, root + 1, end);
+            List<Node> allLeftSubstrees = construct(start, root - 1);
+            List<Node> allRightSubstrees = construct(root + 1, end);
             //iterate through them in all combination and them connect them to root
             //and add to allTrees.
             for (Node left : allLeftSubstrees) {
                 for (Node right : allRightSubstrees) {
-                    Node node = Node.newNode(inorder[root]);
+                    Node node = Node.newNode(root);
                     node.left = left;
                     node.right = right;
                     allTrees.add(node);
@@ -52,9 +57,8 @@ public class ConstructAllBinaryTreeFromInorderTraversal {
     }
 
     public static void main(String args[]) {
-        int inorder[] = {1, 2, 3, 4, 5};
         ConstructAllBinaryTreeFromInorderTraversal ct = new ConstructAllBinaryTreeFromInorderTraversal();
-        List<Node> allTrees = ct.construct(inorder);
+        List<Node> allTrees = ct.generateTrees(3);
         ct.printAllTrees(allTrees);
     }
 }
