@@ -5,10 +5,16 @@ import java.util.LinkedList;
 import java.util.StringTokenizer;
 
 /**
+ * Date 04/18/2016
+ * @author Tushar Roy
+ *
  * Given an absolute path for a file (Unix-style), simplify it.
  * For example,
  * path = "/home/", => "/home"
  * path = "/a/./b/../../c/", => "/c"
+ *
+ * Space complexity O(n)
+ * Time complexity O(n)
  *
  * https://leetcode.com/problems/simplify-path/
  */
