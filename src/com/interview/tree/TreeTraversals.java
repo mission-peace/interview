@@ -96,27 +96,23 @@ public class TreeTraversals {
     }
     
     public void postOrderItrOneStack(Node root){
-        Deque<Node> stack = new LinkedList<Node>();
-        while(true){
-            if(root != null){
-                stack.addFirst(root);
-                root = root.left;
+        Node current = root;
+        Deque<Node> stack = new LinkedList<>();
+        while(current != null || !stack.isEmpty()){
+            if(current != null){
+                stack.addFirst(current);
+                current = current.left;
             }else{
-                if(!stack.isEmpty()){
-                    if(stack.peekFirst().right != null){
-                        root = stack.peekFirst().right;
-                    }else{
-                        root = stack.pollFirst();
-                        System.out.print(root.data + " ");
-                        while(!stack.isEmpty() && root == stack.peekFirst().right){
-                            root = stack.pollFirst();
-                            System.out.print(root.data + " ");
-                        }
-                        root = stack.isEmpty() ? null : stack.peekFirst().right;
+                Node temp = stack.peek().right;
+                if (temp == null) {
+                    temp = stack.poll();
+                    System.out.print(temp.data + " ");
+                    while (!stack.isEmpty() && temp == stack.peek().right) {
+                        temp = stack.poll();
+                        System.out.print(temp.data + " ");
                     }
-                    
-                }else{
-                    break;
+                } else {
+                    current = temp;
                 }
             }
         }
@@ -127,14 +123,14 @@ public class TreeTraversals {
         Node head = null;
         head = bt.addNode(10, head);
         head = bt.addNode(15, head);
-        head = bt.addNode(5, head);
-        head = bt.addNode(7, head);
         head = bt.addNode(19, head);
-        head = bt.addNode(20, head);
-        head = bt.addNode(-1, head);
-        head = bt.addNode(21, head);
+        head = bt.addNode(17, head);
+        head = bt.addNode(11, head);
+
+        head = bt.addNode(-11, head);
+
+
         TreeTraversals tt = new TreeTraversals();
-        
         tt.postOrder(head);
         System.out.println();
         tt.postOrderItr(head);
