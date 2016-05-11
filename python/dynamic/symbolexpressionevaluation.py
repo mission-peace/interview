@@ -1,50 +1,67 @@
-# Let there be a binary operation for 3 symbols a, b, c and result of these binary operation given in a table.
-# Given an expression of these 3 symbols and a final result, tell if this expression can be parenthesize in certain
-# way to produce the final result.
+"""
+Problem Statement
+=================
 
-class Holder(object):
-    def __init__(self):
-        self.value_holder = set()
+Let there be a binary operation for 3 symbols a, b, c and result of these binary operation given in a table.
+Given an expression of these 3 symbols and a final result, tell if this expression can be parenthesize in certain
+way to produce the final result.
 
-    def add(self, ch):
-        self.value_holder.add(ch)
+Complexity
+----------
 
-    def values(self):
-        return self.value_holder
+* Run time Complexity: O(n^3)
+* SpaceL O(n^2)
 
-    def __str__(self):
-        return repr(self.value_holder)
+Where n is the length of the expression.
+"""
 
-    def __repr__(self):
-        return self.__str__()
-        
-def evaluate_expression(input, index, expression, result):
-    T = [[Holder() for i in range(len(expression))] for j in range(len(expression))]
-    
-    for i,ch in enumerate(expression):
-        T[i][i].add(ch)
 
-    for l in range(2, len(T) + 1):
-        for i in range(len(T) - l + 1):
-            j = i + l - 1
-            for k in range(i, j):
-                for ch in T[i][k].values():
-                    for ch1 in T[k+1][j].values():
-                        T[i][j].add(input[index[ch]][index[ch1]])
+def evaluate_expression(expression_map, expression, result):
+    expression_length = len(expression)
+    T = [[set() for _ in range(expression_length)] for _ in range(len(expression))]
 
-    for ch in T[0][len(T) - 1].values():
-        if result == ch:
+    for idx, expr in enumerate(expression):
+        T[idx][idx].add(expr)
+
+    # We take a sub expression of length 2 until the total expression length
+    for sub_length in range(2, expression_length + 1):
+        for left_index in range(0, expression_length - sub_length + 1):
+            right_index = left_index + sub_length - 1
+            # we split the expression at different k indices for the total sub-expression length and store the result.
+            # at T[left_index][right_index]
+            # Like bbc, will be treated for (b(bc) and ((bb) c) and the final result is stored in a set at T[0][2]
+            for k in range(left_index, right_index):
+                for expr1 in T[left_index][k]:
+                    for expr2 in T[k+1][right_index]:
+                        T[left_index][right_index].add(expression_map[(expr1, expr2)])
+
+    for expr in T[0][-1]:
+        if result in expr:
             return True
 
     return False
 
 if __name__ == '__main__':
-    index = {}
-    index['a'] = 0
-    index['b'] = 1
-    index['c'] = 2
+    expressions = ['a', 'b', 'c']
+    # expression table denotes the binary operation between two expression and its result.
+    expression_table = [
+        ['b', 'b', 'a'],
+        ['c', 'b', 'a'],
+        ['a', 'a', 'c']
+    ]
 
-    input = [['b', 'b', 'a'], ['c', 'b', 'a'], ['a', 'a', 'c']]
-    print(evaluate_expression(input, index, 'bbbbac', 'a'))
-    
-    
+    # For convenience, we can modify it to be more explicit and use the expression table
+
+    expression_map = {
+        ('a', 'a'): 'b',
+        ('a', 'b'): 'b',
+        ('a', 'c'): 'a',
+        ('b', 'a'): 'c',
+        ('b', 'b'): 'b',
+        ('b', 'c'): 'a',
+        ('c', 'a'): 'a',
+        ('c', 'b'): 'a',
+        ('c', 'c'): 'c'
+    }
+
+    assert True == evaluate_expression(expression_map, 'bbbbac', 'a')
