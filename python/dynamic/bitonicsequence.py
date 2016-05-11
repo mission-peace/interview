@@ -36,8 +36,8 @@ def longest_bitonic(sequence):
 
     max_value = 0
     for i in range(len(sequence)):
-        if increasing_sequence[i] + decreasing_sequence[i] - 1 > max_value:
-            max_value = increasing_sequence[i] + decreasing_sequence[i] - 1
+        bitonic_sequence_length = increasing_sequence[i] + decreasing_sequence[i] - 1
+        max_value = max(max_value, bitonic_sequence_length)
 
     return max_value
 
