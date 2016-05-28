@@ -1,8 +1,11 @@
 #dijkstra's algorithm
+
 # java code https://github.com/mission-peace/interview/blob/master/src/com/interview/graph/DijkstraShortestPath.java
+
 from priorityqueue import PriorityQueue
 from graph import Graph
 import sys
+
 
 def shortest_path(graph, sourceVertex):
 
@@ -35,6 +38,7 @@ def shortest_path(graph, sourceVertex):
                 
 
     return distance
+
 
 def get_other_vertex_for_edge(vertex, edge):
     if edge.vertex1.id == vertex.id:

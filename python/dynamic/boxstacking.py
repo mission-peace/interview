@@ -36,7 +36,10 @@ dimension = namedtuple("Dimension", "height length width")
 
 def create_rotation(given_dimensions):
     """
-    A rotation is an order wherein length is greater than or equal to width.
+    A rotation is an order wherein length is greater than or equal to width. Having this constraint avoids the
+    repetition of same order, but with width and length switched.
+
+    For e.g (height=3, width=2, length=1) is same the same box for stacking as (height=3, width=1, length=2).
 
     :param given_dimensions: Original box dimensions
     :return: All the possible rotations of the boxes with the condition that length >= height.
@@ -64,8 +67,9 @@ def box_stack_max_height(dimensions):
     for i in range(1, num_boxes):
         for j in range(0, i):
             if can_stack(boxes[i], boxes[j]):
-                if (T[j] + boxes[i].height) > T[i]:
-                    T[i] = T[j] + boxes[i].height
+                stacked_height = T[j] + boxes[i].height
+                if stacked_height > T[i]:
+                    T[i] = stacked_height
                     R[i] = j
 
     max_height = max(T)

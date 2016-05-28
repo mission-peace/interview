@@ -2,8 +2,8 @@
 Problem Statement
 =================
 
-Given a certain number of eggs and a certain number of floors, determine the minimum number of attempts
-required to find the egg breaking floor.
+Given a certain number of eggs and a certain number of floors, determine the minimum number of attempts required to find
+the egg breaking floor.
 
 Analysis
 --------

@@ -1,12 +1,13 @@
 """
 Problem Statement
 =================
+
 Given a string and a dictionary, split the string in to multiple words so that each word belongs to the dictionary.
 
 Video
 -----
-* https://youtu.be/WepWFGxiwRs
 
+* https://youtu.be/WepWFGxiwRs
 
 Analysis
 --------
