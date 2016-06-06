@@ -44,6 +44,9 @@ public class RegexMatching {
         return false;
     }
 
+    /**
+     * Dynamic programming technique for regex matching.
+     */
     public boolean matchRegex(char[] text, char[] pattern) {
         boolean T[][] = new boolean[text.length + 1][pattern.length + 1];
 
