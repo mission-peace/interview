@@ -16,7 +16,6 @@ public class BurstBalloons {
         for (int l = 1; l <= nums.length; l++) {
             for (int i = 0; i <= nums.length - l; i++) {
                 int j = i + l - 1;
-                int val = 0;
                 for (int k = i; k <= j; k++) {
                     int left = 1;
                     int right = 1;
