@@ -31,7 +31,7 @@ public class Immutable2DSumRangeQuery {
         }
    }
 
-    public int sumRegion(int row1, int col1, int row2, int col2) {
+    public int sumQuery(int row1, int col1, int row2, int col2) {
         row1++;
         col1++;
         row2++;
@@ -48,6 +48,6 @@ public class Immutable2DSumRangeQuery {
 
         int[][] input1 = {{2,0,-3,4}, {6, 3, 2, -1}, {5, 4, 7, 3}, {2, -6, 8, 1}};
         Immutable2DSumRangeQuery isr = new Immutable2DSumRangeQuery(input1);
-        System.out.println(isr.sumRegion(1, 1, 2, 2));
+        System.out.println(isr.sumQuery(1, 1, 2, 2));
     }
 }
