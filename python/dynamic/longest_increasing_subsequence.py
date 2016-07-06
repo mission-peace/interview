@@ -3,7 +3,7 @@ Problem Statement
 =================
 
 Find a subsequence in given array in which the subsequence's elements are in sorted order, lowest to highest, and in
-which the subsequence is as long as possible
+which the subsequence is as long as possible.
 
 Video
 -----
@@ -14,7 +14,7 @@ Solution
 
 Dynamic Programming is used to solve this question. DP equation is.::
 
-        if(arr[i] > arr[j]) { T[i] = max(T[i], T[j] + 1 }
+        if(arr[i] > arr[j]) { T[i] = max(T[i], T[j] + 1) }
 
 * Time complexity is O(n^2).
 * Space complexity is O(n)
