@@ -17,11 +17,6 @@ public class ThreadPoolExample {
     public static ExecutorService threadPool =  Executors.newFixedThreadPool(5);
     public void doWork() throws Exception{
         CompletionService<String> completionService = new ExecutorCompletionService<String>(threadPool);
-        
-        Count10 count1 = new Count10(1);
-        Count10 count2 = new Count10(2);
-        Count10 count3 = new Count10(3);
-        
         List<Future<String>> futureList = new ArrayList<Future<String>>();
         for(int i=0; i < 20; i++){
             futureList.add(completionService.submit(new Count10(i)));
