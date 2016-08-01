@@ -1,4 +1,4 @@
-package com.interview.dynamic;
+package com.interview.array;
 
 /**
  * Date 07/31/2016
