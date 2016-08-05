@@ -10,12 +10,12 @@ package com.interview.dynamic;
 public class CountAs {
 
     public int countAs(int n){
-        if(n < 7){
+        if(n <= 7){
             return n;
         }
         
         int T[] = new int[n+1];
-        for(int i=1; i < 7 ; i++){
+        for(int i=1; i <= 7 ; i++){
             T[i] = i;
         }
 
@@ -31,7 +31,7 @@ public class CountAs {
                 T[i] = Math.max(T[i], T[k]*(p-2));
             }
         }
-        
+
         return T[n];
     }
     
