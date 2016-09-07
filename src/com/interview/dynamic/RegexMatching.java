@@ -52,7 +52,7 @@ public class RegexMatching {
 
         T[0][0] = true;
         //Deals with patterns like a* or a*b* or a*b*c*
-        for (int i = 1; i < T[0].length; i++) {
+        for (int i = 1; i <= T[0].length; i++) {
             if (pattern[i-1] == '*') {
                 T[0][i] = T[0][i - 2];
             }
