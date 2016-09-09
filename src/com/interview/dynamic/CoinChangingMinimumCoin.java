@@ -76,7 +76,8 @@ public class CoinChangingMinimumCoin {
             R[i] = -1;
         }
         for(int j=0; j < coins.length; j++){
-            for(int i=coins[j]; i <= total; i++){
+            int i=( (coins[j] > 0) ? coins[j] : 1);
+            for(; i <= total; i++){
                 
                     if (T[i - coins[j]] + 1 < T[i]) {
                         T[i] = 1 + T[i - coins[j]];
