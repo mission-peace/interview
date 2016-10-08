@@ -36,9 +36,9 @@ public class SegmentTreeMinimumRangeQuery {
      */
     public int[] createSegmentTree(int input[]){
         NextPowerOf2 np2 = new NextPowerOf2();
-        //if input len is pow of then size of 
-        //segment tree is 2*len -1 otherwisze
-        //size of segment tree is next (pow of 2 for len) * 2 -1
+        //if input len is pow of 2 then size of 
+        //segment tree is 2*len - 1, otherwise
+        //size of segment tree is next (pow of 2 for len)*2 - 1.
         int nextPowOfTwo = np2.nextPowerOf2(input.length);
         int segmentTree[] = new int[nextPowOfTwo*2 -1];
         
