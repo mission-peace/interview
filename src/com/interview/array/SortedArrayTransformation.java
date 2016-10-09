@@ -8,7 +8,7 @@ package com.interview.array;
  * Apply a function of the form f(x) = ax2 + bx + c to each element x in the array.
  *
  * Time complexity O(n)
- * 
+ *
  * https://leetcode.com/problems/sort-transformed-array/
  */
 public class SortedArrayTransformation {
