@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Date 10/08/2016
  * @author Tushar Roy
- * 
+ *
  * Given a binary tree, collect a tree's nodes as if you were doing this: Collect and remove all leaves, repeat until the tree is empty.
  *
  * Time complexity O(n^2) for unbalanced tree.
