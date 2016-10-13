@@ -10,7 +10,8 @@ import java.util.List;
  * Given a binary tree and a sum, find all root-to-leaf paths where each path's sum equals the given sum.
  *
  * Time complexity O(n)
- * 
+ *
+ * https://leetcode.com/problems/path-sum/
  * https://leetcode.com/problems/path-sum-ii/
  */
 public class PathSum {
@@ -37,5 +38,15 @@ public class PathSum {
         pathSumUtil(root.left, sum - root.data, result, currentPath);
         pathSumUtil(root.right, sum - root.data, result, currentPath);
         currentPath.remove(currentPath.size() - 1);
+    }
+
+    public boolean hasPathSum(Node root, int sum) {
+        if (root == null) {
+            return false;
+        }
+        if (root.left == null && root.right == null) {
+            return root.data == sum;
+        }
+        return hasPathSum(root.left, sum - root.data) || hasPathSum(root.right, sum - root.data);
     }
 }
