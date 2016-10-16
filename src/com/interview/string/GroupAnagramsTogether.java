@@ -7,34 +7,28 @@ import java.util.*;
  */
 public class GroupAnagramsTogether {
     public List<List<String>> groupAnagrams(String[] strs) {
-        if (strs == null || strs.length == 0) return new ArrayList<List<String>>();
-        Map<String, Map<String, Integer>> anagramGroup = new HashMap<>();
+        if (strs == null || strs.length == 0)
+            return new ArrayList<List<String>>();
+        
+        int listIndex = 0;
+        List<List<String>> result = new ArrayList<>();
+        Map<String, Integer> anagramGroup = new HashMap<>();
+        
         for (String str : strs) {
             char[] chars = str.toCharArray();
             Arrays.sort(chars);
             String sorted = new String(chars);
             if (anagramGroup.containsKey(sorted)) {
-                Map<String, Integer> r = anagramGroup.get(sorted);
-                if (r.containsKey(str)) {
-                    r.put(str, r.get(str) + 1);
-                } else {
-                    r.put(str, 1);
-                }
+                int index = anagramGroup.get(sorted);
+                List<String> listResult = result.get(index);    
+                listResult.add(str);
             } else {
-                Map<String, Integer> r = new TreeMap<>();
-                r.put(str, 1);
-                anagramGroup.put(sorted, r);
+                List<String> resultList = new ArrayList<>();
+                resultList.add(str);
+                result.add(listIndex, resultList);
+                anagramGroup.put(sorted, listIndex);
+                listIndex++;
             }
-        }
-        List<List<String>> result = new ArrayList<>();
-        for (Map<String, Integer> value : anagramGroup.values()) {
-            List<String> r = new ArrayList<>();
-            for (String k : value.keySet()) {
-                for (int i = 0; i < value.get(k) ; i++) {
-                    r.add(k);
-                }
-            }
-            result.add(r);
         }
         return result;
     }

@@ -12,7 +12,7 @@ class Node(object):
         return str(self.data)
 
     def __repr__(self):
-        return self.__str__();
+        return self.__str__()
 
 
 class DisjointSet(object):

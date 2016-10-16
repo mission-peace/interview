@@ -11,4 +11,13 @@ public class TestUtil<T> {
             Assert.assertEquals("Failed at index " + i, str, actual.get(i++));
         }
     }
+
+    public void compareListOfList(List<List<T>> expected, List<List<T>> actual) {
+        Assert.assertEquals(expected.size(), actual.size());
+        for (int i = 0; i < expected.size(); i++) {
+            List<T> a1 = expected.get(i);
+            List<T> a2 = expected.get(i);
+            compareList(a1, a2);
+        }
+    }
 }
