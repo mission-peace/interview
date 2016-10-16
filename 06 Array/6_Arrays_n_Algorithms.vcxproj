@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+    </ClCompile>
+    <Link>
+      <TargetMachine>MachineX86</TargetMachine>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <TargetMachine>MachineX86</TargetMachine>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="source files\algorithms-learntnew\DutchNationalFlag-2Colours.cpp" />
+    <ClCompile Include="source files\algorithms-learntnew\DutchNationalFlag-3Colours.cpp" />
+    <ClCompile Include="source files\algorithms-learntnew\Fisher-YatesShufflingofArray.cpp" />
+    <ClCompile Include="source files\algorithms-learntnew\Flood-Fill-Algo_ReplaceXbyOifsurroundedbyX.cpp" />
+    <ClCompile Include="source files\algorithms-learntnew\LighteningSpellAlgorithm.cpp" />
+    <ClCompile Include="source files\algorithms-learntnew\MooresVotingAlgorithm.cpp" />
+    <ClCompile Include="source files\bits\FindTwoElementswithOddOccurrances.cpp" />
+    <ClCompile Include="source files\bits\FullAddernFullSubtractor.cpp" />
+    <ClCompile Include="source files\bits\Multipleof3-Mulitlplyanumby7.cpp" />
+    <ClCompile Include="source files\bits\NextPowerof2.cpp" />
+    <ClCompile Include="source files\bits\ReverseBitsofNumandPrintBits.cpp" />
+    <ClCompile Include="source files\jargonsofarray\CountingInversions.cpp" />
+    <ClCompile Include="source files\jargonsofarray\LEADERSofArray.cpp" />
+    <ClCompile Include="source files\maths\CheckFibonacci-O(1).cpp" />
+    <ClCompile Include="source files\maths\FibonacccibyMultiply.cpp" />
+    <ClCompile Include="source files\maths\HornetEvaluation.cpp" />
+    <ClCompile Include="source files\maths\IsLucky-SieveofEratosthenes.cpp" />
+    <ClCompile Include="source files\maths\Mutiply2numswithNoMulDivLoopBitWise.cpp" />
+    <ClCompile Include="source files\maths\PermutationsofString.cpp" />
+    <ClCompile Include="source files\maths\PrimeFactorsofaNumber.cpp" />
+    <ClCompile Include="source files\maths\RussianPeasantMultiplication.cpp" />
+    <ClCompile Include="source files\maths\TowerofHanoi.cpp" />
+    <ClCompile Include="source files\Stock-BuyingandSellingatmostTwice.cpp" />
+    <ClCompile Include="source files\strings\RemoveDuplicatesfromString.cpp" />
+    <ClCompile Include="source files\z_others\CheckifanElementisMajorityinSortedArray.cpp" />
+    <ClCompile Include="source files\z_others\FindDuplicatesinaRangeinArray.cpp" />
+    <ClCompile Include="source files\z_others\FindifNumbersareConsecutive.cpp" />
+    <ClCompile Include="source files\z_others\Findmaximumj-isuchthatarr[j]gtarr[i].cpp" />
+    <ClCompile Include="source files\z_others\FindPairSum_DoubleHashed.cpp" />
+    <ClCompile Include="source files\z_others\FindSubarraywithgivenKey-3Methods.cpp" />
+    <ClCompile Include="source files\z_others\FindtheFirstOccranceusingBinarySearch.cpp" />
+    <ClCompile Include="source files\z_others\FindtheMissingNoandRepearingNoinaRange.cpp" />
+    <ClCompile Include="source files\z_others\FindtheNextGreatElement.cpp" />
+    <ClCompile Include="source files\z_others\FindtheNoofIslands.cpp" />
+    <ClCompile Include="source files\z_others\FindtheSmallestMissingNumber.cpp" />
+    <ClCompile Include="source files\z_others\FindtheSmallestPositiveNoinUnsortedArraywithNegativeNums.cpp" />
+    <ClCompile Include="source files\z_others\FormaMaximumNumberoutofArrayNumbers.cpp" />
+    <ClCompile Include="source files\z_others\InfixtoPostfixusingStack.cpp" />
+    <ClCompile Include="source files\z_others\LargestSumPair-SingleTraversal.cpp" />
+    <ClCompile Include="source files\z_others\MaxDiffbtwn2NumssuchthatSmallFirstLargerNext.cpp" />
+    <ClCompile Include="source files\z_others\MaximumSumPathArray.cpp" />
+    <ClCompile Include="source files\z_others\MaxnMinusingminimumNoOfComparisons.cpp" />
+    <ClCompile Include="source files\z_others\ProductArray.cpp" />
+    <ClCompile Include="source files\z_others\ReplaceeveryElewithMulofPrevandNext.cpp" />
+    <ClCompile Include="source files\z_others\ReversalAlgorithm-ToRotateArrays.cpp" />
+    <ClCompile Include="source files\z_others\ReverseDoublyLinkedList.cpp" />
+    <ClCompile Include="source files\z_others\ReverseStackSortStackusingRecursion.cpp" />
+    <ClCompile Include="source files\z_others\SegregateOddnEvenNumbers.cpp" />
+    <ClCompile Include="source files\z_others\SortedSubsequenceofSize3-SortedBitonicsize3Sequence.cpp" />
+    <ClCompile Include="source files\z_others\StockSpan.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
