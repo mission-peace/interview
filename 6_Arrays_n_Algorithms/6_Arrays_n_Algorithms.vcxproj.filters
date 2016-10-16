@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Algorithms-LearntNew">
+      <UniqueIdentifier>{f5f7e02b-eda9-4f48-bb05-d82dd445de89}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source files\Stock-BuyingandSellingatmostTwice.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source files\bits\FindTwoElementswithOddOccurrances.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source files\bits\FullAddernFullSubtractor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source files\bits\Multipleof3-Mulitlplyanumby7.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source files\bits\NextPowerof2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source files\bits\ReverseBitsofNumandPrintBits.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source files\jargonsofarray\CountingInversions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source files\jargonsofarray\LEADERSofArray.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source files\maths\CheckFibonacci-O(1).cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source files\maths\FibonacccibyMultiply.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source files\maths\HornetEvaluation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source files\maths\IsLucky-SieveofEratosthenes.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source files\maths\Mutiply2numswithNoMulDivLoopBitWise.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source files\maths\PermutationsofString.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source files\maths\PrimeFactorsofaNumber.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source files\maths\RussianPeasantMultiplication.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source files\maths\TowerofHanoi.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source files\strings\RemoveDuplicatesfromString.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source files\z_others\CheckifanElementisMajorityinSortedArray.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source files\z_others\FindDuplicatesinaRangeinArray.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source files\z_others\FindifNumbersareConsecutive.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source files\z_others\Findmaximumj-isuchthatarr[j]gtarr[i].cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source files\z_others\FindPairSum_DoubleHashed.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source files\z_others\FindSubarraywithgivenKey-3Methods.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source files\z_others\FindtheFirstOccranceusingBinarySearch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source files\z_others\FindtheMissingNoandRepearingNoinaRange.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source files\z_others\FindtheNextGreatElement.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source files\z_others\FindtheNoofIslands.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source files\z_others\FindtheSmallestMissingNumber.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source files\z_others\FindtheSmallestPositiveNoinUnsortedArraywithNegativeNums.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source files\z_others\FormaMaximumNumberoutofArrayNumbers.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source files\z_others\InfixtoPostfixusingStack.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source files\z_others\LargestSumPair-SingleTraversal.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source files\z_others\MaxDiffbtwn2NumssuchthatSmallFirstLargerNext.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source files\z_others\MaximumSumPathArray.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source files\z_others\MaxnMinusingminimumNoOfComparisons.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source files\z_others\ProductArray.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source files\z_others\ReplaceeveryElewithMulofPrevandNext.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source files\z_others\ReversalAlgorithm-ToRotateArrays.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source files\z_others\ReverseDoublyLinkedList.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source files\z_others\ReverseStackSortStackusingRecursion.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source files\z_others\SegregateOddnEvenNumbers.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source files\z_others\SortedSubsequenceofSize3-SortedBitonicsize3Sequence.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source files\z_others\StockSpan.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source files\algorithms-learntnew\DutchNationalFlag-2Colours.cpp">
+      <Filter>Source Files\Algorithms-LearntNew</Filter>
+    </ClCompile>
+    <ClCompile Include="source files\algorithms-learntnew\DutchNationalFlag-3Colours.cpp">
+      <Filter>Source Files\Algorithms-LearntNew</Filter>
+    </ClCompile>
+    <ClCompile Include="source files\algorithms-learntnew\Fisher-YatesShufflingofArray.cpp">
+      <Filter>Source Files\Algorithms-LearntNew</Filter>
+    </ClCompile>
+    <ClCompile Include="source files\algorithms-learntnew\Flood-Fill-Algo_ReplaceXbyOifsurroundedbyX.cpp">
+      <Filter>Source Files\Algorithms-LearntNew</Filter>
+    </ClCompile>
+    <ClCompile Include="source files\algorithms-learntnew\LighteningSpellAlgorithm.cpp">
+      <Filter>Source Files\Algorithms-LearntNew</Filter>
+    </ClCompile>
+    <ClCompile Include="source files\algorithms-learntnew\MooresVotingAlgorithm.cpp">
+      <Filter>Source Files\Algorithms-LearntNew</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
