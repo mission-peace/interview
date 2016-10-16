@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+    </ClCompile>
+    <Link>
+      <TargetMachine>MachineX86</TargetMachine>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <TargetMachine>MachineX86</TargetMachine>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="source files - bst\BST-DLL.cpp" />
+    <ClCompile Include="source files - bst\BST-Insert-Search-Delete.cpp" />
+    <ClCompile Include="source files - bst\FloornCeil.cpp" />
+    <ClCompile Include="source files - bst\kthSmallestNodeinBST.cpp" />
+    <ClCompile Include="source files - bst\Print-Successor_Predecessor_LCA.cpp" />
+    <ClCompile Include="source files - bst\PrintKeysinaGivenRange-BST.cpp" />
+    <ClCompile Include="source files - bst\SortedLL-BST.cpp" />
+    <ClCompile Include="source files - bst\SortelementsbyFrequency.cpp" />
+    <ClCompile Include="source files - bt\Array-BST.cpp" />
+    <ClCompile Include="source files - bt\ConvertBtreetoChildSumTree.cpp" />
+    <ClCompile Include="source files - bt\ConvertBTreetoDLL.cpp" />
+    <ClCompile Include="source files - bt\ConvertLeavesofBtreetoDLL.cpp" />
+    <ClCompile Include="source files - bt\MorrisTraversal-FindthekthSmallestNode.cpp" />
+    <ClCompile Include="source files - bt\Printnodes-kdistancefromRoot.cpp" />
+    <ClCompile Include="source files - bt\PrintNodeskdistancefromLeaf.cpp" />
+    <ClCompile Include="source files - bt\SpiralorZigZagandDiagonalTreeTraversal.cpp" />
+    <ClCompile Include="source files - bt\SprialTraversalofTree-ITERnRECUR.cpp" />
+    <ClCompile Include="source files - bt\SumofNumbersformedbyRoottoLeafPathinBtree.cpp" />
+    <ClCompile Include="source files - bt\treeconstructions\BuildTreefromInorderandLevelOrder.cpp" />
+    <ClCompile Include="source files - bt\treeconstructions\ConstructBtreefromSLL_RecurisveandIterative.cpp" />
+    <ClCompile Include="source files - bt\treeconstructions\ConvertBinaryTreetoDoublyLinkedList_RecursivenIterative.cpp" />
+    <ClCompile Include="source files - bt\treedeletesnremoves\DeleteTree_RecursivenIterative.cpp" />
+    <ClCompile Include="source files - bt\treeoperations\BracketBalance.cpp" />
+    <ClCompile Include="source files - bt\treeoperations\ConnecttheNodesatSameLevel_Iterative.cpp" />
+    <ClCompile Include="source files - bt\treeoperations\DeepestLeafwhichistheLeftChild_RecursivenITerative.cpp" />
+    <ClCompile Include="source files - bt\treeoperations\FindtheMaximumOddDepthLeafNode_IterativenRecursive.cpp" />
+    <ClCompile Include="source files - bt\treeoperations\FindtheSumofallLeftLeaf_RecursivenIterative.cpp" />
+    <ClCompile Include="source files - bt\treeoperations\MirrortheTree_Recursive.cpp" />
+    <ClCompile Include="source files - bt\treeoperations\PopulatetheInorderSuccessor_RecursivenIterative.cpp" />
+    <ClCompile Include="source files - bt\treeoperations\SerializeandDeserializeBSTusingPostOrder_useSTL.cpp" />
+    <ClCompile Include="source files - bt\treeoperations\SerializeandDeserializeBSTusingPreOrder_useSTL.cpp" />
+    <ClCompile Include="source files - bt\treeoperations\Trees_Intro.cpp" />
+    <ClCompile Include="source files - bt\treeproperties\CheckifTreeisHeightBalanced_Recursive.cpp" />
+    <ClCompile Include="source files - bt\treeproperties\ChildSumProperty_Iterative.cpp" />
+    <ClCompile Include="source files - bt\treeproperties\ChildSumProperty_Recursive.cpp" />
+    <ClCompile Include="source files - bt\treeproperties\CountLeafNodesinBTree_Iterative.cpp" />
+    <ClCompile Include="source files - bt\treeproperties\CountLeafNodesinBtree_Recursive.cpp" />
+    <ClCompile Include="source files - bt\treeproperties\DoubleTree.cpp" />
+    <ClCompile Include="source files - bt\treeproperties\HeightofTree_Iterative.cpp" />
+    <ClCompile Include="source files - bt\treeproperties\HeightofTree_Recursive.cpp" />
+    <ClCompile Include="source files - bt\treeproperties\SizeofBTree_Iterative.cpp" />
+    <ClCompile Include="source files - bt\treeproperties\SizeofBTree_Recursive.cpp" />
+    <ClCompile Include="source files - bt\treeproperties\TreeIsomorphismnTreeFoldability.cpp" />
+    <ClCompile Include="source files - bt\treeproperties\WidthoftheTree_Recursive.cpp" />
+    <ClCompile Include="source files - bt\treeproperties\WidthofTree_Iterative.cpp" />
+    <ClCompile Include="source files - bt\TreeTraversal_8waysRecurIter.cpp" />
+    <ClCompile Include="source files - bt\treeviewsntraversals\BottomViewofTree-MultipleEntriesPrinting.cpp" />
+    <ClCompile Include="source files - bt\treeviewsntraversals\BottomViewofTree.cpp" />
+    <ClCompile Include="source files - bt\treeviewsntraversals\DFSTree_PrintthepathsfromRoot2Leaf_IterativenRecursive.cpp" />
+    <ClCompile Include="source files - bt\treeviewsntraversals\Distancebetween2Nodes_LCA.cpp" />
+    <ClCompile Include="source files - bt\treeviewsntraversals\LeftViewnRightViewofTree-RECnITER.cpp" />
+    <ClCompile Include="source files - bt\treeviewsntraversals\LeftViewofTree.cpp" />
+    <ClCompile Include="source files - bt\treeviewsntraversals\LevelOrder_Left2Right.cpp" />
+    <ClCompile Include="source files - bt\treeviewsntraversals\LevelOrder_Right2Left.cpp" />
+    <ClCompile Include="source files - bt\treeviewsntraversals\MOrrisTraversal-Inorder-PreOrder.cpp" />
+    <ClCompile Include="source files - bt\treeviewsntraversals\PostorderTraversal_Iterative.cpp" />
+    <ClCompile Include="source files - bt\treeviewsntraversals\PreorderTraversal_Iterative.cpp" />
+    <ClCompile Include="source files - bt\treeviewsntraversals\PrintLeaftoNode.cpp" />
+    <ClCompile Include="source files - bt\treeviewsntraversals\PrinttheAncestorsofTree_IterativenRecursive.cpp" />
+    <ClCompile Include="source files - bt\treeviewsntraversals\RightViewofTree.cpp" />
+    <ClCompile Include="source files - bt\treeviewsntraversals\TopViewofTree-MultipleEntries-tweakBottomView.cpp" />
+    <ClCompile Include="source files - bt\treeviewsntraversals\TopViewofTree.cpp" />
+    <ClCompile Include="source files - bt\treeviewsntraversals\VerticalOrderSUM.cpp" />
+    <ClCompile Include="source files - bt\treeviewsntraversals\VerticalOrderTraversal.cpp" />
+    <ClCompile Include="source files - bt\VerticalSum-usingDLL.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
