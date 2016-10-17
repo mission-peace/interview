@@ -4,92 +4,89 @@ import java.util.*;
 
 /**
  * Given two words (beginWord and endWord), and a dictionary's word list, find all shortest transformation sequence(s) from beginWord to endWord, such that:
-
- Only one letter can be changed at a time
- Each intermediate word must exist in the word list
+ * Only one letter can be changed at a time
+ * Each intermediate word must exist in the word list
+ *
+ * Solution -
+ * Since we have to find all paths we need care about below extra stuff on top of regular BFS
+ * 1) Maintain parent of every word to recreate the path
+ * 2) Maintain 2 visited. First is for level and once the entire level is done then move it to visited.
+ * 3) Also since we are looking result from beginWord to endWord switch them initially and go from endWord towards beginWord.
+ *
  * https://leetcode.com/problems/word-ladder-ii/
  */
 public class WordLadder {
     public List<List<String>> findLadders(String beginWord, String endWord, Set<String> wordList) {
-        wordList.add(endWord);
+        if (wordList == null || wordList.size() == 0) {
+            return Collections.EMPTY_LIST;
+        }
+        String temp = endWord;
+        endWord = beginWord;
+        beginWord = temp;
+        Map<String, List<String>> parent = new HashMap<>();
+        Queue<String> queue1 = new LinkedList<>();
         Set<String> visited = new HashSet<>();
-        Deque<String> queue = new LinkedList<>();
-        Map<String, Set<String>> parent = new HashMap<>();
-        List<List<String>> result = new ArrayList<>();
-        queue.offerFirst(beginWord);
-        queue.offerFirst(null);
-        boolean foundEndWord = false;
         Set<String> levelVisited = new HashSet<>();
+        List<List<String>> result = new ArrayList<>();
+        parent.put(beginWord, null);
+        queue1.offer(beginWord);
         visited.add(beginWord);
-        while (!queue.isEmpty()) {
-            String word = queue.pollLast();
-            if (word == null) {
-                visited.addAll(levelVisited);
-                levelVisited.clear();
-                if (foundEndWord) {
-                    break;
-                } else if (!queue.isEmpty()) {
-                    queue.offerFirst(null);
+        boolean foundDestination = false;
+        while (!queue1.isEmpty()) {
+            while (!queue1.isEmpty()) {
+                String word = queue1.poll();
+                for (int i = 0; i < word.length(); i++) {
+                    char wordArray[] = word.toCharArray();
+                    for (char ch = 'a'; ch <= 'z'; ch++) {
+                        wordArray[i] = ch;
+                        String newWord = new String(wordArray);
+                        if (!endWord.equals(newWord) && (!wordList.contains(newWord) || visited.contains(newWord))) {
+                            continue;
+                        }
+                        List<String> parents = parent.get(newWord);
+                        if (parents == null) {
+                            parents = new ArrayList<>();
+                            parent.put(newWord, parents);
+                        }
+                        parents.add(word);
+
+                        levelVisited.add(newWord);
+                        if (endWord.equals(newWord)) {
+                            foundDestination = true;
+                            break;
+                        }
+                    }
                 }
-                continue;
             }
-            List<String> neighbors = nextWord(visited, wordList, word);
-            for (String neighbor : neighbors) {
-                Set<String> set = parent.get(neighbor);
-                if (set == null) {
-                    set = new HashSet<>();
-                }
-                set.add(word);
-                parent.put(neighbor, set);
-                levelVisited.add(neighbor);
-                if (endWord.equals(neighbor)) {
-                    foundEndWord = true;
-                }
-                queue.offerFirst(neighbor);
+            if (foundDestination) {
+                break;
             }
+            for (String word : levelVisited) {
+                queue1.offer(word);
+                visited.add(word);
+            }
+            levelVisited.clear();
         }
-        if (!foundEndWord) {
-            return Collections.emptyList();
+        if (!foundDestination) {
+            return Collections.EMPTY_LIST;
+        } else {
+            setParent(parent, beginWord, new ArrayList<>(), endWord, result);
         }
-        setResult(endWord, parent, new ArrayList<>(), beginWord, result);
         return result;
     }
 
-    private void setResult(String word, Map<String, Set<String>> map, List<String> result, String beginWord, List<List<String>> finalResult) {
-        result.add(word);
-        if (beginWord.equals(word)) {
-            List<String> r = new ArrayList<>();
-            r.addAll(result);
-            Collections.reverse(r);
-            finalResult.add(r);
-            result.remove(result.size() - 1);
+    private void setParent(Map<String, List<String>> parent, String startWord, List<String> path, String currentWord,
+                           List<List<String>> result) {
+        path.add(currentWord);
+        if (startWord.equals(currentWord)) {
+            result.add(new ArrayList<>(path));
+            path.remove(path.size() - 1);
             return;
         }
-        Set<String> set = map.get(word);
-        for (String parent : set) {
-            setResult(parent, map, result, beginWord, finalResult);
+        for (String p :  parent.get(currentWord)) {
+            setParent(parent, startWord, path, p, result);
         }
-        result.remove(result.size() - 1);
-    }
-
-    private List<String> nextWord(Set<String> visited, Set<String> wordList, String word) {
-        List<String> neighbors = new ArrayList<>();
-        char[] input = word.toCharArray();
-        for (int i = 0; i < input.length; i++) {
-            char ch = input[i];
-            for (char k = 'a'; k <= 'z'; k++) {
-                if (k == ch) {
-                    continue;
-                }
-                input[i] = k;
-                String newString = new String(input);
-                if (!visited.contains(newString) && wordList.contains(newString)) {
-                    neighbors.add(newString);
-                }
-            }
-            input[i] = ch;
-        }
-        return neighbors;
+        path.remove(path.size() - 1);
     }
 
     public static void main(String args[]) {
