@@ -1,5 +1,8 @@
 package com.interview.string;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Date 04/03/2016
  * @author Tushar Roy
@@ -38,6 +41,42 @@ public class LongestSubstringWithKDistinctCharacters {
                 }
             }
             ascii[ch]++;
+            max = Math.max(max, i - start + 1);
+        }
+        return max;
+    }
+
+    public int lengthOfLongestSubstringKDistinctUsingMap(String s, int k) {
+        if (k == 0 || s.length() == 0) {
+            return 0;
+        }
+        Map<Character, Integer> countMap = new HashMap<>();
+        int max = 0;
+        int start = 0;
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+            if (!countMap.containsKey(ch) && countMap.size() >= k) {
+                while (start < i) {
+                    countMap.compute(s.charAt(start), (key, val) -> {
+                        if (val == 1) {
+                            return null;
+                        } else {
+                            return val - 1;
+                        }
+                    });
+                    start++;
+                    if (countMap.size() < k) {
+                        break;
+                    }
+                }
+            }
+            countMap.compute(ch, (key, val) -> {
+                if (val == null) {
+                    return 1;
+                } else {
+                    return val + 1;
+                }
+            });
             max = Math.max(max, i - start + 1);
         }
         return max;
