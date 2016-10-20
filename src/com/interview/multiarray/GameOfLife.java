@@ -1,126 +1,70 @@
 package com.interview.multiarray;
 
+/**
+ * Date 10/20/2016
+ * @author Tushar Roy
+ * Given a board with m by n cells, each cell has an initial state live (1) or dead (0).
+ * Each cell interacts with its eight neighbors (horizontal, vertical, diagonal) using the following
+ * four rules (taken from the above Wikipedia article):
+ * Read full qs on leetcode.
+ *
+ * Solution - Keep two array prev and current. Fill the values in current array. As soon as current row is done
+ * replace elemments of board with prev array.
+ *
+ * Time complexity O(n * m)
+ *
+ * https://leetcode.com/problems/game-of-life/
+ */
 public class GameOfLife {
+    public void gameOfLife(int[][] board) {
+        if (board.length == 0 || board[0].length == 0) {
+            return;
+        }
+        int n = board.length;
+        int m = board[0].length;
+        int[] prevRow = new int[m];
+        int[] currentRow = new int[m];
 
-	boolean [][]board = null;
-	boolean [][]tempBoard = null;
-	public GameOfLife(boolean[][] initialState){
-		board = initialState;
-		tempBoard = new boolean[board.length][board.length];
-	}
-	
-	public void printState(){
-		for(int i=0; i < board.length; i++){
-			for(int j=0; j < board[i].length; j++){
-				if(board[i][j]){
-					System.out.print("1 ");
-				}else{
-					System.out.print("0 ");
-				}
-			}
-			System.out.print("\n");
-		}
-		System.out.print("\n\n");
-	}
-	
-	public void next(){
-		
-		int count=0;
-		for(int i=0; i < board.length; i++){
-			for(int j=0; j < board[i].length; j++){
-				count = countNeighbors(i, j);
-				tempBoard[i][j] = board[i][j];
-				if(count <= 1){
-					tempBoard[i][j] = false;
-				}
-				if(count ==3){
-					tempBoard[i][j] = true;
-				}
-				if(count >= 4){
-					tempBoard[i][j] = false;
-				}
-			}
-		}
-		boolean[][] rBoard = tempBoard;
-		tempBoard = board;
-		board = rBoard;
-	}
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                currentRow[j] = doesLive(i, j, board) ? 1 : 0;
+            }
+            if (i != 0) {
+                copyRow(prevRow, board[i - 1]);
+            }
+            if (i != n - 1) {
+                copyRow(currentRow, prevRow);
+            }
+        }
+        copyRow(currentRow, board[n - 1]);
+    }
 
-	public void nextOptimized(){
-		
-		boolean temp1[] = new boolean[board[0].length];
-		boolean temp2[] = new boolean[board[0].length];
-		calculate(board,temp1,0);
-		for(int i=1; i < board.length; i++){
-			calculate(board,temp2,i);
-			copy(i-1,temp1);
-			copy(temp1,temp2);
-		}
-		copy(board.length-1,temp1);
-	}
-	
-	void copy(boolean arr1[],boolean arr2[]){
-		for(int i=0; i <arr2.length; i++){
-			arr1[i] = arr2[i];
-		}
-	}
-	
-	void calculate(boolean [][]board,boolean temp[],int i){
-		int count=0;
-		for(int j=0; j < board[i].length; j++){
-			count = countNeighbors(i, j);
-			temp[j] = board[i][j];
-			if(count <= 1){
-				temp[j] = false;
-			}
-			if(count ==3){
-				temp[j] = true;
-			}
-			if(count >= 4){
-				temp[j] = false;
-			}
-		}
+    private void copyRow(int[] source, int[] dest) {
+        for (int i = 0; i < source.length; i++) {
+            dest[i] = source[i];
+        }
+    }
 
-	}
-	
-	private void copy(int i,boolean []temp){
-		for(int x=0; x < temp.length; x++){
-			board[i][x] = temp[x];
-		}
-	}
-
-	private int countNeighbors(int i,int j){
-		int count =0;
-		for(int k = i-1; k <= i+1; k++){
-			for(int l = j-1; l <= j+1; l++){
-				if((i ==k && j == l) || k < 0 || l < 0 || k >= board.length || l >= board[k].length){
-					continue;
-				}
-				if(board[k][l]){
-					count++;
-				}
-			}
-		}
-		return count;
-	}
-	
-	public static void main(String args[]){
-		boolean[][] initialState = new boolean[10][10];
-		initialState[3][6] = true;
-		initialState[4][6] = true;
-		initialState[5][6] = true;
-		initialState[5][7] = true;
-		initialState[5][8] = true;
-		GameOfLife gol = new GameOfLife(initialState);
-		gol.printState();
-		gol.nextOptimized();
-		gol.printState();
-		gol.nextOptimized();
-		gol.printState();
-		gol.nextOptimized();
-		gol.printState();
-		gol.nextOptimized();
-		gol.printState();
-		
-	}
+    private boolean doesLive(int x, int y, int[][] board) {
+        int count = 0;
+        for (int i = x - 1; i <= x + 1; i++) {
+            for (int j = y - 1; j <= y + 1; j++) {
+                if (x == i && y == j) {
+                    continue;
+                }
+                if (i < 0 || i >= board.length) {
+                    break;
+                }
+                if (j < 0 || j >= board[0].length) {
+                    continue;
+                }
+                count += board[i][j];
+            }
+        }
+        if (board[x][y] == 1) {
+            return count == 2 || count == 3;
+        } else {
+            return count == 3;
+        }
+    }
 }
