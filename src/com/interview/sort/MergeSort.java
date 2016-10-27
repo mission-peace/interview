@@ -26,7 +26,7 @@ public class MergeSort {
         sortedMerge(input,low,high);
    }
     
-   private void sortedMerge(int input[], int low, int high){
+ private void sortedMerge(int input[], int low, int high){
         int middle = (low+high)/2;
         int temp[] = new int[middle-low+1];
         int i = 0;
