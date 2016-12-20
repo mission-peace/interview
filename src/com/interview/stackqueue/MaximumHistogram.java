@@ -53,7 +53,7 @@ public class MaximumHistogram {
                 if(stack.isEmpty()){
                     area = input[top] * i;
                 }
-                //if stack is not empty then everythin from i-1 to input.peek() + 1
+                //if stack is not empty then everythin from i-1 to stack.peek() + 1
                 //has to be greater or equal to input[top]
                 //so area = input[top]*(i - stack.peek() - 1);
                 else{
