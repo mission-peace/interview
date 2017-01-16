@@ -2,10 +2,41 @@ package com.interview.dynamic;
 
 /**
  * Paint House 2
+ * https://leetcode.com/problems/paint-house/
  * https://leetcode.com/problems/paint-house-ii/
  */
 public class PaintHouse {
-    public int minCost(int[][] costs) {
+
+    public int minCostTopDownPainHouse1(int[][] costs) {
+        if (costs.length == 0) {
+            return 0;
+        }
+        int[][] dp = new int[costs.length][3];
+        return minCostUtil(costs, 0, -1, dp);
+    }
+
+    private int minCostUtil(int[][] costs, int house, int prevColor, int[][] dp) {
+        if (house == costs.length) {
+            return 0;
+        }
+        int min = Integer.MAX_VALUE;
+        for (int i = 0; i <= 2; i++) {
+            if (i == prevColor) {
+                continue;
+            }
+            int val;
+            if (dp[house][i] != 0) {
+                val = dp[house][i];
+            } else {
+                val = costs[house][i] + minCostUtil(costs, house + 1, i, dp);
+                dp[house][i] = val;
+            }
+            min = Math.min(min, val);
+        }
+        return min;
+    }
+
+    public int minCostBottomUpPaintHouse2(int[][] costs) {
         if (costs.length == 0 || costs[0].length == 0) {
             return 0;
         }
@@ -64,6 +95,6 @@ public class PaintHouse {
     public static void main(String args[]) {
         PaintHouse ph = new PaintHouse();
         int[][] input = {{1, 2, 1}, {1, 4, 5}, {2, 6, 1}, {3, 3, 2}};
-        System.out.println(ph.minCost(input));
+        System.out.println(ph.minCostBottomUpPaintHouse2(input));
     }
 }
