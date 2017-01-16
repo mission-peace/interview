@@ -1,26 +1,26 @@
 package com.interview.dynamic;
 
 /**
- * Paint House 2
+ * Paint House
  * https://leetcode.com/problems/paint-house/
  * https://leetcode.com/problems/paint-house-ii/
  */
 public class PaintHouse {
 
-    public int minCostTopDownPainHouse1(int[][] costs) {
+    public int minCostTopDownPainHouse1or2(int[][] costs) {
         if (costs.length == 0) {
             return 0;
         }
         int[][] dp = new int[costs.length][3];
-        return minCostUtil(costs, 0, -1, dp);
+        return minCostUtil(costs, 0, -1, 3, dp);
     }
 
-    private int minCostUtil(int[][] costs, int house, int prevColor, int[][] dp) {
+    private int minCostUtil(int[][] costs, int house, int prevColor, int k, int[][] dp) {
         if (house == costs.length) {
             return 0;
         }
         int min = Integer.MAX_VALUE;
-        for (int i = 0; i <= 2; i++) {
+        for (int i = 0; i < k; i++) {
             if (i == prevColor) {
                 continue;
             }
@@ -28,7 +28,7 @@ public class PaintHouse {
             if (dp[house][i] != 0) {
                 val = dp[house][i];
             } else {
-                val = costs[house][i] + minCostUtil(costs, house + 1, i, dp);
+                val = costs[house][i] + minCostUtil(costs, house + 1, i, k, dp);
                 dp[house][i] = val;
             }
             min = Math.min(min, val);
