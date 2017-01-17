@@ -1,38 +1,50 @@
 package com.interview.binarysearch;
 
+/**
+ * @author Tushar Roy
+ * Date 01/17/2107
+ * A peak element is an element that is greater than its neighbors. Find index of peak element in the array.
+ *
+ * Space complexity is O(1)
+ * Time complexity is O(n)
+ *
+ * https://leetcode.com/problems/find-peak-element/
+ */
 public class PeakElement {
 
-    public int peakElement(int arr[]){
+    public int findPeakElement(int[] nums) {
         int low = 0;
-        int high = arr.length-1;
-        while(low < high){
-            int mid = (low+high)/2;
-            if(mid == 0 || mid == arr.length-1){
-                return arr[mid];
+        int high = nums.length - 1;
+        int middle = 0;
+        while (low <= high) {
+            middle = (low + high)/2;
+            int before = Integer.MIN_VALUE;
+            if (middle > 0) {
+                before = nums[middle - 1];
             }
-            if(arr[mid] > arr[mid-1] && arr[mid] > arr[mid+1]){
-                return arr[mid];
+            int after = Integer.MIN_VALUE;
+            if (middle < nums.length - 1) {
+                after = nums[middle + 1];
             }
-            if(arr[mid] < arr[mid-1]){
-                high = mid-1;
-                continue;
-            }
-            if(arr[mid] < arr[mid+1]){
-                low = mid+1;
-                continue;
+            if (nums[middle] > before && nums[middle] > after) {
+                return middle;
+            } else if (before > after) {
+                high = middle - 1;
+            } else {
+                low = middle + 1;
             }
         }
-        return arr[low];
+        return middle;
     }
-    
+
     public static void main(String args[]){
         int arr[] = {10,5,15,2,23,90,67};
         PeakElement pe = new PeakElement();
-        System.out.println(pe.peakElement(arr));
+        System.out.println(pe.findPeakElement(arr));
         int arr1[] = {10,20,30,40,50};
-        System.out.println(pe.peakElement(arr1));
+        System.out.println(pe.findPeakElement(arr1));
         int arr2[] = {100,90,80,70,60};
-        System.out.println(pe.peakElement(arr2));
+        System.out.println(pe.findPeakElement(arr2));
                 
     }
 }
