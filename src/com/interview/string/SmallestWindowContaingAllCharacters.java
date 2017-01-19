@@ -12,97 +12,49 @@ public class SmallestWindowContaingAllCharacters {
 
     public String minWindow(String s, String t) {
         Map<Character, Integer> countMap = new HashMap<>();
-        for (char s1 : t.toCharArray()) {
-            countMap.compute(s1, (key, val) -> {
-                if (val == null) {
-                    return 1;
+        for (char ch : t.toCharArray()) {
+            Integer val = countMap.get(ch);
+            if (val == null) {
+                val = 0;
+            }
+            countMap.put(ch, val + 1);
+        }
+        int start = 0;
+        int currLen = t.length();
+        int minWindow = Integer.MAX_VALUE;
+        int minStart = 0;
+        int i = 0;
+        while (i < s.length()) {
+            Integer val = countMap.get(s.charAt(i));
+            if (val == null) {
+                i++;
+                continue;
+            }
+            if (val > 0) {
+                currLen--;
+            }
+            val--;
+            countMap.put(s.charAt(i), val);
+            while (currLen == 0) {
+                if (minWindow > i - start + 1) {
+                    minWindow = i - start + 1;
+                    minStart = start;
                 }
-                return val + 1;
-            });
-        }
-
-        Map<Character, Integer> foundMap = new HashMap<>();
-        for (char s1 : t.toCharArray()) {
-            foundMap.put(s1, 0);
-        }
-
-        int startWindow;
-        int charsFound = 0;
-        for (startWindow = 0; startWindow < s.length(); startWindow++) {
-            if (countMap.containsKey(s.charAt(startWindow))) {
-                break;
-            }
-        }
-        int minWindowStart = Integer.MIN_VALUE;
-        int minWindowEnd = -1;
-        int totalCharacters = t.length();
-        for (int i = startWindow; i < s.length(); i++) {
-            char ch = s.charAt(i);
-            Integer count = countMap.get(ch);
-            if (count != null) {
-                Integer actualCount = foundMap.get(ch);
-                foundMap.put(ch, actualCount + 1);
-                if (actualCount < count) {
-                    charsFound++;
-                    if (charsFound == totalCharacters) {
-                        if (i - startWindow < minWindowEnd - minWindowStart) {
-                            minWindowStart = startWindow;
-                            minWindowEnd = i;
-                        }
-                        ShrinkResult sr = shrinkWindow(countMap, foundMap, startWindow, s, i);
-                        if (sr.fullStartWindow != -1) {
-                            if (i - sr.fullStartWindow < minWindowEnd - minWindowStart) {
-                                minWindowStart = sr.fullStartWindow;
-                                minWindowEnd = i;
-                            }
-                        }
-                        startWindow = sr.startWindow;
-                        charsFound--;
-                    }
-                }
-            }
-        }
-        if (minWindowEnd == -1) {
-            return "";
-        } else {
-            return s.substring(minWindowStart, minWindowEnd + 1);
-        }
-    }
-
-    class ShrinkResult {
-        int startWindow;
-        int fullStartWindow;
-    }
-
-    private ShrinkResult shrinkWindow(Map<Character, Integer> countMap, Map<Character, Integer> foundMap,
-                                      int startWindow, String s, int end) {
-        boolean firstViolation = false;
-        int diff = -1;
-        int i;
-        for(i = startWindow; i <= end; i++) {
-            if(!firstViolation) {
-                diff = i;
-            }
-            char ch = s.charAt(i);
-            Integer count = countMap.get(ch);
-            if (count != null) {
-                int actualCount = foundMap.get(ch);
-                if (firstViolation) {
-                    if (actualCount <= count) {
+                Integer val1 = countMap.get(s.charAt(start));
+                if (val1 != null) {
+                    if (val1 == 0) {
                         break;
-                    }
-                } else {
-                    if (actualCount == count) {
-                        firstViolation = true;
+                    } else {
+                        val1++;
+                        countMap.put(s.charAt(start), val1);
                     }
                 }
-                foundMap.compute(ch, (key, val) -> val - 1);
+                start++;
             }
+            i++;
         }
-        ShrinkResult sr = new ShrinkResult();
-        sr.fullStartWindow = diff;
-        sr.startWindow = i;
-        return sr;
+
+        return minWindow != Integer.MAX_VALUE ? s.substring(minStart, minStart + minWindow) : "";
     }
 
     public static void main(String args[]) {
