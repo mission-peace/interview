@@ -18,6 +18,47 @@ import java.util.LinkedList;
 public class StockBuySellKTransactions {
 
     /**
+     * Below solution is accepted by leetcode and runs in space proportional to prices length.
+     */
+    public int maxProfitLinearSpace(int k, int[] prices) {
+        if (k == 0 || prices.length == 0) {
+            return 0;
+        }
+
+        if (k >= prices.length) {
+            return allTimeProfit(prices);
+        }
+        int[] T = new int[prices.length];
+        int[] prev = new int[prices.length];
+        for (int i = 1; i <= k; i++) {
+            int maxDiff = -prices[0];
+            for (int j = 1; j < prices.length; j++) {
+                T[j] = Math.max(T[j - 1], maxDiff + prices[j]);
+                maxDiff = Math.max(maxDiff, prev[j] - prices[j]);
+            }
+            for (int j = 1; j < prices.length; j++) {
+                prev[j] = T[j];
+            }
+        }
+        return T[T.length - 1];
+    }
+
+    public int allTimeProfit(int arr[]){
+        int profit = 0;
+        int localMin = arr[0];
+        for(int i=1; i < arr.length;i++){
+            if(arr[i-1] >= arr[i]){
+                localMin = arr[i];
+            }else{
+                profit += arr[i] - localMin;
+                localMin = arr[i];
+            }
+
+        }
+        return profit;
+    }
+
+    /**
      * This is faster method which does optimization on slower method
      * Time complexity here is O(K * number of days)
      *
