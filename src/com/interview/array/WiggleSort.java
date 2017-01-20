@@ -16,7 +16,8 @@ import java.util.Arrays;
  */
 public class WiggleSort {
 
-    public void wiggleSort(int[] arr) {
+    //looking for nums[0] < nums[1] > nums[2] < nums[3] and so on.
+    public void wiggleSort2(int[] arr) {
         if (arr.length == 0) {
             return;
         }
@@ -43,12 +44,18 @@ public class WiggleSort {
 
     //in this version we are looking for nums[0] <= nums[1] >= nums[2] <= nums[3] and so on.
     public void wiggleSort1(int[] nums) {
-        for (int i=1; i<nums.length; i++) {
-            int a = nums[i-1];
-            if ((i%2 == 1) == (a > nums[i])) {
-                nums[i-1] = nums[i];
-                nums[i] = a;
+        boolean flag = true;
+        for (int i = 0; i < nums.length - 1; i++) {
+            if (flag) {
+                if (nums[i] > nums[i + 1]) {
+                    swap(nums, i, i + 1);
+                }
+            } else {
+                if (nums[i] < nums[i + 1]) {
+                    swap(nums, i, i + 1);
+                }
             }
+            flag = !flag;
         }
     }
 
@@ -65,7 +72,7 @@ public class WiggleSort {
     public static void main(String args[]) {
         WiggleSort ws = new WiggleSort();
         int input[] =  {6, 2, 1, 6, 8, 9, 6};
-        ws.wiggleSort(input);
+        ws.wiggleSort2(input);
         System.out.print(Arrays.toString(input));
     }
 }
