@@ -32,104 +32,30 @@ public class InsertInterval {
         Interval(int s, int e) { start = s; end = e; }
     }
 
-    class BinarySearchResult {
-        int low;
-        int high;
-    }
-
-    public List<Interval> insertBinarySearchBased(List<Interval> intervals, Interval newInterval) {
-        if (intervals.size() == 0) {
-            return Collections.singletonList(newInterval);
-        }
-
-        if (newInterval.start > intervals.get(intervals.size() - 1).end) {
-            intervals.add(newInterval);
-            return intervals;
-        }
-
-        if (newInterval.end < intervals.get(0).start) {
-            intervals.add(0, newInterval);
-            return intervals;
-        }
-
-        BinarySearchResult bsr1 = search(intervals, newInterval.start);
-        BinarySearchResult bsr2 = search(intervals, newInterval.end);
-
-        System.out.println(bsr1.low + " " + bsr1.high);
-        System.out.println(bsr2.low + " " + bsr2.high);
-
+    public List<Interval> insert(List<Interval> intervals, Interval newInterval) {
         List<Interval> result = new ArrayList<>();
-        int low1 = bsr1.low == bsr1.high ? bsr1.low - 1 : bsr1.low;
-        for (int i = 0; i <= low1; i++) {
-            result.add(intervals.get(i));
+        boolean alreadyAdded = false;
+        for (int i = 0; i < intervals.size(); i++) {
+            if ((intervals.get(i).end < newInterval.start)) {
+                result.add(intervals.get(i));
+            } else if (intervals.get(i).start > newInterval.end) {
+                if (!alreadyAdded) {
+                    result.add(newInterval);
+                    alreadyAdded = true;
+                }
+                result.add(intervals.get(i));
+            } else {
+                newInterval.start = Math.min(newInterval.start, intervals.get(i).start);
+                newInterval.end = Math.max(newInterval.end, intervals.get(i).end);
+                if (!alreadyAdded) {
+                    result.add(newInterval);
+                    alreadyAdded = true;
+                }
+            }
         }
-
-        if (bsr1.low == bsr1.high && bsr2.low == bsr2.high) {
-            result.add(new Interval(intervals.get(bsr1.low).start, intervals.get(bsr2.high).end));
-        } else if (bsr1.low != bsr1.high && bsr2.low == bsr2.high) {
-            result.add(new Interval(newInterval.start, intervals.get(bsr2.high).end));
-        } else if (bsr1.low == bsr1.high && bsr2.low != bsr2.high) {
-            result.add(new Interval(intervals.get(bsr1.low).start, newInterval.end));
-        } else {
+        if (!alreadyAdded) {
             result.add(newInterval);
         }
-        int high = bsr2.low == bsr2.high ? bsr2.high + 1 : bsr2.high;
-        for (int i = high; i < intervals.size(); i++) {
-            result.add(intervals.get(i));
-        }
-        return result;
-    }
-
-    private BinarySearchResult search(List<Interval> intervals, int val) {
-        int start = 0;
-        int end = intervals.size() - 1;
-        BinarySearchResult bsr = new BinarySearchResult();
-        while (start <= end) {
-            int middle = (start + end)/2;
-
-            Interval middleInterval = intervals.get(middle);
-
-            if (middleInterval.end >= val && middleInterval.start <= val) {
-                bsr.low = middle;
-                bsr.high = middle;
-                return bsr;
-            }
-
-            if (middleInterval.start > val && (middle == 0 || intervals.get(middle - 1).end < val)) {
-                bsr.low = middle - 1;
-                bsr.high = middle;
-                return bsr;
-            }
-
-            if (middleInterval.end < val && (middle == intervals.size() - 1 || intervals.get(middle + 1).start > val)) {
-                bsr.low = middle;
-                bsr.high = middle + 1;
-                return bsr;
-            }
-
-            if (middleInterval.start > val) {
-                end = middle - 1;
-            } else {
-                start = middle + 1;
-            }
-        }
-        throw new IllegalArgumentException("This should not happen");
-    }
-
-
-    public List<Interval> insert(List<Interval> intervals, Interval newInterval) {
-        List<Interval> result = new LinkedList<>();
-        int i = 0;
-        while (i < intervals.size() && intervals.get(i).end < newInterval.start)
-            result.add(intervals.get(i++));
-        while (i < intervals.size() && intervals.get(i).start <= newInterval.end) {
-            newInterval = new Interval( // we could mutate newInterval here also
-                    Math.min(newInterval.start, intervals.get(i).start),
-                    Math.max(newInterval.end, intervals.get(i).end));
-            i++;
-        }
-        result.add(newInterval);
-        while (i < intervals.size()) result.add(intervals.get(i++));
         return result;
     }
 
