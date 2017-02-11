@@ -25,7 +25,7 @@ public class LevelOrderTraversal {
         Queue<Node> queue = new LinkedList<Node>();
         queue.offer(root);
         System.out.println();
-        while(queue.size() > 0){
+        while(!queue.isEmpty()){
             root = queue.poll();
             System.out.print(root.data + " ");
             if(root.left != null){
