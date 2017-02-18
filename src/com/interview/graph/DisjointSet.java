@@ -82,11 +82,11 @@ public class DisjointSet {
      */
     private Node findSet(Node node) {
         Node parent = node.parent;
-        if (parent == node) {
+        if (parent == node) { //root points to itself
             return parent;
         }
         node.parent = findSet(node.parent);
-        return node.parent;
+        return node.parent; // set all child-in-path's parent as root
     }
 
     public static void main(String args[]) {
