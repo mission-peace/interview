@@ -38,13 +38,13 @@ public class NQueenProblem {
 
     private boolean solveNQueenOneSolutionUtil(int n, int row, Position[] positions) {
         if (n == row) {
-            return true;
+            return true; //problem solved
         }
         int col;
-        for (col = 0; col < n; col++) {
+        for (col = 0; col < n; col++) { // once all columns are checked, return false to calling function
             boolean foundSafe = true;
 
-            //check if this row and col is not under attack from any previous queen.
+            //check if this row and col is not under attack from any previous row's queen.
             for (int queen = 0; queen < row; queen++) {
                 if (positions[queen].col == col || positions[queen].row - positions[queen].col == row - col ||
                         positions[queen].row + positions[queen].col == row + col) {
@@ -53,13 +53,13 @@ public class NQueenProblem {
                 }
             }
             if (foundSafe) {
-                positions[row] = new Position(row, col);
-                if (solveNQueenOneSolutionUtil(n, row + 1, positions)) {
+                positions[row] = new Position(row, col); // record current safe square
+                if (solveNQueenOneSolutionUtil(n, row + 1, positions)) { // recursion to next row. if false, loop to next column
                     return true;
-                }
-            }
+                } // if recursion fails to find solution, loop continues to next column
+            } 
         }
-        return false;
+        return false; // no safe column found on current row, backtrack to previous row (calling function) and advance queen to next column
     }
 
     /*
