@@ -54,13 +54,15 @@ public class Knapsack01 {
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
+            if (o == null || getClass() != o.getClass()) 
+                return false;
 
             Index index = (Index) o;
 
-            if (remainingWeight != index.remainingWeight) return false;
+            if (remainingWeight != index.remainingWeight) 
+                return false;
             return remainingItems == index.remainingItems;
-
+            // key is valid if both remainingWeight && remainingItems are correct
         }
 
         @Override
@@ -87,7 +89,7 @@ public class Knapsack01 {
             return 0;
         }
 
-        //fom a key based on remainingWeight and remainingCount
+        //form a key based on remainingWeight and remainingCount
         Index key = new Index();
         key.remainingItems = totalItems - currentItem -1;
         key.remainingWeight = remainingWeight;
