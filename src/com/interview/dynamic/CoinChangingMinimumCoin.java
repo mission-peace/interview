@@ -54,6 +54,7 @@ public class CoinChangingMinimumCoin {
         }
 
         //if min is MAX_VAL dont change it. Just result it as is. Otherwise add 1 to it.
+        // +1 comes from coin in above for loop
         min =  (min == Integer.MAX_VALUE ? min : min + 1);
 
         //memoize the minimum for current total.
