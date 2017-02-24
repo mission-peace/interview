@@ -15,22 +15,24 @@ package com.interview.dynamic;
 public class SubsetSum {
 
     public boolean subsetSum(int input[], int total) {
-
+        //input[]==subsetIntegerArray so input[i-1]==subsetInt
         boolean T[][] = new boolean[input.length + 1][total + 1];
         for (int i = 0; i <= input.length; i++) {
-            T[i][0] = true;
+            T[i][0] = true; //sum==0 is always possible
         }
 
         for (int i = 1; i <= input.length; i++) {
             for (int j = 1; j <= total; j++) {
                 if (j - input[i - 1] >= 0) {
+                    //true if above row is true || [row-1][col-subsetInt]
                     T[i][j] = T[i - 1][j] || T[i - 1][j - input[i - 1]];
                 } else {
+                    // if (subsetInt <= total), copy from above row
                     T[i][j] = T[i-1][j];
                 }
             }
         }
-        return T[input.length][total];
+        return T[input.length][total]; //answer
 
     }
 
