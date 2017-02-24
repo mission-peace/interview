@@ -16,9 +16,6 @@ public class OptimalTreeSearch {
         if (low > high) {   // If there are no elements in this subarray
             return 0;
         }
-        if (low == high) {  // If there is one element in this subarray
-            return freq[low]; 
-        }
 
         // Initialize minimum value
         int min = Integer.MAX_VALUE;
