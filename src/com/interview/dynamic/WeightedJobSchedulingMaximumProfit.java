@@ -3,6 +3,8 @@ package com.interview.dynamic;
 import java.util.Arrays;
 import java.util.Comparator;
 
+/*Any class, field, method or constructor that has no declared access modifier
+ *is accessible only by classes in the same package. */
 class Job{
     int start;
     int end;
@@ -45,14 +47,15 @@ public class WeightedJobSchedulingMaximumProfit {
     public int maximum(Job[] jobs){
         int T[] = new int[jobs.length];
         FinishTimeComparator comparator = new FinishTimeComparator();
-        Arrays.sort(jobs, comparator);
+        Arrays.sort(jobs, comparator); //sort by increasing end time
         
         T[0] = jobs[0].profit;
         for(int i=1; i < jobs.length; i++){
             T[i] = Math.max(jobs[i].profit, T[i-1]);
-            for(int j=i-1; j >=0; j--){
-                if(jobs[j].end <= jobs[i].start){
-                    T[i] = Math.max(T[i], jobs[i].profit + T[j]);
+            for(int j=i-1; j >=0; j--){ // restart j in every increment of i
+                if(jobs[j].end <= jobs[i].start){ // no overlap in job times
+                    T[i] = Math.max(T[i], // current max profit
+                        jobs[i].profit + T[j]); // profit if we accept jobs[j]
                     break;
                 }
             }
