@@ -13,7 +13,7 @@ package com.interview.dynamic;
  * Run Kadane's algorithm to find max sum subarray in temp. Now increment right by
  * 1. When right reaches last column reset right to 1 and left to 1.
  * 
- * Space complexity of this algorithm is O(row)
+ * Space complexity of this algorithm is O(row), array[row] used for Kadane's algorithm
  * Time complexity of this algorithm is O(row*col*col)
  * 
  * References
@@ -35,30 +35,35 @@ public class SubRectangularMatrixWithMaximumSum {
         }
         
     }
-    
+    // Time complexity of this algorithm is O(row*col*col)
+    // since there is 2xcolumn_loop and 1xrow_loop
+    // leftBound column loop * rightBound column loop (inside leftBound column loop)
+    // * kadane row calculations (inside rightBound column loop)
     public Result maxSum(int input[][]){
         int rows = input.length;
         int cols = input[0].length;
-        int temp[] = new int[rows];
-        Result result = new Result();
-        for(int left = 0; left < cols ; left++){
+        int temp[] = new int[rows]; // holds row sum of input[row][leftBound to rightBound]
+        Result result = new Result(); // result stays outside loop so it doesn't reset
+        for(int left = 0; left < cols ; left++){ // increment leftBound
             for(int i=0; i < rows; i++){
-                temp[i] = 0;
+                temp[i] = 0; // reset 1d array everytime leftBound increments
             }
-            for(int right = left; right < cols; right++){
+            // reset rightBound everytime leftBound increments so rightBound==leftBound
+            for(int right = left; right < cols; right++){ 
                 for(int i=0; i < rows; i++){
-                    temp[i] += input[i][right];
+                    temp[i] += input[i][right]; //add input[column] to temp[]
                 }
-                KadaneResult kadaneResult = kadane(temp);
-                if(kadaneResult.maxSum > result.maxSum){
+                KadaneResult kadaneResult = kadane(temp); //calculate maxSum
+                if(kadaneResult.maxSum > result.maxSum){ // update result condition
                     result.maxSum = kadaneResult.maxSum;
-                    result.leftBound = left;
-                    result.rightBound = right;
-                    result.upBound = kadaneResult.start;
-                    result.lowBound = kadaneResult.end;
+                    result.leftBound = left; // current left
+                    result.rightBound = right; // current right
+                    result.upBound = kadaneResult.start; // maxSum left
+                    result.lowBound = kadaneResult.end; // maxSum right
                 }
-            }
-        }
+            } // rightBound has reached end of matrix, 
+              // increment leftBound && reset rightBound to leftBound
+        } // leftBound has reached end of column, algorithm complete
         return result;
     }
     
@@ -73,6 +78,8 @@ public class SubRectangularMatrixWithMaximumSum {
         }
     }
     
+    // find maxSum in 1D array
+    // return {maxSum, left, right}
     private KadaneResult kadane(int arr[]){
         int max = 0;
         int maxStart = -1;
@@ -80,15 +87,15 @@ public class SubRectangularMatrixWithMaximumSum {
         int currentStart = 0;
         int maxSoFar = 0;
         for(int i=0; i < arr.length; i++){
-            maxSoFar += arr[i];
-            if(maxSoFar < 0){
+            maxSoFar += arr[i]; // keep adding array values
+            if(maxSoFar < 0){ //if maxSoFar < 0, reset to 0
                 maxSoFar = 0;
                 currentStart = i+1;
             }
             if(max < maxSoFar){
                 maxStart = currentStart;
                 maxEnd = i;
-                max = maxSoFar;
+                max = maxSoFar; //update max
             }
         }
         return new KadaneResult(max, maxStart, maxEnd);
