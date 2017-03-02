@@ -5,9 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Date 08/12/2013
- * @author Tushar Roy
- *
  * Given a total and coins of certain denomination with infinite supply, what is the minimum number
  * of coins it takes to form this total.
  *
@@ -21,7 +18,7 @@ import java.util.Map;
 public class CoinChangingMinimumCoin {
 
     /**
-     * Top down dynamic programing. Using map to store intermediate results.
+     * Top down dynamic programming. Using map to store intermediate results.
      * Returns Integer.MAX_VALUE if total cannot be formed with given coins
      */
     public int minimumCoinTopDown(int total, int coins[], Map<Integer, Integer> map) {
@@ -67,21 +64,25 @@ public class CoinChangingMinimumCoin {
      * Keep input sorted. Otherwise temp[j-arr[i]) + 1 can become Integer.Max_value + 1 which
      * can be very low negative number
      * Returns Integer.MAX_VALUE - 1 if solution is not possible.
+     * time complexity is O(total * numOfDifferentCoins)
      */
     public int minimumCoinBottomUp(int total, int coins[]){
+        // stores minimum # of coins used. index == total
         int T[] = new int[total + 1];
+        // stores coin[index] used corresponding to T[]. coin[index] == coin used
         int R[] = new int[total + 1];
-        T[0] = 0;
-        for(int i=1; i <= total; i++){
-            T[i] = Integer.MAX_VALUE-1;
-            R[i] = -1;
+        T[0] = 0; // 0 coins make 0
+        for(int t=1; t <= total; t++){ 
+            T[t] = Integer.MAX_VALUE-1; // initialize high for minimum comparison
+            R[t] = -1;
         }
-        for(int j=0; j < coins.length; j++){
-            for(int i=1; i <= total; i++){
-                if(i >= coins[j]){
-                    if (T[i - coins[j]] + 1 < T[i]) {
-                        T[i] = 1 + T[i - coins[j]];
-                        R[i] = j;
+        for(int C=0; C < coins.length; C++){ // solve for each different coin subproblem
+            for(int t=1; t <= total; t++){ // solve for each different total subproblem
+                if(t >= coins[C]){ // total must be greater than coin value
+                    // minimum(picking jth coin: T[t-coins[C]], without picking jth coin: T[t]
+                    if (T[t - coins[C]] + 1 < T[t]) { 
+                        T[t] = 1 + T[t - coins[C]]; // +1 for picking Cth coin
+                        R[t] = C;
                     }
                 }
             }
@@ -95,12 +96,12 @@ public class CoinChangingMinimumCoin {
             System.out.print("No solution is possible");
             return;
         }
-        int start = R.length - 1;
+        int index = R.length - 1;
         System.out.print("Coins used to form total ");
-        while ( start != 0 ) {
-            int j = R[start];
-            System.out.print(coins[j] + " ");
-            start = start - coins[j];
+        while ( index != 0 ) { // index == total. exit when total == 0
+            int j = R[index];
+            System.out.print(coins[j] + " "); // print coin indicated by array
+            index = index - coins[j]; // subtract coin value from total
         }
         System.out.print("\n");
     }
