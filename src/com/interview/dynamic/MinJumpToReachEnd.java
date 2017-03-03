@@ -25,17 +25,18 @@ public class MinJumpToReachEnd {
     public int minJump(int arr[],int result[]){
         
         int []jump = new int[arr.length];
-        jump[0] = 0;
+        jump[0] = 0; //no jumps needed at start
         for(int i=1; i < arr.length ; i++){
             jump[i] = Integer.MAX_VALUE-1;
         }
         
-        for(int i=1; i < arr.length; i++){
-            for(int j=0; j < i; j++){
-                if(arr[j] + j >= i){
-                    if(jump[i] > jump[j] + 1){
-                        result[i] = j;
-                        jump[i] = jump[j] + 1;
+        //loop for all reachable destination
+        for(int d=1; d < arr.length; d++){ // d: destination point
+            for(int s=0; s < d; s++){ // s: starting point
+                if(arr[s] + s >= d){
+                    if(jump[d] > jump[s] + 1){ //keep min jumps
+                        result[d] = s; // save index where jump came from
+                        jump[d] = jump[s] + 1; //update jump count
                     }
                 }
             }
