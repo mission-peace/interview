@@ -26,11 +26,13 @@ import java.util.Arrays;
  * http://people.cs.clemson.edu/~bcdean/dp_practice/
  */
 public class BoxStacking {
-
+    // space complexity: O(n)
+    // time complexity: O(n^2)
     public int maxHeight(Dimension[] input) {
         //get all rotations of box dimension.
-        //e.g if dimension is 1,2,3 rotations will be 2,1,3  3,2,1  3,1,2  . Here length is always greater
-        //or equal to width and we can do that without loss of generality.
+        //e.g if dimension is 1,2,3 rotations will be 2,1,3  3,2,1  3,1,2. 
+        //Here length is always greater or equal to width 
+        //and we can do that without loss of generality.
         Dimension[] allRotationInput = new Dimension[input.length * 3];
         createAllRotation(input, allRotationInput);
         
@@ -38,32 +40,40 @@ public class BoxStacking {
         Arrays.sort(allRotationInput);
 
         //apply longest increasing subsequence kind of algorithm on these sorted boxes.
-        int T[] = new int[allRotationInput.length];
-        int result[] = new int[allRotationInput.length];
+        int H[] = new int[allRotationInput.length]; //stores max height of sequence
+        //stores allRotationInput[index] where value at result[index] 
+        //is index of box below. 
+        int result[] = new int[allRotationInput.length]; 
 
-        for (int i = 0; i < T.length; i++) {
-            T[i] = allRotationInput[i].height;
+        // initialize H[] with height of single box
+        for (int i = 0; i < H.length; i++) {
+            H[i] = allRotationInput[i].height;
             result[i] = i;
         }
-
-        for (int i = 1; i < T.length; i++) {
-            for (int j = 0; j < i; j++) {
-                if (allRotationInput[i].length < allRotationInput[j].length
-                        && allRotationInput[i].width < allRotationInput[j].width) {
-                    if( T[j] + allRotationInput[i].height > T[i]){
-                        T[i] = T[j] + allRotationInput[i].height;
-                        result[i] = j;
+        
+        //t: top box, b: base box
+        for (int t = 1; t < H.length; t++) {
+            for (int b = 0; b < t; b++) {
+                if (allRotationInput[t].length < allRotationInput[b].length
+                        && allRotationInput[t].width < allRotationInput[b].width) {
+                    // top box is strictly less than base box
+                    if( H[b] + allRotationInput[t].height > H[t]){
+                        // new height == base boxes + top box
+                        H[t] = H[b] + allRotationInput[t].height;
+                        // allRotationInput[H[index of max value]] will be top box
+                        // next box down's index will be value at result[index]
+                        result[t] = b;
                     }
                 }
             }
         }
        
-        //find max in T[] and that will be our max height.
+        //find max in H[] and that will be our max height.
         //Result can also be found using result[] array.
         int max = Integer.MIN_VALUE;
-        for(int i=0; i < T.length; i++){
-            if(T[i] > max){
-                max = T[i];
+        for(int i=0; i < H.length; i++){
+            if(H[i] > max){
+                max = H[i];
             }
         }
         
@@ -71,8 +81,7 @@ public class BoxStacking {
     }
 
     //create all rotations of boxes, always keeping length greater or equal to width
-    private void createAllRotation(Dimension[] input,
-            Dimension[] allRotationInput) {
+    private void createAllRotation(Dimension[] input, Dimension[] allRotationInput) {
         int index = 0;
         for (int i = 0; i < input.length; i++) {
             allRotationInput[index++] = Dimension.createDimension(
@@ -96,8 +105,6 @@ public class BoxStacking {
 
 /**
  * Utility class to hold dimensions
- * @author tusroy
- *
  */
 class Dimension implements Comparable<Dimension> {
     int height;
