@@ -10,13 +10,17 @@ package com.interview.dynamic;
  * https://leetcode.com/problems/wildcard-matching/
  */
 public class WildCardMatching {
-    public boolean isMatch(String s, String p) {
-        char[] str = s.toCharArray();
-        char[] pattern = p.toCharArray();
+    // bottom up solution
+    // Space complexity: O(patternLength * stringLength)
+    // Time complexity: O(patternLength * stringLength)
+    //   since each cell is written once
+    public boolean isMatch(String stringIn, String patternIn) {
+        char[] str = stringIn.toCharArray();
+        char[] pattern = patternIn.toCharArray();
 
-        //replace multiple * with one *
+        //replace multiple * with one * since it's logically same
         //e.g a**b***c --> a*b*c
-        int writeIndex = 0;
+        int writeIndex = 0; // new pattern length after condensing *s
         boolean isFirst = true;
         for ( int i = 0 ; i < pattern.length; i++) {
             if (pattern[i] == '*') {
@@ -29,21 +33,28 @@ public class WildCardMatching {
                 isFirst = true;
             }
         }
-
+        // booleanMatrix[stringRow][patternColumn]
         boolean T[][] = new boolean[str.length + 1][writeIndex + 1];
 
+        //corner case where pattern starts with *
         if (writeIndex > 0 && pattern[0] == '*') {
             T[0][1] = true;
         }
 
-        T[0][0] = true;
+        T[0][0] = true; // null string == null pattern
 
-        for (int i = 1; i < T.length; i++) {
-            for (int j = 1; j < T[0].length; j++) {
-                if (pattern[j-1] == '?' || str[i-1] == pattern[j-1]) {
-                    T[i][j] = T[i-1][j-1];
-                } else if (pattern[j-1] == '*'){
-                    T[i][j] = T[i-1][j] || T[i][j-1];
+        for (int s = 1; s < T.length; s++) {
+            for (int p = 1; p < T[0].length; p++) {
+                //valid char match
+                if (pattern[p-1] == '?' || str[s-1] == pattern[p-1]) { //single char
+                    //up+left cell indicates if all prior string matches pattern
+                    T[s][p] = T[s-1][p-1]; 
+                } else if (pattern[p-1] == '*'){ //any number of char
+                    // T[s][p-1]: subtract * from pattern indicating * == blank
+                    //   and determine match from left cell
+                    // T[s-1][p]: * represents current stringChar. subtract char
+                    //   and determine match from above cell
+                    T[s][p] = T[s-1][p] || T[s][p-1];
                 }
             }
         }
@@ -59,29 +70,31 @@ public class WildCardMatching {
         return isMatchRecursiveUtil(s.toCharArray(), p.toCharArray(), 0, 0);
     }
 
-    private boolean isMatchRecursiveUtil(char[] text, char[] pattern, int pos1, int pos2) {
-        if (pos2 == pattern.length) {
-            return text.length == pos1;
+    // posT: position Text, posP: position Pattern
+    private boolean isMatchRecursiveUtil(char[] text, char[] pattern, int posT, int posP) {
+        if (posP == pattern.length) {
+            return text.length == posT;
         }
 
-        if (pattern[pos2] != '*') {
-            if (pos1 < text.length && (text[pos1] == pattern[pos2]) || pattern[pos2] == '?') {
-                return isMatchRecursiveUtil(text, pattern, pos1 + 1, pos2 + 1);
+        if (pattern[posP] != '*') {
+            if (posT < text.length && (text[posT] == pattern[posP]) || pattern[posP] == '?') {
+                // valid match, increment posT && posP, enter recursion
+                return isMatchRecursiveUtil(text, pattern, posT + 1, posP + 1);
             } else {
-                return false;
+                return false; // exit condition
             }
-        } else {
+        } else { // pattern[] == *
             //if we have a***b then skip to the last *
-            while (pos2 < pattern.length - 1 && pattern[pos2 + 1] == '*') {
-                pos2++;
+            while (posP < pattern.length - 1 && pattern[posP + 1] == '*') {
+                posP++;
             }
-            pos1--;
-            while (pos1 < text.length) {
-                if (isMatchRecursiveUtil(text, pattern, pos1 + 1, pos2 + 1)) {
+            posT--; // backstep text[] in case * represents textChar
+            while (posT < text.length) {
+                if (isMatchRecursiveUtil(text, pattern, posT + 1, posP + 1)) {
                     return true;
                 }
-                pos1++;
-            }
+                posT++; // advance text[] until stringChar matches patternChar
+            } // end of text[], no match, return false
             return false;
         }
     }
