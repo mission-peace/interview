@@ -19,41 +19,45 @@ package com.interview.dynamic;
 public class BurstBalloons {
 
     /**
-     * Dynamic programming solution.
+     * Bottom up Dynamic programming solution.
+     * Space complexity: O(n^2) for matrix
+     * Time complexity: O(n^3), 2 loops for matrix, 1 loop to optimize subsequence
      */
-    public int maxCoinsBottomUpDp(int[] nums) {
+    public int maxBalloonBottomUpDp(int[] nums) {
 
         int T[][] = new int[nums.length][nums.length];
 
         for (int len = 1; len <= nums.length; len++) {
-            for (int i = 0; i <= nums.length - len; i++) {
-                int j = i + len - 1;
-                for (int k = i; k <= j; k++) {
+            for (int s = 0; s <= nums.length - len; s++) { // s: start index
+                int e = s + len - 1; // e: end index relative to subsequence length
+                for (int k = s; k <= e; k++) { // k: last balloon to burst
                     //leftValue/rightValue is initially 1. If there is element on
                     // left/right of k then left/right value will take that value.
-                    int leftValue = 1;
-                    int rightValue = 1;
-                    if (i != 0) {
-                        leftValue = nums[i-1];
+                    int leftValue = 1; //balloon value to left
+                    int rightValue = 1; // balloon value to right
+                    if (s != 0) {
+                        leftValue = nums[s-1]; // value before subsequence
                     }
-                    if (j != nums.length -1) {
-                        rightValue = nums[j+1];
+                    if (e != nums.length -1) {
+                        rightValue = nums[e+1]; // value after subsequence
                     }
 
                     //before is initially 0. If k is i then before will
                     //stay 0 otherwise it gets value T[i][k-1]
                     //after is similarly 0 initially. if k is j then after will
                     //stay 0 other will get value T[k+1][j]
-                    int before = 0;
-                    int after = 0;
-                    if (i != k) {
-                        before = T[i][k-1];
+                    //subsequence range must fall within bottom-up length
+                    int before = 0; // subsequence before k
+                    int after = 0; // subsequence after k
+                    if (s != k) {
+                        before = T[s][k-1];
                     }
-                    if (j != k) {
-                        after = T[k+1][j];
+                    if (e != k) {
+                        after = T[k+1][e];
                     }
-                    T[i][j] = Math.max(leftValue * nums[k] * rightValue + before + after,
-                            T[i][j]);
+                    // keep previous max, or save current last balloon 'k'
+                    T[s][e] = Math.max(T[s][e], 
+                            leftValue * nums[k] * rightValue + before + after);
                 }
             }
         }
@@ -63,25 +67,28 @@ public class BurstBalloons {
     /**
      * Recursive solution.
      */
-    public int maxCoinsRec(int nums[]) {
+    public int maxBalloonRec(int nums[]) {
+        //insert 1 before && after array for edge cases calculations
         int[] nums1 = new int[nums.length + 2];
         nums1[0] = 1;
         nums1[nums1.length - 1] = 1;
         for (int i = 0; i < nums.length; i++) {
             nums1[i+1] = nums[i];
         }
-        return maxCoinsRecUtil(nums1);
+        return maxBalloonRecUtil(nums1);
     }
 
-    private int maxCoinsRecUtil(int[] nums) {
-        if (nums.length == 2) {
-            return 0;
+    private int maxBalloonRecUtil(int[] nums) {
+        if (nums.length == 2) { // last 2 array 1s inserted for edge cases
+            return 0; //base case
         }
 
         int max = 0;
+        // recurse array, excluding outside 1s
         for (int i = 1; i < nums.length - 1; i++) {
-            int val = nums[i - 1]*nums[i]*nums[i+1] + maxCoinsRecUtil(formNewArray(nums, i));
-            if (val > max) {
+            int val = nums[i - 1] * nums[i] * nums[i+1] 
+                    + maxBalloonRecUtil(formNewArray(nums, i));
+            if (val > max) { //save best value
                 max = val;
             }
          }
@@ -89,6 +96,7 @@ public class BurstBalloons {
 
     }
 
+    // remove bursted balloon
     private int[] formNewArray(int[] input, int doNotIncludeIndex) {
         int[] newArray = new int[input.length - 1];
         int index = 0;
@@ -105,6 +113,6 @@ public class BurstBalloons {
     public static void main(String args[]) {
         BurstBalloons bb = new BurstBalloons();
         int input[] = {2, 4, 3, 5};
-        System.out.print(bb.maxCoinsBottomUpDp(input));
+        System.out.print(bb.maxBalloonBottomUpDp(input));
     }
 }
