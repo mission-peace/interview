@@ -30,16 +30,20 @@ public class BurstBalloons {
         for (int len = 1; len <= nums.length; len++) {
             for (int s = 0; s <= nums.length - len; s++) { // s: start index
                 int e = s + len - 1; // e: end index relative to subsequence length
+                // k cuts the length (1') subsequence into a 2' subsequence
+                // matrix stores the values of length (1') subsequence from s-e
+                // 1' subsequence == 2' subsequence before k + 2' subsequence after k
+                // + (balloon before length * balloon k * balloon after length)
                 for (int k = s; k <= e; k++) { // k: last balloon to burst
                     //leftValue/rightValue is initially 1. If there is element on
                     // left/right of k then left/right value will take that value.
                     int leftValue = 1; //balloon value to left
                     int rightValue = 1; // balloon value to right
                     if (s != 0) {
-                        leftValue = nums[s-1]; // value before subsequence
+                        leftValue = nums[s-1]; // balloon before length
                     }
                     if (e != nums.length -1) {
-                        rightValue = nums[e+1]; // value after subsequence
+                        rightValue = nums[e+1]; // balloon after length
                     }
 
                     //before is initially 0. If k is i then before will
