@@ -24,6 +24,8 @@ public class SameTree {
             return false;
         }
         
+        // return false; logical AND breaks recursion when false
+        // return true; without termination, time complexity is O(n)
         return root1.data == root2.data && 
                 sameTree(root1.left, root2.left) &&
                 sameTree(root1.right, root2.right);
