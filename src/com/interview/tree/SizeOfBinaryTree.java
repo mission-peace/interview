@@ -20,9 +20,12 @@ package com.interview.tree;
 public class SizeOfBinaryTree {
 
     public int size(Node root){
+        // recurse down to leaf node
         if(root == null){
-            return 0;
+            return 0; //base case
         }
+        // after reaching bottom of tree (root == null)
+        // climb tree, adding each node (+1)
         return size(root.left) + size(root.right) + 1;
     }
     
