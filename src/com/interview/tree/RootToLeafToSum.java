@@ -31,16 +31,24 @@ public class RootToLeafToSum {
             return false;
         }
 
+        // base case: check if leaf
         if(root.left == null && root.right == null){
+            // sum of all nodes to leaf == sumOfInterest
             if(root.data == sum){
+                // save node to ArrayList
                 path.add(root);
+                // return true so calling function will save its node
                 return true;
             }else{
                 return false;
             }
         }
-        if(printPath(root.left, sum-root.data, path) || printPath(root.right, sum - root.data, path)){
+        // subtract every node from current sum, enter recursion
+        if(printPath(root.left, sum-root.data, path) 
+           || printPath(root.right, sum - root.data, path)){
+            // valid pathway, save node
             path.add(root);
+            // return true so calling function will save its node
             return true;
         }
         return false;
@@ -58,8 +66,10 @@ public class RootToLeafToSum {
         head = bt.addNode(20, head);
         head = bt.addNode(4, head);
         head = bt.addNode(3, head);
+        // array to save results
         List<Node> result = new ArrayList<>();
         boolean r = rtl.printPath(head, 22, result);
+        // valid pathway found, print result array
         if(r){
             result.forEach(node -> System.out.print(node.data + " "));
         }else{
