@@ -42,7 +42,7 @@ def print_coins(R, coins):
         return
 
     print "Coins:",
-    while start != 0:
+    while start > 0:
         coin = coins[R[start]]
         print "%d " % coin,
         start = start - coin
