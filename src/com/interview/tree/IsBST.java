@@ -34,37 +34,51 @@ public class IsBST {
         if(root == null){
             return true;
         }
+        // if node fails to fall in expected range, return false
         if(root.data <= min || root.data > max){
             return false;
         }
+        // when traversing tree, reduce expected range of node based on previously traversed nodes
         return isBST(root.left, min, root.data) && isBST(root.right, root.data, max);
     }
 
-
+    // inOrder traversal of BST is sorted
+    // left->root->right
     public boolean isBSTIterative(Node root) {
         if (root == null) {
             return true;
         }
 
+        // double ended queue, supports insertion & removals from both ends
         Deque<Node> stack = new LinkedList<>();
         Node node = root;
         int prev = Integer.MIN_VALUE;
         int current;
         while ( true ) {
+            // traverse down left side of tree
             if (node != null) {
+                // add left node in front of queue
                 stack.addFirst(node);
                 node = node.left;
             } else {
+                // exit condition
                 if (stack.isEmpty()) {
                     break;
                 }
+                // since every left node is added to front of queue,
+                // nodes in queue should be in increasing order
                 node = stack.pollFirst();
                 current = node.data;
                 if (current < prev) {
                     return false;
                 }
                 prev = current;
+                // traverse right after left is exhausted
                 node = node.right;
+                // after right node is queued,
+                // loop traverses down left nodes
+                // adding each left node to front of queue
+                // pushing back greater values
             }
         }
         return true;
