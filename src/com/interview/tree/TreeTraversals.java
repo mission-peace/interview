@@ -107,6 +107,10 @@ public class TreeTraversals {
                 if (temp == null) {
                     temp = stack.poll();
                     System.out.print(temp.data + " ");
+                    // temp just came off stack, 
+                    // check if new top of stack is rightChild of temp
+                    // if so, we just visited top of stack's right and
+                    // can now visit the node's value
                     while (!stack.isEmpty() && temp == stack.peek().right) {
                         temp = stack.poll();
                         System.out.print(temp.data + " ");
