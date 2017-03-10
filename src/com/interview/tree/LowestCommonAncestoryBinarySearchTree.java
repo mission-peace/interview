@@ -13,6 +13,8 @@ package com.interview.tree;
  */
 public class LowestCommonAncestoryBinarySearchTree {
 
+    // lowest common ancestor node's value will be first node found
+    // with value in between input values
     public Node lowestCommonAncestor(Node root, int p, int q) {
         if (root.data > Math.max(p, q)) {
             return lowestCommonAncestor(root.left, p, q);
