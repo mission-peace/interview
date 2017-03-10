@@ -14,7 +14,7 @@ package com.interview.tree;
 public class LowestCommonAncestoryBinarySearchTree {
 
     // lowest common ancestor node's value will be first node found
-    // with value in between input values
+    // with value in between (& including) input values
     // this method only works for binary SEARCH tree,
     // NOT binary tree
     public Node lowestCommonAncestor(Node root, int p, int q) {
