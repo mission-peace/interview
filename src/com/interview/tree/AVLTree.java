@@ -32,9 +32,12 @@ package com.interview.tree;
 public class AVLTree {
 
     private Node leftRotate(Node root){
+        // rotation
         Node newRoot = root.right;
         root.right = root.right.left;
         newRoot.left = root;
+        
+        // update node variables
         root.height = setHeight(root);
         root.size = setSize(root);
         newRoot.height = setHeight(newRoot);
@@ -43,9 +46,12 @@ public class AVLTree {
     }
     
     private Node rightRotate(Node root){
+        // rotation
         Node newRoot = root.left;
         root.left = root.left.right;
         newRoot.right = root;
+        
+        // update node variables
         root.height = setHeight(root);
         root.size = setSize(root);
         newRoot.height = setHeight(newRoot);
@@ -76,6 +82,7 @@ public class AVLTree {
     }
     
     public Node insert(Node root, int data){
+        // node insertion
         if(root == null){
             return Node.newNode(data);
         }
@@ -85,18 +92,24 @@ public class AVLTree {
         else{
             root.left = insert(root.left,data);
         }
+        
+        /* AVL balance */
         int balance = balance(root.left, root.right);
-        if(balance > 1){
+        if(balance > 1){ // leftHeight > rightHeight
             if(height(root.left.left) >= height(root.left.right)){
+                // left left case
                 root = rightRotate(root);
             }else{
+                // left right case
                 root.left = leftRotate(root.left);
                 root = rightRotate(root);
             }
-        }else if(balance < -1){
+        }else if(balance < -1){ // rightHeight > leftHeight
             if(height(root.right.right) >= height(root.right.left)){
+                // right right case
                 root = leftRotate(root);
             }else{
+                // right left case
                 root.right = rightRotate(root.right);
                 root = leftRotate(root);
             }
