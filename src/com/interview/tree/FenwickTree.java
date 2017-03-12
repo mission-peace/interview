@@ -11,6 +11,7 @@ package com.interview.tree;
  * 
  * Space complexity for fenwick tree is O(n)
  * Time complexity to create fenwick tree is O(nlogn)
+     goes through each element n * logN to calculate value for each node
  * Time complexity to update value is O(logn)
  * Time complexity to get prefix sum is O(logn)
  * 
@@ -23,7 +24,7 @@ public class FenwickTree {
 
     /**
      * Start from index+1 if you updating index in original array. Keep adding this value 
-     * for next node till you reach outside range of tree
+     * for next node (with range that includes index's range) till you reach outside range of tree
      */
     public void updateBinaryIndexedTree(int binaryIndexedTree[], int val, int index){
         while(index < binaryIndexedTree.length){
@@ -59,19 +60,23 @@ public class FenwickTree {
     
     /**
      * To get parent
-     * 1) 2's complement to get minus of index
-     * 2) AND this with index
-     * 3) Subtract that from index
+     * 1) 2's complement to get minus of index (negative binary)
+            2's complement is found by getting 1's complement (flipping bits)
+            then adding 1
+     * 2) AND 2's complement with index (original binary)
+     * 3) Subtract result from 2) from index (original binary)
      */
     private int getParent(int index){
         return index - (index & -index);
     }
     
     /**
-     * To get next
-     * 1) 2's complement of get minus of index
-     * 2) AND this with index
-     * 3) Add it to index
+     * To get next node with range that includes index's range
+     * 1) 2's complement of get minus of index (negative binary)
+            2's complement is found by getting 1's complement (flipping bits)
+            then adding 1
+     * 2) AND 2's complement with index (original binary)
+     * 3) Add result from 2) to index (original binary)
      */
     private int getNext(int index){
         return index + (index & -index);
