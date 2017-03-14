@@ -9,20 +9,22 @@ package com.interview.tree;
  * Write a program to insert into an AVL tree.
  * 
  * AVL tree is self balancing binary tree. Difference of height of left or right subtree
- * cannot be greater than one.
+ * cannot be greater than one. A search will therefore be O(logN)
  * 
  * There are four different use cases to insert into AVL tree
  * left left - needs ones right rotation
- * left right - needs one left and one right rotation
- * right left - needs one right and one left rotation
+ * left right - needs one (root.left) left and one (root) right rotation
+ * right left - needs one (root.right) right and one (root) left rotation
  * right right - needs one left rotation
+ * Worst case: 2 rotations throughout height of tree during insertion
+ *             2*logN work, which is O(logN) time complexity
  * 
  * Follow rotation rules to keep tree balanced.
  * 
  * At every node we will also keep height of the tree so that we don't
  * have to recalculate values again.
  * 
- * Runtime complexity to insert into AVL tree is O(logn).
+ * Runtime complexity to insert, delete, or search AVL tree is O(logN).
  * 
  * References 
  * http://en.wikipedia.org/wiki/AVL_tree
@@ -33,40 +35,44 @@ public class AVLTree {
 
     private Node leftRotate(Node root){
         // rotation
-        Node newRoot = root.right;
-        root.right = root.right.left;
-        newRoot.left = root;
+        Node pivot = root.right; // pivot will become new root
+        // pivot is no longer root's child
+        root.right = root.right.left; // root adopts child it will be replacing
+        pivot.left = root; // root replaces pivot's child
         
         // update node variables
-        root.height = setHeight(root);
-        root.size = setSize(root);
-        newRoot.height = setHeight(newRoot);
-        newRoot.size = setSize(newRoot);
-        return newRoot;
+        root.height = incrementHeight(root);
+        root.size = incrementSize(root);
+        pivot.height = incrementHeight(pivot);
+        pivot.size = incrementSize(pivot);
+        return pivot; // pivot is now root
     }
     
     private Node rightRotate(Node root){
         // rotation
-        Node newRoot = root.left;
-        root.left = root.left.right;
-        newRoot.right = root;
+        Node pivot = root.left; // pivot will become new root
+        // pivot is no longer root's child
+        root.left = root.left.right; // root adopts child it will be replacing
+        pivot.right = root; // root replaces pivot's child
         
         // update node variables
-        root.height = setHeight(root);
-        root.size = setSize(root);
-        newRoot.height = setHeight(newRoot);
-        newRoot.size = setSize(newRoot);
-        return newRoot;
+        root.height = incrementHeight(root);
+        root.size = incrementSize(root);
+        pivot.height = incrementHeight(pivot);
+        pivot.size = incrementSize(pivot);
+        return pivot; // pivot is now root
     }
 
-    private int setHeight(Node root){
+    private int incrementHeight(Node root){
         if(root == null){
             return 0;
         }
-        return 1 + Math.max((root.left != null ? root.left.height : 0), (root.right != null ? root.right.height : 0));
+        // increment height of longest branch by one
+        return 1 + Math.max((root.left != null ? root.left.height : 0), 
+                (root.right != null ? root.right.height : 0));
     }
     
-    private int height(Node root){
+    private int getHeight(Node root){
         if(root == null){
             return 0;
         }else {
@@ -74,18 +80,20 @@ public class AVLTree {
         }
     }
     
-    private int setSize(Node root){
+    private int incrementSize(Node root){
         if(root == null){
             return 0;
         }
-        return 1 + Math.max((root.left != null ? root.left.size : 0), (root.right != null ? root.right.size : 0));
+        return 1 + Math.max((root.left != null ? root.left.size : 0), 
+                (root.right != null ? root.right.size : 0));
     }
     
     public Node insert(Node root, int data){
-        // node insertion
-        if(root == null){
-            return Node.newNode(data);
+        // regular binary search tree (BST) node insertion
+        if(root == null){ // leaf node's child is null
+            return Node.newNode(data); // insert data into leaf node's child
         }
+        // recursion to find point of insertion
         if(root.data <= data){
             root.right = insert(root.right,data);
         }
@@ -93,36 +101,39 @@ public class AVLTree {
             root.left = insert(root.left,data);
         }
         
-        /* AVL balance */
-        int balance = balance(root.left, root.right);
-        if(balance > 1){ // leftHeight > rightHeight
-            if(height(root.left.left) >= height(root.left.right)){
-                // left left case
+        /* AVL balance in reverse recursion*/
+        int balance = balance(root.left, root.right); // leftHeight - rightHeight
+        if(balance > 1){ // leftHeight > rightHeight by more than 1, left case
+            if(getHeight(root.left.left) >= getHeight(root.left.right)){
+                // left's left > left's right = left left case, rightRotate root
                 root = rightRotate(root);
             }else{
-                // left right case
-                root.left = leftRotate(root.left);
-                root = rightRotate(root);
+                // left case + right case = left right case
+                // leftRotate leftChild, rightRotate root
+                root.left = leftRotate(root.left); // leftRotate into leftLeft case
+                root = rightRotate(root); //rightRotate left left case
             }
-        }else if(balance < -1){ // rightHeight > leftHeight
-            if(height(root.right.right) >= height(root.right.left)){
-                // right right case
+        }else if(balance < -1){ // rightHeight > leftHeight by more than 1, right case
+            if(getHeight(root.right.right) >= getHeight(root.right.left)){
+                // right's right > right's left = right right case, leftRotate root
                 root = leftRotate(root);
             }else{
-                // right left case
-                root.right = rightRotate(root.right);
-                root = leftRotate(root);
+                // right's left > right's left = right left case
+                // rightRotate rightChild, leftRotate root
+                root.right = rightRotate(root.right); // rightRotate into rightRight case
+                root = leftRotate(root); // leftRotate right right case
             }
         }
-        else{
-            root.height = setHeight(root);
-            root.size = setSize(root);
+        else{ // no balance needed, update node variables
+            root.height = incrementHeight(root); // 1 + max(leftBranch, rightBranch)
+            root.size = incrementSize(root);
         }
-        return root;
+        // if rotation occured, pivot is now root; else root stays as is
+        return root; // return root as calling method's child
     }
     
     private int balance(Node rootLeft, Node rootRight){
-        return height(rootLeft) - height(rootRight);
+        return getHeight(rootLeft) - getHeight(rootRight);
     }
     
     public static void main(String args[]){
