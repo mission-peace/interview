@@ -10,8 +10,11 @@ import java.util.Map;
  * Write program for Bellman Ford algorithm to find single source shortest path in directed graph.
  * Bellman ford works with negative edges as well unlike Dijksra's algorithm. If there is negative
  * weight cycle it detects it.
+   Negative weight cycle is a cycle whose total weight is negative.
  *
  * Time complexity - O(EV)
+     If running every source - O( V^2 * E)
+     Worst Case: O(V^4) when 2 edges between every vertex, E = V^2. Floyd-Warshall's worst case is O(V^3)
  * Space complexity - O(V)
  *
  * References
@@ -19,6 +22,7 @@ import java.util.Map;
  * http://www.geeksforgeeks.org/dynamic-programming-set-23-bellman-ford-algorithm/
  */
 
+// find shortest distance from source to every other vertex
 public class BellmanFordShortestPath {
 
     //some random big number is treated as infinity. I m not taking INTEGER_MAX as infinity because
@@ -43,19 +47,22 @@ public class BellmanFordShortestPath {
         //set distance of source vertex to be 0
         distance.put(sourceVertex, 0);
 
-        int V = graph.getAllVertex().size();
+        int V = graph.getAllVertex().size(); // total vertices in graph
 
-        //relax edges repeatedly V - 1 times
-        for (int i = 0; i < V - 1 ; i++) {
+        // Since the longest possible path (visiting all vertex) without a cycle can be V-1 edges
+        // edges must be scanned V - 1 time to ensure all paths has been found to all nodes
+        for (int i = 0; i < V - 1 ; i++) { //relax edges repeatedly V - 1 times 
+            // go through all edges
             for (Edge<Integer> edge : graph.getAllEdges()) {
-                Vertex<Integer> u = edge.getVertex1();
-                Vertex<Integer> v = edge.getVertex2();
+                Vertex<Integer> u = edge.getVertex1(); // start of edge
+                Vertex<Integer> v = edge.getVertex2(); // end of edge
                 //relax the edge
                 //if we get better distance to v via u then use this distance
                 //and set u as parent of v.
                 if (distance.get(u) + edge.getWeight() < distance.get(v)) {
+                    // update shortest path distance
                     distance.put(v, distance.get(u) + edge.getWeight());
-                    parent.put(v, u);
+                    parent.put(v, u); // update parent of shortest path
                 }
             }
         }
@@ -70,7 +77,7 @@ public class BellmanFordShortestPath {
                 throw new NegativeWeightCycleException();
             }
         }
-        return distance;
+        return distance; // return distance map
     }
 
     public static void main(String args[]){
