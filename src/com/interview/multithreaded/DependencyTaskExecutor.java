@@ -37,14 +37,9 @@ public class DependencyTaskExecutor {
             taskTracker.put(task.name(), future);
             return future;
         }
-        CompletableFuture<Void> future = null;
+        CompletableFuture<Void> future = CompletableFuture.completedFuture(null);;
         for (Task upstreamTask : task.dependencies()) {
-            if (future == null) {
-                future = scheduleTaskUtil(upstreamTask, executor);
-            } else {
-                future = future.thenAcceptBothAsync(scheduleTaskUtil(upstreamTask, executor), (a, b) -> {
-                }, executor);
-            }
+            future = future.thenAcceptBothAsync(scheduleTaskUtil(upstreamTask, executor), (a, b) -> {}, executor);
         }
         future = future.thenRunAsync(() -> task.execute(), executor);
         taskTracker.put(task.name(), future);
@@ -68,7 +63,7 @@ public class DependencyTaskExecutor {
         x.addDependency(y);
         x.addDependency(z);
         y.addDependency(a);
-        taskExecutor.scheduleTask(Lists.newArrayList(a, b, c, d, x, y, z), 3);
+        taskExecutor.scheduleTask(Lists.newArrayList(a, b, c, d, x, y, z), 4);
     }
 }
 
