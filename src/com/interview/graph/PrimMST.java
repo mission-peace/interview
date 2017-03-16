@@ -27,7 +27,9 @@ public class PrimMST {
         //  decrease    O(logV)
         //  add         O(logV)
         //  contains    O(1)
+        //key: vertex, Value: smallest edge weight
         BinaryMinHeap<Vertex<Integer>> minHeap = new BinaryMinHeap<>();
+        //Dijkstra's Algorithm stores single source shortest path length from source to vector
 
         //map of vertex to edge which gave minimum weight to this vertex.
         Map<Vertex<Integer>,Edge<Integer>> vertexToEdge = new HashMap<>();
@@ -66,7 +68,7 @@ public class PrimMST {
                 if(minHeap.containsData(adjacent) 
                    && minHeap.getWeight(adjacent) > edge.getWeight()){
                     //decrease the value of adjacent vertex to this edge weight.
-                    minHeap.decrease(adjacent, edge.getWeight());
+                    minHeap.decrease(adjacent, edge.getWeight()); // O(logV)
                     //add vertex->edge mapping in the graph.
                     vertexToEdge.put(adjacent, edge);
                 }
