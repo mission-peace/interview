@@ -85,7 +85,8 @@ public class DisjointSet {
         if (parent == node) { //root points to itself
             return parent;
         }
-        node.parent = findSet(node.parent);
+        // recursion returns parent to every node in recursion 
+        node.parent = findSet(node.parent); // path compression
         return node.parent; // set all child-in-path's parent as root
     }
 
