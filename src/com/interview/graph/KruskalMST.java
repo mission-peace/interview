@@ -12,7 +12,8 @@ import java.util.List;
  *         <p>
  *         Find minimum spanning tree usinig Kruskals algorithm
  *         <p>
- *         Time complexity - O(ElogE)
+ *         Time complexity - O(ElogE + E) -> O(ElogE)
+                O(ElogE) to sort by minimum weight + O(E) for disjoint set operations
  *         Space complexity - O(E + V)
  *         <p>
  *         References
@@ -38,7 +39,7 @@ public class KruskalMST {
         List<Edge<Integer>> allEdges = graph.getAllEdges();
         EdgeComparator edgeComparator = new EdgeComparator();
 
-        //sort all edges in non decreasing order
+        //sort all edges in increasing order
         Collections.sort(allEdges, edgeComparator);
         DisjointSet disjointSet = new DisjointSet();
 
@@ -55,7 +56,7 @@ public class KruskalMST {
             long root2 = disjointSet.findSet(edge.getVertex2().getId());
 
             //check if the vertices are in same set or different set
-            //if verties are in same set then ignore the edge
+            //if vertices are in same set then ignore the edge
             if (root1 == root2) {
                 continue;
             } else {
