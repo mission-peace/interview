@@ -1,22 +1,23 @@
 
-<h2>Please visit my wiki link for full list of questions</h2>
-<h3>https://github.com/mission-peace/interview/wiki</h3>
+### Please visit my wiki link for full list of questions
+#### https://github.com/mission-peace/interview/wiki
 
-<h2> Like my facebook page for latest updates on my youtube channel</h2>
-<h3>https://www.facebook.com/tusharroy25</h3>
+### Like my facebook page for latest updates on my youtube channel
+### https://www.facebook.com/tusharroy25
 
-<h2> Contribution </h2>
-Please contribute to this repository to help it make better. Any change like new question, code improvement, doc improvement etc. is very welcome. Just send me a pull request and I will review the request and approve it if it looks good. 
+### Contribution
+Please contribute to this repository to help it make better. Any change like new question, code improvement, doc improvement etc. is very welcome. Just send me a pull request and I will review the request and approve it if it looks good.
 
-<h2> How to use this repository </h2>
+## How to use this repository
 
-<h3> Softwares to install </h3>
-* Install JDK8 https://docs.oracle.com/javase/8/docs/technotes/guides/install/install_overview.html
-* Install Git https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
-* Install either Intellij https://www.jetbrains.com/idea/download/
-* If you like eclipse instead of intellij install eclipse https://eclipse.org/downloads/
+###  Softwares to install ###
+1. Install JDK8 https://docs.oracle.com/javase/8/docs/technotes/guides/install/install_overview.html
+2. Install Git https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
+3. Install either:
+  * Intellij https://www.jetbrains.com/idea/download/
+  * If you like eclipse instead of intellij install eclipse https://eclipse.org/downloads/
 
-<h3> Set up your desktop </h3>
+###  Set up your desktop ###
 * Pull the git repository. Go to command line and type git clone https://github.com/mission-peace/interview.git
 * Go to root directory of checked out project.
 * Run ./gradlew idea to generate idea related classes
