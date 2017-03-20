@@ -14,8 +14,8 @@ Please contribute to this repository to help it make better. Any change like new
 1. Install JDK8 https://docs.oracle.com/javase/8/docs/technotes/guides/install/install_overview.html
 2. Install Git https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
 3. Install either:
-  * Intellij https://www.jetbrains.com/idea/download/
-  * If you like eclipse instead of intellij install eclipse https://eclipse.org/downloads/
+    * Intellij https://www.jetbrains.com/idea/download/
+    * If you like eclipse instead of intellij install eclipse https://eclipse.org/downloads/
 
 ###  Set up your desktop ###
 * Pull the git repository. Go to command line and type git clone https://github.com/mission-peace/interview.git
