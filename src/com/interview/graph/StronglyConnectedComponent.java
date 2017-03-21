@@ -52,10 +52,13 @@ public class StronglyConnectedComponent {
         List<Set<Vertex<Integer>>> result = new ArrayList<>();
         while (!stack.isEmpty()) {
             Vertex<Integer> vertex = reverseGraph.getVertex(stack.poll().getId());
+            // start new set if vertex has never been visited
             if(visited.contains(vertex)){
                 continue;
             }
+            // new set to store all strongly connected vertices
             Set<Vertex<Integer>> set = new HashSet<>();
+            // recursion for reverse graph
             DFSUtilForReverseGraph(vertex, visited, set);
             result.add(set);
         }
@@ -71,6 +74,7 @@ public class StronglyConnectedComponent {
         return reverseGraph;
     }
 
+    // depth-first search recursion to build stack
     private void DFSUtil(Vertex<Integer> vertex,
             Set<Vertex<Integer>> visited, Deque<Vertex<Integer>> stack) {
         visited.add(vertex);
@@ -83,8 +87,10 @@ public class StronglyConnectedComponent {
         stack.offerFirst(vertex);
     }
 
+    // depth-first search recursion for reverse graph
     private void DFSUtilForReverseGraph(Vertex<Integer> vertex,
                                         Set<Vertex<Integer>> visited, Set<Vertex<Integer>> set) {
+        // add to visitedSet to prevent repetitive recursion
         visited.add(vertex);
         set.add(vertex);
         for (Vertex<Integer> v : vertex.getAdjacentVertexes()) {
@@ -92,7 +98,7 @@ public class StronglyConnectedComponent {
                 continue;
             }
             DFSUtilForReverseGraph(v, visited, set);
-        }
+        } // exit recursion when all neighbors are explored
     }
 
     public static void main(String args[]){
