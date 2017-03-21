@@ -15,6 +15,8 @@ import java.util.*;
  */
 public class TravelingSalesmanHeldKarp {
 
+    // big number treated as infinity. 
+    // INTEGER_MAX may cause integer overflow with addition
     private static int INFINITY = 100000000;
 
     private static class Index {
@@ -54,25 +56,38 @@ public class TravelingSalesmanHeldKarp {
         }
     }
 
+    // distance[startVertex][endVertex]'s value = edge weight
     public int minCost(int[][] distance) {
 
-        //stores intermediate values in map
+        /* stores intermediate values in map */
+        // cost to reach current vertex from start vertex
+        //  visiting all the vertices in the vertex set
         Map<Index, Integer> minCostDP = new HashMap<>();
+        // stores vertex (from vertex set) immediately before parent
+        //  which will yield minimum cost
         Map<Index, Integer> parent = new HashMap<>();
 
+        // generate all combinations of n-1,
+        // -1 to exclude starting/ending vertex
         List<Set<Integer>> allSets = generateCombination(distance.length - 1);
 
+        // run calculation for every set
         for(Set<Integer> set : allSets) {
+            // skip currentVertex=0 since it's the origin
             for(int currentVertex = 1; currentVertex < distance.length; currentVertex++) {
-                if(set.contains(currentVertex)) {
+                if(set.contains(currentVertex)) { // skip itself
                     continue;
                 }
+                // create key for HashMap
+                // index.currentVertex, index.vertexSet
                 Index index = Index.createIndex(currentVertex, set);
                 int minCost = INFINITY;
                 int minPrevVertex = 0;
                 //to avoid ConcurrentModificationException copy set into another set while iterating
                 Set<Integer> copySet = new HashSet<>(set);
-                for(int prevVertex : set) {
+                for(int prevVertex : set) { //check every possible previous vertex
+                    // cost of prevVertex to currentVertex
+                    // + cost to reach previous vertex from generated sets
                     int cost = distance[prevVertex][currentVertex] + getCost(copySet, prevVertex, minCostDP);
                     if(cost < minCost) {
                         minCost = cost;
@@ -83,6 +98,7 @@ public class TravelingSalesmanHeldKarp {
                 if(set.size() == 0) {
                     minCost = distance[0][currentVertex];
                 }
+                // save to HashMap
                 minCostDP.put(index, minCost);
                 parent.put(index, minPrevVertex);
             }
@@ -96,6 +112,7 @@ public class TravelingSalesmanHeldKarp {
         int prevVertex = -1;
         //to avoid ConcurrentModificationException copy set into another set while iterating
         Set<Integer> copySet = new HashSet<>(set);
+        // calculate minimum cost of traveling salesman from tables
         for(int k : set) {
             int cost = distance[k][0] + getCost(copySet, k, minCostDP);
             if(cost < min) {
@@ -138,6 +155,7 @@ public class TravelingSalesmanHeldKarp {
         return cost;
     }
 
+    // generate 2^n combinations possible
     private List<Set<Integer>> generateCombination(int n) {
         int input[] = new int[n];
         for(int i = 0; i < input.length; i++) {
@@ -154,26 +172,37 @@ public class TravelingSalesmanHeldKarp {
         if(pos == input.length) {
             return;
         }
+        // generate set of size == pos
         Set<Integer> set = createSet(result, pos);
         allSets.add(set);
         for(int i=start; i < input.length; i++) {
-            result[pos] = input[i];
+            // iterate each input value through same result position
+            result[pos] = input[i]; 
+            // generate set for current result[pos]
             generateCombination(input, i+1, pos+1, allSets, result);
         }
     }
 
-    private static Set<Integer> createSet(int input[], int pos) {
+    private static Set<Integer> createSet(int[] result, int pos) {
         if(pos == 0) {
-            return new HashSet<>();
+            return new HashSet<>(); // generate empty subset
         }
         Set<Integer> set = new HashSet<>();
         for(int i = 0; i < pos; i++) {
-            set.add(input[i]);
+            set.add(result[i]);
         }
         return set;
     }
+    
+    // driver program to test above function
+    public static void main(String[] args) {
+        TravelingSalesmanHeldKarp tshk = new TravelingSalesmanHeldKarp();
+        int[][] edges =  new int[][]{
+                    {0, 1, 15, 6},
+                    {2, 0, 7, 3},
+                    {9, 6, 0, 12},
+                    {10, 4, 8, 0}};
+        int cost = tshk.minCost(edges);
+        System.out.println("Min cost is " + cost);
+    }
 }
-
-
-
-
