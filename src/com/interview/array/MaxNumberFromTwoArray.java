@@ -21,98 +21,71 @@ import java.util.LinkedList;
  */
 public class MaxNumberFromTwoArray {
     public int[] maxNumber(int[] nums1, int[] nums2, int k) {
-
-        int[] result = new int[k];
-        //try k from nums1 and k - i from nums2.
-        //Combine then by merge sort routine. And see that this result is bigger than
-        //already stored result. If yes then store it as result.
-        for (int i = 0; i <= nums1.length; i++) {
-
-            if (k - i < 0 || i > nums1.length || (k - i) > nums2.length) {
+        int[] max = new int[k];
+        for (int i = 0; i <= k; i++) {
+            if (nums1.length < i || nums2.length < k - i) {
                 continue;
             }
-
-            int[] r1 = findMaxNumber(nums1, i);
-            int[] r2 = findMaxNumber(nums2, k - i);
-
-            int x = 0, y = 0;
-            int r[] = new int[k];
-            int index = 0;
-            while (x < r1.length && y < r2.length) {
-                //if both the numbers are equal then keep check till the end to see which one has greater
-                //number following after current number.
-                if (r1[x] == r2[y]) {
-                    int t = x + 1;
-                    int u = y + 1;
-                    while (t < r1.length && u < r2.length) {
-                        if (r1[t] == r2[u]) {
-                            t++;
-                            u++;
-                        } else {
-                            break;
-                        }
-                    }
-                    if (t == r1.length || u == r2.length) {
-                        r[index++] = (t == r1.length ? r2[y++] : r1[x++]);
-                    } else {
-                        r[index++] = r1[t] > r2[u] ? r1[x++] : r2[y++];
-                    }
-                } else if (r1[x] > r2[y]) {
-                    r[index++] = r1[x++];
-                } else if (r2[y] > r1[x]) {
-                    r[index++] = r2[y++];
-                }
-            }
-
-            while (x < r1.length) {
-                r[index++] = r1[x++];
-            }
-
-            while(y < r2.length) {
-                r[index++] = r2[y++];
-            }
-
-            if (isBigger(r, result)) {
-                result = r;
+            int[] a = merge(findLargest1(nums1, i), findLargest1(nums2, k - i));
+            if (isGreater(a, max, 0, 0)) {
+                max = a;
             }
         }
+        return max;
+    }
 
+    private int[] merge(int[] a1, int[] a2) {
+        int[] result = new int[a1.length + a2.length];
+        int i = 0;
+        int j = 0;
+        int k = 0;
+        while (i < a1.length || j < a2.length) {
+            if (i == a1.length) {
+                result[k++] = a2[j++];
+            } else if (j == a2.length) {
+                result[k++] = a1[i++];
+            } else if (a1[i] > a2[j]) {
+                result[k++] = a1[i++];
+            } else if (a1[i] < a2[j]) {
+                result[k++] = a2[j++];
+            } else {
+                if (isGreater(a1, a2, i, j)) {
+                    result[k++] = a1[i++];
+                } else {
+                    result[k++] = a2[j++];
+                }
+            }
+        }
         return result;
     }
 
-    private boolean isBigger(int[] r1, int[] r2) {
-        for (int i = 0; i < r1.length; i++) {
-            if (r1[i] > r2[i]) {
+    private boolean isGreater(int[] a, int[] b, int i, int j) {
+        while (i < a.length && j < b.length) {
+            if (a[i] > b[j]) {
                 return true;
-            } else if (r1[i] < r2[i]) {
+            } else if (a[i] < b[j]) {
                 return false;
             }
+            i++;
+            j++;
         }
-        return false;
+        return j == b.length;
     }
 
-    /**
-     * Find max number by removing k digits from input.
-     */
-    private int[] findMaxNumber(int input[],int k) {
-        int remaining = input.length - k;
-        Deque<Integer> stack = new LinkedList<>();
-        for (int i = 0; i < input.length; i++) {
-            while(!stack.isEmpty() && remaining > 0) {
-                if (stack.peek() < input[i]) {
-                    stack.pollFirst();
-                    remaining--;
-                } else {
-                    break;
-                }
+    private int[] findLargest1(int[] nums, int k) {
+        if (k == 0) {
+            return new int[0];
+        }
+        int[] result = new int[k];
+        int index = 0;
+        for (int i = 0; i < nums.length; i++) {
+            while (index > 0 && index + (nums.length - i - 1) >= k && result[index - 1] < nums[i]) {
+                index--;
             }
-            stack.offerFirst(input[i]);
+            if (index < k) {
+                result[index++] = nums[i];
+            }
         }
-        int[] result = new int[Math.min(k, input.length)];
-        for (int i = 0; i < result.length; i++) {
-            result[i] = stack.pollLast();
-        }
-
         return result;
     }
 
