@@ -11,10 +11,10 @@ public class LongestCommonSubsequence {
             return 0;
         }
         if(str1[len1] == str2[len2]){
-            return 1 + lcs(str1,str2,len1+1,len2+1);
+            return 1 + lcs(str1,str2,len1-1,len2-1);
         }
         else{
-            return Math.max(lcs(str1,str2,len1+1,len2),lcs(str1,str2,len1,len2+1));
+            return Math.max(lcs(str1,str2,len1-1,len2),lcs(str1,str2,len1,len2-1));
         }
     }
 
