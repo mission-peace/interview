@@ -5,6 +5,9 @@ package com.interview.tree;
  * @author Tushar Roy
  *
  * Morris inorder/preorder traversals
+ * A binary tree is threaded by making all right child pointers that would normally be null 
+ * point to the inorder successor of the node (if it exists), 
+ * and all left child pointers that would normally be null point to the inorder predecessor of the node.
  *
  * Time complexity O(n)
  * Space complexity O(1)
@@ -28,17 +31,19 @@ public class MorrisTraversal {
                 }
                 //if right node is null then go left after establishing link from predecessor to current.
                 if(predecessor.right == null){
-                    predecessor.right = current;
+                    predecessor.right = current; //thread predecessor.right to next inorder node 
                     current = current.left;
-                }else{ //left is already visit. Go rigth after visiting current.
-                    predecessor.right = null;
+                // reach this line only after threading predecessor.right to current
+                }else{ //left is already visit. Go right after visiting current.
+                    predecessor.right = null; // remove threaded pointer
                     System.out.print(current.data + " ");
-                    current = current.right;
+                    current = current.right; 
                 }
             }
         }
     }
 
+    // only difference is node is visited before exploring left
     public void preorder(Node root) {
         Node current = root;
         while (current != null) {
@@ -53,7 +58,7 @@ public class MorrisTraversal {
                 }
                 if(predecessor.right == null){
                     predecessor.right = current;
-                    System.out.print(current.data + " ");
+                    System.out.print(current.data + " "); // visit node before exploring left
                     current = current.left;
                 }else{
                     predecessor.right = null;

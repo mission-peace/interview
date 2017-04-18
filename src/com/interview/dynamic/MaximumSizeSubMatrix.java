@@ -14,6 +14,7 @@ public class MaximumSizeSubMatrix {
         
         int result[][] = new int[arr.length][arr[0].length];
         int max = 0;
+        // initialize result 0th column && row
         for(int i=0; i < arr.length; i++){
             result[i][0] = arr[i][0];
             if (result[i][0] == 1)
@@ -21,7 +22,6 @@ public class MaximumSizeSubMatrix {
                 max = 1;
             }
         }
-        
         for(int i=0; i < arr[0].length; i++){
             result[0][i] = arr[0][i];
             if (result[0][i] == 1)
@@ -37,6 +37,7 @@ public class MaximumSizeSubMatrix {
                 if(arr[i][j] == 0){
                     continue;
                 }
+                // take min of top, left, and topLeft to form +1 square
                 int t = min(result[i-1][j],result[i-1][j-1],result[i][j-1]);
                 result[i][j] =  t +1;
                 if(result[i][j] > max){

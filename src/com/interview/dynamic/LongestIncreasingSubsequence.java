@@ -26,23 +26,26 @@ public class LongestIncreasingSubsequence {
      * DP way of solving LIS
      */
     public int longestSubsequenceWithActualSolution(int arr[]){
+        // array tracking increasing subsequence length
         int T[] = new int[arr.length];
         int actualSolution[] = new int[arr.length];
         for(int i=0; i < arr.length; i++){
+            //initialize minimum length as 1
             T[i] = 1;
             actualSolution[i] = i;
         }
-        
-        for(int i=1; i < arr.length; i++){
-            for(int j=0; j < i; j++){
-                if(arr[i] > arr[j]){
-                    if(T[j] + 1 > T[i]){
-                        T[i] = T[j] + 1;
+        // initialize 'i' ahead of 'j'
+        for(int i=1; i < arr.length; i++){ 
+            // restart 'j' @ 0 whenever 'i' increments
+            for(int j=0; j < i; j++){//loop terminates when 'j' reaches 'i'
+                if(arr[i] > arr[j]){ // it is in increasing subsequence
+                    if(T[j] + 1 > T[i]){ //take max increasing subsequence
+                        T[i] = T[j] + 1; // sequence length @ 'i' must be greater than 'j'
                         //set the actualSolution to point to guy before me
                         actualSolution[i] = j;
                     }
                 }
-            }
+            }//when 'j'=='i'-1, inner loop terminates and 'i' loop continues
         }
         
         //find the index of max number in T 

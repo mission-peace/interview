@@ -29,15 +29,15 @@ public class Combination {
 
     private void combination(char input[],int count[],int pos, char output[],int len){
         print(output, len);
-        for(int i=pos; i < input.length; i++){
+        for(int i=pos; i < input.length; i++){ //start i at pos to prevent using previous char
             if (count[i] == 0) {
                 continue;
             }
             output[len] = input[i];
-            count[i]--;
-            combination(input, count, i, output, len + 1);
-            count[i]++;
-        }
+            count[i]--; // dec char-count before calling recursion
+            combination(input, count, i, output, len + 1); // modifying len will cause bugs
+            count[i]++; // restore char-count before continuing iteration
+        } //results are printed, not returned
     }
 
     private void print(char result[],int pos){

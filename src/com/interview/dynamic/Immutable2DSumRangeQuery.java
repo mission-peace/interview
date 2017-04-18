@@ -23,10 +23,15 @@ public class Immutable2DSumRangeQuery {
             row = matrix.length;
             col = matrix[0].length;
         }
+        // additional 0th row && col initialized to all 0
+        // to prevent out of range error
         T = new int[row + 1][col + 1];
-        for (int i = 1; i < T.length; i++) {
-            for (int j = 1; j < T[0].length; j++) {
-                T[i][j] = T[i - 1][j] + T[i][j - 1] + matrix[i - 1][j - 1] - T[i - 1][j - 1];
+        for (int r = 1; r < T.length; r++) {
+            for (int c = 1; c < T[0].length; c++) {
+                // matrix cell == sumOfRecW/1LessRow + sumOfRecW/1LessCol
+                //                    - overlappingRectAdded2x + currentCell
+                T[r][c] = T[r - 1][c] + T[r][c - 1] 
+                        - T[r - 1][c - 1] + matrix[r - 1][c - 1] ;
             }
         }
    }
@@ -36,7 +41,10 @@ public class Immutable2DSumRangeQuery {
         col1++;
         row2++;
         col2++;
-        return T[row2][col2] - T[row1 - 1][col2] - T[row2][col1 - 1] + T[row1 - 1][col1 - 1];
+        // bottomRightArea - areaAboveTopRightCorner
+        //   - areaLeftOfBottomLeftCorner + topLeftAreaOverlappingButSubtacted2x
+        return T[row2][col2] - T[row1 - 1][col2] 
+                - T[row2][col1 - 1] + T[row1 - 1][col1 - 1];
     }
 
     public static void main(String args[]) {

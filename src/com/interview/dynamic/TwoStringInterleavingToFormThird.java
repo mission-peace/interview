@@ -8,47 +8,61 @@ public class TwoStringInterleavingToFormThird {
 
     public boolean isInterleavedRecursive(char str1[], char str2[], char str3[],int pos1, int pos2, int pos3){
         if(pos1 == str1.length && pos2 == str2.length && pos3 == str3.length){
-            return true;
+            return true; // recursion successful
         }
         
         if(pos3 == str3.length){
-            return false;
+            return false; // end of recursion without using all input char
         }
-        
-        return (pos1 < str1.length && str1[pos1] == str3[pos3] && isInterleavedRecursive(str1, str2, str3, pos1+1, pos2, pos3+1))
-                || (pos2 < str2.length && str2[pos2] == str3[pos3] && isInterleavedRecursive(str1, str2, str3, pos1, pos2+1, pos3+1));
+        // char1 matches char3, increment pos1 && pos3, enter recursion ||
+        // char2 matches char3, increment pos2 && pos3, enter recursion
+        return (pos1 < str1.length 
+                    && str1[pos1] == str3[pos3] 
+                    && isInterleavedRecursive(str1, str2, str3, pos1+1, pos2, pos3+1))
+            || (pos2 < str2.length 
+                    && str2[pos2] == str3[pos3] 
+                    && isInterleavedRecursive(str1, str2, str3, pos1, pos2+1, pos3+1));
         
     }
-    
-    public boolean isInterleaved(char str1[], char str2[], char str3[]){
-        boolean T[][] = new boolean[str1.length +1][str2.length +1];
+    // string C is interleaved string of A & B
+    public boolean isInterleaved(char[] A, char[] B, char[] C){
+        // A runs horizontally, B runs vertically
+        boolean T[][] = new boolean[A.length +1][B.length +1];
         
-        if(str1.length + str2.length != str3.length){
+        // string C can be an interleaving of string A and string B only if 
+        // sum of lengths A & B is equal to length of C
+        if(A.length + B.length != C.length){
             return false;
         }
         
-        for(int i=0; i < T.length; i++){
-            for(int j=0; j < T[i].length; j++){
-                int l = i + j -1;
-                if(i == 0 && j == 0){
-                    T[i][j] = true;
+        for(int r=0; r < T.length; r++){ //fill matrix topRow down
+            for(int c=0; c < T[r].length; c++){ //fill matrix column left2right
+                int p = r + c -1; //p: position on C
+                // two empty strings have an empty string as interleaving
+                if(r == 0 && c == 0){
+                    T[r][c] = true;
                 }
-                else if(i == 0){
-                    if(str3[l] == str2[j-1]){
-                        T[i][j] = T[i][j-1];
+                // A is empty
+                else if(r == 0){
+                    if(C[p] == B[c-1]){
+                        T[r][c] = T[r][c-1];
                     }
                 }
-                else if(j == 0){
-                    if(str1[i-1] == str3[l]){
-                        T[i][j] = T[i-1][j];
+                // B (column) is empty
+                else if(c == 0){
+                    if(A[r-1] == C[p]){
+                        T[r][c] = T[r-1][c];
                     }
                 }
                 else{
-                    T[i][j] = (str1[i-1] == str3[l] ? T[i-1][j] : false) || (str2[j-1] == str3[l] ? T[i][j-1] : false);
+                    // charA matches charC ? check if previous charB is valid ||
+                    // charB matches charC ? check if previous charA is valid
+                    T[r][c] = (A[r-1] == C[p] ? T[r-1][c] : false) 
+                            || (B[c-1] == C[p] ? T[r][c-1] : false);
                 }
             }
         }
-        return T[str1.length][str2.length];
+        return T[A.length][B.length];
     }
     
     public static void main(String args[]){

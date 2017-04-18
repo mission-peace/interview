@@ -10,7 +10,7 @@ import java.util.Map;
  * Find single source shortest path using Dijkstra's algorithm
  *
  * Space complexity - O(E + V)
- * Time complexity - O(ElogV)
+ * Time complexity - O(ElogV), every Edge is checked * logVertex time for binary heap functions 
  *
  * References
  * https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
@@ -20,7 +20,9 @@ public class DijkstraShortestPath {
     public Map<Vertex<Integer>,Integer> shortestPath(Graph<Integer> graph, Vertex<Integer> sourceVertex){
 
         //heap + map data structure
+        // Key: vertex, Value: shortest distance from source to key vertex
         BinaryMinHeap<Vertex<Integer>> minHeap = new BinaryMinHeap<>();
+        // Prim's heap tree stores shortest edge to be used in minimum spanning tree
 
         //stores shortest distance from root to every vertex
         Map<Vertex<Integer>,Integer> distance = new HashMap<>();
@@ -44,7 +46,8 @@ public class DijkstraShortestPath {
 
         //iterate till heap is not empty
         while(!minHeap.empty()){
-            //get the min value from heap node which has vertex and distance of that vertex from source vertex.
+            //get & remove the min value from heap node which has 
+            //vertex and distance of that vertex from source vertex.
             BinaryMinHeap<Vertex<Integer>>.Node heapNode = minHeap.extractMinNode();
             Vertex<Integer> current = heapNode.key;
 
@@ -57,16 +60,19 @@ public class DijkstraShortestPath {
                 //get the adjacent vertex
                 Vertex<Integer> adjacent = getVertexForEdge(current, edge);
 
-                //if heap does not contain adjacent vertex means adjacent vertex already has shortest distance from source vertex
+                //if heap does not contain adjacent vertex means 
+                //adjacent vertex already has shortest distance from source vertex
                 if(!minHeap.containsData(adjacent)){
-                    continue;
+                    continue; // done with this vertex
                 }
 
-                //add distance of current vertex to edge weight to get distance of adjacent vertex from source vertex
+                //add distance of current vertex to edge weight 
+                // to get distance of adjacent vertex from source vertex
                 //when it goes through current vertex
                 int newDistance = distance.get(current) + edge.getWeight();
 
-                //see if this above calculated distance is less than current distance stored for adjacent vertex from source vertex
+                //see if this above calculated distance is less than current 
+                //distance stored for adjacent vertex from source vertex
                 if(minHeap.getWeight(adjacent) > newDistance) {
                     minHeap.decrease(adjacent, newDistance);
                     parent.put(adjacent, current);

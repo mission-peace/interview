@@ -35,28 +35,28 @@ public class SubsquareSurrounedByXs {
     }
     public int findSubSquare(char input[][]){
         Cell T[][] = new Cell[input.length][input[0].length];
-        for(int i=0; i < T.length; i++){
-            for(int j=0; j < T[0].length; j++){
-                T[i][j] = new Cell();
+        for(int v=0; v < T.length; v++){
+            for(int h=0; h < T[0].length; h++){
+                T[v][h] = new Cell();
             }
         }
     
-        for(int i=0; i < input.length; i++){
-            for(int j=0; j < input[0].length; j++){
-                if(input[i][j] == 'X'){
-                    if(i == 0 && j == 0){
-                        T[i][j].hori = 1;
-                        T[i][j].ver = 1;
+        for(int v=0; v < input.length; v++){
+            for(int h=0; h < input[0].length; h++){
+                if(input[v][h] == 'X'){
+                    if(v == 0 && h == 0){
+                        T[v][h].hori = 1;
+                        T[v][h].ver = 1;
                     }
-                    else if(i == 0){
-                        T[i][j].hori = T[i][j-1].hori + 1;
-                        T[i][j].ver = 1;
-                    }else if(j == 0){
-                        T[i][j].ver = T[i-1][j].ver +1;
-                        T[i][j].hori = 1;
+                    else if(v == 0){
+                        T[v][h].hori = T[v][h-1].hori + 1;
+                        T[v][h].ver = 1;
+                    }else if(h == 0){
+                        T[v][h].ver = T[v-1][h].ver +1;
+                        T[v][h].hori = 1;
                     }else{
-                        T[i][j].hori = T[i][j-1].hori +1;
-                        T[i][j].ver = T[i-1][j].ver + 1;
+                        T[v][h].hori = T[v][h-1].hori +1;
+                        T[v][h].ver = T[v-1][h].ver + 1;
                     }
                 }
             }
@@ -72,15 +72,19 @@ public class SubsquareSurrounedByXs {
         //If this is greater than 1 then see if you can find a number between this min and 1
         //such that on left's ver and top's hori is greater greater than or equal to k.
         int max = 1;
-        for(int i=T.length -1; i >=0 ; i--){
-            for(int j= T[0].length-1 ; j >=0; j--){
-                if(T[i][j].ver == 0 || T[i][j].ver == 1 || T[i][j].hori ==1 ){
+        // iterate from bottomRight matrix
+        // stopping at max since any solution inside max must be smaller
+        for(int v=T.length -1; v >max ; v--){
+            for(int h= T[0].length-1 ; h >max; h--){
+                if(T[v][h].ver == 0 || T[v][h].ver == 1 || T[v][h].hori ==1 ){
                     continue;
                 }
-                int min = Math.min(T[i][j].ver, T[i][j].hori);
+                // maximum square cannot exceed minimum(rightEdge, topEdge)
+                int minEdge = Math.min(T[v][h].ver, T[v][h].hori);
                 int k = 0;
-                for(k=min; k > 1; k--){
-                    if(T[i][j-k+1].ver >= k && T[i-k+1][j].hori >= k){
+                for(k=minEdge; k > 1; k--){
+                    // check for valid leftEdge && topEdge 
+                    if(T[v][h-k+1].ver >= k && T[v-k+1][h].hori >= k){
                         break;
                     }
                 }

@@ -38,6 +38,8 @@ public class TreeTraversalLevelByLevel {
 
     /**
      * Use two queue to print level by level
+     * as one queue is printing, its children are added to other queue
+     * after queue is exhausted, next queue will be printed on new line
      */
     public void levelByLevelTwoQueue(Node root) {
         if (root == null) {
@@ -50,6 +52,7 @@ public class TreeTraversalLevelByLevel {
             while (!q1.isEmpty()) {
                 root = q1.poll();
                 System.out.print(root.data + " ");
+                // add children to other queue
                 if (root.left != null) {
                     q2.offer(root.left);
                 }
@@ -61,6 +64,7 @@ public class TreeTraversalLevelByLevel {
             while (!q2.isEmpty()) {
                 root = q2.poll();
                 System.out.print(root.data + " ");
+                // add children to other queue
                 if (root.left != null) {
                     q1.offer(root.left);
                 }
@@ -68,24 +72,31 @@ public class TreeTraversalLevelByLevel {
                     q1.offer(root.right);
                 }
             }
-            System.out.println();
+            System.out.println(); // new line
         }
     }
 
     /**
      * Use one queue and delimiter to print level by level
+     * delimiter here is null. When null comes off stack,
+     * it indicates a new level and
+     * all children of that level needs to go on a new line
+     * so null is added to end of queue
      */
     public void levelByLevelOneQueueUsingDelimiter(Node root) {
         if (root == null) {
             return;
         }
         Queue<Node> q = new LinkedList<Node>();
+        // .add() throws exception when element can not be added to collection
+        // .offer() does not 
         q.offer(root);
         q.offer(null);
         while (!q.isEmpty()) {
             root = q.poll();
             if (root != null) {
                 System.out.print(root.data + " ");
+                // add children to queue
                 if (root.left != null) {
                     q.offer(root.left);
                 }
@@ -103,32 +114,35 @@ public class TreeTraversalLevelByLevel {
 
     /**
      * Use one queue and count to print level by level
+     * children nodes are counted as they are added to queue
+     * remaining nodes are deducted as they are printed
      */
     public void levelByLevelOneQueueUsingCount(Node root) {
         if (root == null) {
             return;
         }
         Queue<Node> q = new LinkedList<Node>();
-        int levelCount = 1;
-        int currentCount = 0;
+        int remainingNodes = 1; // remaining nodes in this level
+        int childrenNodes = 0; // children added to queue
         q.offer(root);
         while (!q.isEmpty()) {
-            while (levelCount > 0) {
+            while (remainingNodes > 0) {
                 root = q.poll();
                 System.out.print(root.data + " ");
                 if (root.left != null) {
-                    currentCount++;
+                    childrenNodes++;
                     q.offer(root.left);
                 }
                 if (root.right != null) {
-                    currentCount++;
+                    childrenNodes++;
                     q.offer(root.right);
                 }
-                levelCount--;
+                remainingNodes--;
             }
-            System.out.println();
-            levelCount = currentCount;
-            currentCount = 0;
+            System.out.println(); // new line
+            // children nodes now becomes nodes to be printed
+            remainingNodes = childrenNodes;
+            childrenNodes = 0; // clear count for next level
         }
     }
 

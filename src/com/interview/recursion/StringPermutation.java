@@ -47,12 +47,12 @@ public class StringPermutation {
 
         for(int i = 0; i < str.length; i++) {
             if(count[i] == 0) {
-                continue;
+                continue; //no char available, iterate to next
             }
             result[level] = str[i];
             count[i]--;
             permuteUtil(str, count, result, level + 1, resultList);
-            count[i]++;
+            count[i]++; //restore char count before iterating to next char
         }
     }
 

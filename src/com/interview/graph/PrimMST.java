@@ -23,7 +23,13 @@ public class PrimMST {
     public List<Edge<Integer>> primMST(Graph<Integer> graph){
 
         //binary heap + map data structure
+        //  extractMin  O(logV)
+        //  decrease    O(logV)
+        //  add         O(logV)
+        //  contains    O(1)
+        //key: vertex, Value: smallest edge weight
         BinaryMinHeap<Vertex<Integer>> minHeap = new BinaryMinHeap<>();
+        //Dijkstra's Algorithm stores single source shortest path length from source to vector
 
         //map of vertex to edge which gave minimum weight to this vertex.
         Map<Vertex<Integer>,Edge<Integer>> vertexToEdge = new HashMap<>();
@@ -40,12 +46,13 @@ public class PrimMST {
         Vertex<Integer> startVertex = graph.getAllVertex().iterator().next();
 
         //for the start vertex decrease the value in heap + map to 0
+        // since shortest distance to itself is 0
         minHeap.decrease(startVertex, 0);
 
         //iterate till heap + map has elements in it
         while(!minHeap.empty()){
             //extract min value vertex from heap + map
-            Vertex<Integer> current = minHeap.extractMin();
+            Vertex<Integer> current = minHeap.extractMin(); // O(logV)
 
             //get the corresponding edge for this vertex if present and add it to final result.
             //This edge wont be present for first vertex.
@@ -58,9 +65,10 @@ public class PrimMST {
             for(Edge<Integer> edge : current.getEdges()){
                 Vertex<Integer> adjacent = getVertexForEdge(current, edge);
                 //check if adjacent vertex exist in heap + map and weight attached with this vertex is greater than this edge weight
-                if(minHeap.containsData(adjacent) && minHeap.getWeight(adjacent) > edge.getWeight()){
+                if(minHeap.containsData(adjacent) 
+                   && minHeap.getWeight(adjacent) > edge.getWeight()){
                     //decrease the value of adjacent vertex to this edge weight.
-                    minHeap.decrease(adjacent, edge.getWeight());
+                    minHeap.decrease(adjacent, edge.getWeight()); // O(logV)
                     //add vertex->edge mapping in the graph.
                     vertexToEdge.put(adjacent, edge);
                 }

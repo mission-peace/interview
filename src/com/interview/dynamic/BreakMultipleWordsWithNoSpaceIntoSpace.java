@@ -31,6 +31,8 @@ public class BreakMultipleWordsWithNoSpaceIntoSpace {
     /**
      * Recursive and slow version of breaking word problem.
      * If no words can be formed it returns null
+     * adds char from input until word is formed
+     * then enters recursion starting with char following valid word
      */
     public String breakWord(char[] str,int low,Set<String> dictionary){
         StringBuffer buff = new StringBuffer();
@@ -51,7 +53,7 @@ public class BreakMultipleWordsWithNoSpaceIntoSpace {
     
     /**
      * Dynamic programming version for breaking word problem.
-     * It returns null string if string cannot be broken into multipe words
+     * It returns null string if string cannot be broken into multiple words
      * such that each word is in dictionary.
      * Gives preference to longer words over splits
      * e.g peanutbutter with dict{pea nut butter peanut} it would result in
@@ -67,9 +69,9 @@ public class BreakMultipleWordsWithNoSpaceIntoSpace {
         }
         
         //fill up the matrix in bottom up manner
-        for(int l = 1; l <= word.length(); l++){
-            for(int i=0; i < word.length() -l + 1 ; i++){
-                int j = i + l-1;
+        for(int L = 1; L <= word.length(); L++){ //L: length of characters
+            for(int i=0; i < word.length() -L + 1 ; i++){
+                int j = i + L-1;
                 String str = word.substring(i,j+1);
                 //if string between i to j is in dictionary T[i][j] is true
                 if(dict.contains(str)){
@@ -79,7 +81,7 @@ public class BreakMultipleWordsWithNoSpaceIntoSpace {
                 //find a k between i+1 to j such that T[i][k-1] && T[k][j] are both true 
                 for(int k=i+1; k <= j; k++){
                     if(T[i][k-1] != -1 && T[k][j] != -1){
-                        T[i][j] = k;
+                        T[i][j] = k; //store split where k is start of valid word
                         break;
                     }
                 }

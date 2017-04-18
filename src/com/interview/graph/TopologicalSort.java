@@ -11,7 +11,10 @@ import java.util.ArrayDeque;
  *
  * Given a directed acyclic graph, do a topological sort on this graph.
  *
- * Do DFS by keeping visited. Put the vertex which are completely explored into a stack.
+ * Do DFS (depth-first search) by keeping visited vertex in Set. 
+ * Each vertex added to Set will be completely explored recursively.
+ * Vertex is completely explored when it no longer has unvisited children
+ * Put the vertex which are completely explored into a stack.
  * Pop from stack to get sorted order.
  *
  * Space and time complexity is O(n).
@@ -24,7 +27,9 @@ public class TopologicalSort<T> {
     public Deque<Vertex<T>> topSort(Graph<T> graph) {
         Deque<Vertex<T>> stack = new ArrayDeque<>();
         Set<Vertex<T>> visited = new HashSet<>();
+        // explore every vertex
         for (Vertex<T> vertex : graph.getAllVertex()) {
+            // skip already visited vertex
             if (visited.contains(vertex)) {
                 continue;
             }
@@ -40,8 +45,10 @@ public class TopologicalSort<T> {
             if(visited.contains(childVertex)){
                 continue;
             }
+            // childVertex not in visited Set, explore it recursively
             topSortUtil(childVertex,stack,visited);
         }
+        // vertex completely explored, add to stack
         stack.offerFirst(vertex);
     }
     

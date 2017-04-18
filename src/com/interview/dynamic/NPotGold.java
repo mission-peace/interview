@@ -14,6 +14,9 @@ public class NPotGold {
             return first + " " + second + " " + pick;
         }
     }
+    /* bottom up dynamic programming
+     * after picking, array shrinks into remaining subsequence
+     * picking first means you are left with second option of subsequence*/
     public Pair[][] findMoves(int pots[]){
         
         Pair[][] moves = new Pair[pots.length][pots.length];
@@ -30,17 +33,22 @@ public class NPotGold {
             moves[i][i].pick = i;
         }
         
-        for(int l = 2; l <= pots.length; l++){
-            for(int i=0; i <= pots.length - l; i++){
-                int j = i + l -1;
-                if(pots[i] + moves[i+1][j].second > moves[i][j-1].second + pots[j]){
-                    moves[i][j].first = pots[i] + moves[i+1][j].second;
-                    moves[i][j].second = moves[i+1][j].first;
-                    moves[i][j].pick = i;
+        for(int L = 2; L <= pots.length; L++){ //L: Length of subsequence
+            for(int s=0; s <= pots.length - L; s++){ //s: start index
+                int e = s + L -1; //e: end index
+                // if picking startIndex > picking endIndex
+                if(pots[s] + moves[s+1][e].second > pots[e] + moves[s][e-1].second){
+                    // startingPot + 2nd option of subsequence
+                    moves[s][e].first = pots[s] + moves[s+1][e].second;
+                    // starting pot gone, go to remaining subarray
+                    // copy 1st (best) move of subsequence
+                    moves[s][e].second = moves[s+1][e].first;
+                    // save move
+                    moves[s][e].pick = s;
                 }else{
-                    moves[i][j].first = pots[j] + moves[i][j-1].second;
-                    moves[i][j].second = moves[i][j-1].first;
-                    moves[i][j].pick =j;
+                    moves[s][e].first = pots[e] + moves[s][e-1].second;
+                    moves[s][e].second = moves[s][e-1].first;
+                    moves[s][e].pick =e;
                 }
             }
         }
