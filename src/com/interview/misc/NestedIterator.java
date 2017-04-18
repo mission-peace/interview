@@ -4,8 +4,12 @@ import java.util.Deque;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Stack;
 
 /**
+ * Date 04/17/2017
+ * @author Tushar Roy
+ *
  * Given a nested list of integers, implement an iterator to flatten it.
  * Each element is either an integer, or a list -- whose elements may also be integers or other lists.
  * Example 1:
@@ -15,74 +19,50 @@ import java.util.List;
  * https://leetcode.com/problems/flatten-nested-list-iterator/
  */
 public class NestedIterator implements Iterator<Integer> {
-
-    private final Deque<NestedInteger> stack;
-    private NestedInteger current;
-    private final Deque<Integer> positionStack;
-    private int position = 0;
-
+    Stack<Iterator<NestedInteger>> stack = new Stack<>();
+    Integer nextVal = null;
     public NestedIterator(List<NestedInteger> nestedList) {
-        NestedInteger ni = new NestedIntegerImpl(nestedList);
-        current = ni;
-        this.stack = new LinkedList<>();
-        this.positionStack = new LinkedList<>();
+        stack.push(nestedList.iterator());
     }
 
     @Override
     public Integer next() {
-        return current.getList().get(position++).getInteger();
+        if (!hasNext()) {
+            throw new IllegalArgumentException();
+        }
+        Integer val = nextVal;
+        nextVal = null;
+        return val;
     }
 
     @Override
     public boolean hasNext() {
-        if (position < current.getList().size()) {
-            NestedInteger i = current.getList().get(position);
-            if (i.isInteger()) {
-                return true;
-            } else {
-                stack.offerFirst(current);
-                positionStack.offerFirst(position + 1);
-                current = i;
-                position = 0;
-                return hasNext();
-            }
-        } else {
-            if (stack.isEmpty()) {
-                return false;
-            }
-            current = stack.pollFirst();
-            position = positionStack.pollFirst();
-            return hasNext();
+        if (nextVal != null) {
+            return true;
         }
-    }
-}
-
-class NestedIntegerImpl extends NestedInteger {
-
-    private List<NestedInteger> list;
-    NestedIntegerImpl(List<NestedInteger> list) {
-        this.list = list;
-    }
-
-    @Override
-    public boolean isInteger() {
+        while (!stack.isEmpty()) {
+            boolean pushedIntoStack = false;
+            Iterator<NestedInteger> itr = stack.peek();
+            if (itr.hasNext()) {
+                NestedInteger ni = itr.next();
+                if (ni.isInteger()) {
+                    nextVal = ni.getInteger();
+                    return true;
+                } else {
+                    pushedIntoStack = true;
+                    stack.push(ni.getList().iterator());
+                }
+            }
+            if (!pushedIntoStack) {
+                stack.pop();
+            }
+        }
         return false;
     }
-
-    @Override
-    public Integer getInteger() {
-        return null;
-    }
-
-    @Override
-    public List<NestedInteger> getList() {
-        return list;
-    }
 }
 
-
-abstract class NestedInteger {
-    abstract boolean isInteger();
-    abstract Integer getInteger();
-    abstract List<NestedInteger> getList();
+interface NestedInteger {
+    boolean isInteger();
+    Integer getInteger();
+    List<NestedInteger> getList();
 }
