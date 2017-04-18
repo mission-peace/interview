@@ -77,9 +77,9 @@ public class AVLTree {
     
     public Node insert(Node root, int data){
         if(root == null){
-            return Node.newNode(data);
+            root = Node.newNode(data);
         }
-        if(root.data <= data){
+        else if(root.data <= data){
             root.right = insert(root.right,data);
         }
         else{
