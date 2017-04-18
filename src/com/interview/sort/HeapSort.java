@@ -13,7 +13,7 @@ package com.interview.sort;
  * with rest of the array element. Repeat this process
  * 
  * Time complexity
- * O(nlogn)
+ * O(nlogn) ==> How ?
  * 
  * Test cases
  * Null array
