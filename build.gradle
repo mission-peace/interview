@@ -8,10 +8,12 @@ targetCompatibility = '1.8'
 
 repositories {
     mavenCentral()
+    maven {url "https://jitpack.io"}
 }
 
 dependencies {
     testCompile 'junit:junit:4.12'
+    //testCompile 'com.github.USER:Repo:Tag'
 }
 
 sourceSets {
