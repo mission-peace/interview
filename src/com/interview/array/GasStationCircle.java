@@ -98,6 +98,7 @@ public class GasStationCircle {
         		start = i+1;
         	}
         }
+
         return totalGas < totalDistance ? -1 : start;
     }
 
