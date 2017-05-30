@@ -37,42 +37,29 @@ public class GasStationCircle {
     }
     
     /**
-     * If it is not guaranteed that tour exists then once you get
-     * result of kadanewrap make an actual trip to see if value is positive
-     * @return -1 if no solution exists otherwise returns gas station at which to start.
+     * A much simpler solution - 
+     * If total gas available < total gas required then we return -1
+     * Otherwise we just track the current remaining distance and if
+     * that's negative, increment start index
+     * @param  gasAvailable [Gas available at each station]
+     * @param  gasRequired [required amount of gas to go from one station to next]
+     * @return  start [index of starting point]
      */
     public int startTour1(int gasAvailable[], int gasRequired[]){
-        int diff[] = new int[gasAvailable.length];
-        for(int i=0; i < diff.length; i++){
-            diff[i] = gasAvailable[i] - gasRequired[i];
+        int totalDistance = 0;
+        int totalGas = 0;
+        int start = 0;
+        int remainingDistance = 0;
+        for(int i=0; i<gasAvailable.length; i++) {
+        	totalDistance += gasRequired[i];
+        	totalGas += gasAvailable[i];
+        	remainingDistance += gasAvailable[i] - gasRequired[i];
+        	if(remainingDistance < 0) {
+        		remainingDistance = 0;
+        		start = i+1;
+        	}
         }
-
-        boolean allNegative = true;
-        for (int i = 0; i < diff.length; i++) {
-            if (diff[i] >= 0) {
-                allNegative = false;
-                break;
-            }
-        }
-
-        if (allNegative) {
-            return -1;
-        }
-
-        KadaneWrapArray kwa = new KadaneWrapArray();
-        Triplet t = kwa.kadaneWrap(diff);
-        //make sure this solution leads to answer
-        int i = t.start;
-        int netGas = 0;
-        do {
-            netGas += diff[i];
-            i = (i + 1)%diff.length;
-            if (netGas < 0) {
-                return -1;
-            }
-        } while (i != t.start);
-
-        return t.start;
+        return totalGas < totalDistance ? -1 : start;
     }
 
     public static void main(String args[]){
