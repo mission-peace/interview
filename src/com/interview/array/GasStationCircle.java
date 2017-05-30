@@ -89,6 +89,7 @@ public class GasStationCircle {
         int totalGas = 0;
         int start = 0;
         int remainingDistance = 0;
+        
         for(int i=0; i<gasAvailable.length; i++) {
         	totalDistance += gasRequired[i];
         	totalGas += gasAvailable[i];
