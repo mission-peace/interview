@@ -33,7 +33,7 @@ public class AVLTree {
 
     private Node leftRotate(Node root){
         Node newRoot = root.right;
-        root.right = root.right.left;
+        root.right = newRoot.left;
         newRoot.left = root;
         root.height = setHeight(root);
         root.size = setSize(root);
@@ -44,7 +44,7 @@ public class AVLTree {
     
     private Node rightRotate(Node root){
         Node newRoot = root.left;
-        root.left = root.left.right;
+        root.left = newRoot.right;
         newRoot.right = root;
         root.height = setHeight(root);
         root.size = setSize(root);
@@ -57,7 +57,7 @@ public class AVLTree {
         if(root == null){
             return 0;
         }
-        return 1 + Math.max((root.left != null ? root.left.height : 0), (root.right != null ? root.right.height : 0));
+        return 1 + Math.max(height(root.left), height(root.right));
     }
     
     private int height(Node root){
