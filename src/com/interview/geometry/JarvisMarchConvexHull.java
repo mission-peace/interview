@@ -91,8 +91,8 @@ public class JarvisMarchConvexHull {
     }
 
     /**
-     * Returns < 0 if b is closer to a compared to c, == 0 if b and c are same distance from a
-     * or > 0 if c is closer to a compared to b.
+     * Returns < 0 if 'b' is closer to 'a' compared to 'c', == 0 if 'b' and 'c' are same distance from 'a'
+     * or > 0 if 'c' is closer to 'a' compared to 'b'.
      */
     private int distance(Point a, Point b, Point c) {
         int y1 = a.y - b.y;
@@ -104,6 +104,9 @@ public class JarvisMarchConvexHull {
 
     /**
      * Cross product to find where c belongs in reference to vector ab.
+     * If result > 0 it means 'c' is on left of ab
+     *    result == 0 it means 'a','b' and 'c' are collinear
+     *    result < 0  it means 'c' is on right of ab
      */
     private int crossProduct(Point a, Point b, Point c) {
         int y1 = a.y - b.y;
