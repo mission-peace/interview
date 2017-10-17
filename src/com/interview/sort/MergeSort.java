@@ -26,30 +26,26 @@ public class MergeSort {
         sortedMerge(input,low,high);
    }
     
-    private void sortedMerge(int input[], int low, int high){
+ private void sortedMerge(int input[], int low, int high){
         int middle = (low+high)/2;
-        int temp[] = new int[high-low+1];
-        int i = low;
+        int temp[] = new int[middle-low+1];
+        int i = 0;
         int j = middle+1;
-        int r = 0;
+        int r = low;
+        for(int k=low;k<=middle;k++){
+        	temp[k]=input[k];
+        }
         while(i <= middle && j <= high){
-            if(input[i] <= input[j]){
-                temp[r++] = input[i++];
+            if(temp[i] <= input[j]){
+                input[r++] = temp[i++];
             }else{
-                temp[r++] = input[j++];
+                input[r++] = input[j++];
             }
         }
         while(i <= middle){
-            temp[r++] = input[i++];
+            input[r++] = temp[i++];
         }
-        
-        while(j <= high){
-            temp[r++] = input[j++];
-        }
-        i = low;
-        for(int k=0; k < temp.length;){
-            input[i++] = temp[k++];
-        }
+ 
     }
     
     public void printArray(int input[]){
