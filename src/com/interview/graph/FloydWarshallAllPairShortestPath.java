@@ -16,6 +16,7 @@ import java.util.Map;
  *
  * References
  * https://en.wikipedia.org/wiki/Floyd%E2%80%93Warshall_algorithm
+ *
  */
 public class FloydWarshallAllPairShortestPath {
 
@@ -41,6 +42,11 @@ public class FloydWarshallAllPairShortestPath {
             }
         }
 
+        /**
+         * if d[i][j] > d[i][k] + d[k][j],
+         * then d[i][j] = d[i][k] + d[k][j]
+         * then path[i][j] = path[k][j]
+         */
         for(int k=0; k < distanceMatrix.length; k++){
             for(int i=0; i < distanceMatrix.length; i++){
                 for(int j=0; j < distanceMatrix.length; j++){
