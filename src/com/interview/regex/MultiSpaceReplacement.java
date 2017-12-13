@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 public class MultiSpaceReplacement {
 
     public void replace(String str){
-        Pattern pattern = Pattern.compile("^ +|  +| +$");
+        Pattern pattern = Pattern.compile("^ +|(?<= )( +)| +$");
         Matcher matcher = pattern.matcher(str);
         System.out.println(matcher.replaceAll(""));
         
