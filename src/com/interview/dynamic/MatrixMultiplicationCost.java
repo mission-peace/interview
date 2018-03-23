@@ -11,7 +11,7 @@ public class MatrixMultiplicationCost {
         for(int l=2; l < arr.length; l++){
             for(int i=0; i < arr.length - l; i++){
                 int j = i + l;
-                temp[i][j] = 1000000;
+                temp[i][j] = Integer.MAX_VALUE;
                 for(int k=i+1; k < j; k++){
                     q = temp[i][k] + temp[k][j] + arr[i]*arr[k]*arr[j];
                     if(q < temp[i][j]){
