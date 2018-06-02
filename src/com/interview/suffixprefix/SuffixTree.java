@@ -73,7 +73,8 @@ import java.util.List;
 public class SuffixTree {
 
     public static void main(String args[]){
-        SuffixTree st = new SuffixTree("mississippi".toCharArray());
+        char[][] words = {"banana".toCharArray(), "ananab".toCharArray(), "apple".toCharArray(), "elppa".toCharArray()};
+        SuffixTree st = new SuffixTree(words);
         st.build();
         st.dfsTraversal();
         System.out.println(st.validate());
@@ -83,20 +84,41 @@ public class SuffixTree {
     private Active active;
     private int remainingSuffixCount;
     private End end;
+    private End divider[];
     private char input[];
-    private static char UNIQUE_CHAR = '$';
+    private static char[] UNIQUE_CHAR = {'!', '@', '#', '$', '%', '&'} ;
     
-    public SuffixTree(char input[]){
-        this.input = new char[input.length+1];
-        for(int i=0; i < input.length; i++){
-            this.input[i] = input[i];
+    public SuffixTree(char input[][]){
+        // throws exception if input is greater than six words due to the number of unique characters
+        if(input.length > 6){
+            throw new IllegalArgumentException("Max number of words accepted is six (6).");
         }
-        this.input[input.length] = UNIQUE_CHAR;
+
+        // gets total size of input
+        int size = 0;
+        for(int i=0; i < input.length; i++){
+                size += input[i].length;
+        }
+
+        // adds input to this.input as a one-dimensional array of chars
+        this.divider = new End[input.length];
+        this.input = new char[size+input.length];
+        int k = 0;
+        for(int i=0; i < input.length; i++){
+            for(int j=0; j < input[i].length; j++){
+                this.input[k] = input[i][j];
+                k++;
+            }
+            this.input[k] = UNIQUE_CHAR[i];
+            this.divider[i] = new End(k);
+            k++;
+        }
     }
     
     public void build(){
         root = SuffixNode.createNode(1, new End(0));
         root.index = -1;
+        root.wordNum = -1;
         active = new Active(root);
         this.end = new End(-1);
         //loop through string to start new phase
@@ -108,7 +130,7 @@ public class SuffixTree {
             System.out.print("Something wrong happened");
         }
         //finally walk the tree again and set up the index.
-        setIndexUsingDfs(root, 0, input.length);
+        setIndexUsingDfs(root, 0, 0, divider.length);
     }
     
     private void startPhase(int i){
@@ -167,6 +189,7 @@ public class SuffixTree {
                         newInternalNode.child[input[newInternalNode.start + active.activeLength]] = node;
                         newInternalNode.child[input[i]] = newLeafNode;
                         newInternalNode.index = -1;
+                        newInternalNode.wordNum = -1;
                         active.activeNode.child[input[newInternalNode.start]] = newInternalNode;
 
                         //if another internal node was created in last extension of this phase then suffix link of that
@@ -268,19 +291,38 @@ public class SuffixTree {
         return node.end.end - node.start;
     }
   
-    private void setIndexUsingDfs(SuffixNode root,int val, int size){
+    private void setIndexUsingDfs(SuffixNode root, int val, int size, int count){
         if(root == null){
             return;
         }
         
+        // truncates the suffix if it includes more than one word
+        for(int i=0; i < count; i++){
+            if(root.start <=  divider[i].end & root.end.end > divider[i].end){
+                root.end = divider[i];
+                break;
+            }
+        }
+
         val += root.end.end - root.start + 1;
         if(root.index != -1){
-            root.index = size - val;
-            return;
+            // finds which word the suffix belongs to and updates index and wordNum
+            for(int i=0; i < count; i++){
+                if(root.end.end == divider[i].end){
+                    if(i > 0){
+                        size = root.end.end - divider[i-1].end;
+                    }else{
+                        size = root.end.end + 1;
+                    }
+                    root.index = size - val;
+                    root.wordNum = i;
+                    return;
+                }
+            }
         }
         
         for(SuffixNode node : root.child){
-            setIndexUsingDfs(node, val, size);
+            setIndexUsingDfs(node, val, size, count);
         }
     }
     
@@ -303,7 +345,7 @@ public class SuffixTree {
                 result.add(input[i]);
             }
             result.stream().forEach(System.out::print);
-            System.out.println(" " + root.index);
+            System.out.println(" " + root.wordNum + " " + root.index);
             for(int i=root.start; i <= root.end.end; i++){
                 result.remove(result.size()-1);
             }
@@ -327,15 +369,14 @@ public class SuffixTree {
     /**
      * Do validation of the tree by comparing all suffixes and their index at leaf node.
      */
-    private boolean validate(SuffixNode root, char[] input, int index, int curr){
+    private boolean validate(SuffixNode root, char[] input, int index, int curr, int count){
         if(root == null){
             System.out.println("Failed at " + curr + " for index " + index);
             return false;
         }
-        
         if(root.index != -1){
-            if(root.index != index){
-                System.out.println("Index not same. Failed at " + curr + " for index " + index);
+            if((root.index + count) != index){
+                System.out.println("Index not same. Failed at " + curr + " for index " + index + " with root index " + root.index);
                 return false;        
             }else{
                 return true;
@@ -360,14 +401,23 @@ public class SuffixTree {
             j++;
         }
         curr += node.end.end - node.start + 1;
-        return validate(node, input, index, curr);
+        return validate(node, input, index, curr, count);
     }
     
     public boolean validate(){
+        // count is used to increase the root.index location by the number of letters that exist before the current
+        // word's starting position
+        int j = 0;
+        int count = 0;
         for(int i=0; i < this.input.length; i++){
-            if(!validate(this.root, this.input, i, i)){
+            if(!validate(this.root, this.input, i, i, count)){
                 System.out.println("Failed validation");
                 return false;
+            }
+            // count is only updated when we reach the end of the a word in input.
+            if(i == divider[j].end){
+                count = divider[j].end + 1;
+                j++;
             }
         }
         return true;
@@ -385,6 +435,7 @@ class SuffixNode{
     int start;
     End end;
     int index;
+    int wordNum;
     
     SuffixNode suffixLink;
     
