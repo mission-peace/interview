@@ -61,7 +61,7 @@ public class MaximumHistogram {
                 //has to be greater or equal to input[top]
                 //so width = i - stack.peek() - 1;
                        int width=s.size()==0?i:i-s.peek()-1;
-                       area=m1*m2;
+                       area=width*height;
                        if(area>maxArea){maxArea=area;}
                    }
                 
