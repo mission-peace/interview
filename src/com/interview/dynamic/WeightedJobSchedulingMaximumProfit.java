@@ -47,13 +47,13 @@ public class WeightedJobSchedulingMaximumProfit {
         FinishTimeComparator comparator = new FinishTimeComparator();
         Arrays.sort(jobs, comparator);
         
-        T[0] = jobs[0].profit;
-        for(int i=1; i < jobs.length; i++){
-            T[i] = Math.max(jobs[i].profit, T[i-1]);
-            for(int j=i-1; j >=0; j--){
-                if(jobs[j].end <= jobs[i].start){
+       for (int i = 0; i < jobs.length; ++i) {
+            T[i] = jobs[i].profit;
+        }
+        for (int i = 1; i < jobs.length; i++) {
+            for (int j = 0; j < i; j++) {
+                if (jobs[j].end <= jobs[i].start) {
                     T[i] = Math.max(T[i], jobs[i].profit + T[j]);
-                    break;
                 }
             }
         }
