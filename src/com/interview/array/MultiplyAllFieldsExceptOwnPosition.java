@@ -1,8 +1,7 @@
 package com.interview.array;
 
 /**
- * http://www.careercup.com/question?id=5179916190482432
- * Look out for division by 0
+ * https://leetcode.com/problems/product-of-array-except-self/
  */
 public class MultiplyAllFieldsExceptOwnPosition {
 
@@ -11,17 +10,15 @@ public class MultiplyAllFieldsExceptOwnPosition {
             return new int[0];
         }
         int[] output = new int[nums.length];
-        int product = nums[0];
+        output[0] = 1;
         for (int i = 1; i < nums.length; i++) {
-            output[i] = product;
-            product *= nums[i];
+            output[i] = output[i - 1] * nums[i - 1];
         }
 
-        output[0] = 1;
-        product = nums[nums.length - 1];
-        for (int i = nums.length - 2; i >= 0; i--) {
-            output[i] *= product;
-            product *= nums[i];
+        int mult = 1;
+        for (int i = nums.length - 1; i >= 0; i--) {
+            output[i] *= mult;
+            mult *= nums[i];
         }
         return output;
     }

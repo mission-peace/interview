@@ -15,26 +15,34 @@ package com.interview.array;
 public class MaxProductSubarray {
 
     public int maxProduct(int[] nums) {
-        int min = 1;
-        int max = 1;
-        int maxSoFar = nums[0];
+        //neg maintains the multiplication which is negative since last 0
+        //pos maintains the multiplication which is positive since last 0
+        int neg = 1;
+        int pos = 1;
+        int maxProduct = nums[0];
         for (int i = 0; i < nums.length; i++) {
-            if (nums[i] > 0) {
-                max = max * nums[i];
-                min = Math.min(min * nums[i], 1);
-                maxSoFar = Math.max(maxSoFar, max);
-            } else if (nums[i] == 0) {
-                min = 1;
-                max = 1;
-                maxSoFar = Math.max(maxSoFar, 0);
+            if (nums[i] == 0) {
+                neg = 1;
+                pos = 1;
+                maxProduct = Math.max(maxProduct, 0);
+            } else if (nums[i] < 0) {
+                int temp = pos;
+                if (neg < 0) {
+                    pos = neg * nums[i];
+                    maxProduct = Math.max(pos, maxProduct);
+                } else {
+                    pos = 1;
+                }
+                neg = temp * nums[i];
             } else {
-                int t = max * nums[i];
-                maxSoFar = Math.max(maxSoFar, min * nums[i]);
-                max = Math.max(1, min*nums[i]);
-                min = t;
+                if (neg < 0) {
+                    neg *= nums[i];
+                }
+                pos *= nums[i];
+                maxProduct = Math.max(pos, maxProduct);
             }
         }
-        return maxSoFar;
+        return maxProduct;
     }
     
     public static void main(String args[]){

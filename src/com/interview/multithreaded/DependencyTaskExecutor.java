@@ -10,6 +10,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.RunnableFuture;
 
 /**
  * Given a Task with list of its dependencies and execute method. Run the task such that dependencies are executed first.
@@ -106,4 +107,32 @@ class SimpleSleepTask implements Task {
             e.printStackTrace();
         }
     }
+}
+
+class FutureTask implements Runnable {
+
+    Task task;
+    List<FutureTask> chainedTasks = new ArrayList<>();
+    Executor executor;
+    FutureTask(Task task, Executor executor) {
+        this.task = task;
+        this.executor = executor;
+    }
+    @Override
+    public void run() {
+        task.execute();
+        for (FutureTask t : chainedTasks) {
+            supplyAsync(t, executor);
+        }
+    }
+
+    void supplyAsync(FutureTask task, Executor executor) {
+        executor.execute(task);
+    }
+
+    void addChain(FutureTask task) {
+        task.addChain(this);
+    }
+
+
 }
