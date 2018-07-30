@@ -35,7 +35,7 @@ public class GasStationCircle {
         
         return end;
     }
-    
+
     /**
      * If it is not guaranteed that tour exists then once you get
      * result of kadanewrap make an actual trip to see if value is positive
@@ -74,6 +74,34 @@ public class GasStationCircle {
 
         return t.start;
     }
+    
+    /**
+     * A much simpler solution - 
+     * If total gas available < total gas required then we return -1
+     * Otherwise we just track the current remaining distance and if
+     * that's negative, increment start index
+     * @param  gasAvailable [Gas available at each station]
+     * @param  gasRequired [required amount of gas to go from one station to next]
+     * @return  start [index of starting point]
+     */
+    public int startTour2(int gasAvailable[], int gasRequired[]){
+        int totalDistance = 0;
+        int totalGas = 0;
+        int start = 0;
+        int remainingDistance = 0;
+        
+        for(int i=0; i<gasAvailable.length; i++) {
+        	totalDistance += gasRequired[i];
+        	totalGas += gasAvailable[i];
+        	remainingDistance += gasAvailable[i] - gasRequired[i];
+        	if(remainingDistance < 0) {
+        		remainingDistance = 0;
+        		start = i+1;
+        	}
+        }
+
+        return totalGas < totalDistance ? -1 : start;
+    }
 
     public static void main(String args[]){
         GasStationCircle gsc = new GasStationCircle();
@@ -81,5 +109,6 @@ public class GasStationCircle {
         int[] gasRequired = {5, 6, 1};
         System.out.println(gsc.startTour(gasAvailable, gasRequired));
         System.out.println(gsc.startTour1(gasAvailable, gasRequired));
+        System.out.println(gsc.startTour2(gasAvailable, gasRequired));
     }
 }
