@@ -28,7 +28,12 @@ public class EditDistance {
         if(len2 == str2.length){
             return str1.length - len1;
         }
-        return min(recEditDistance(str1, str2, len1 + 1, len2 + 1) + str1[len1] == str2[len2] ? 0 : 1, recEditDistance(str1, str2, len1, len2 + 1) + 1, recEditDistance(str1, str2, len1 + 1, len2) + 1);
+        if(str1[len1] == str2[len2])
+        	return recEditDistance(str1, str2, len1 + 1, len2 + 1);
+        
+        return 1+ min(	recEditDistance(str1, str2, len1 + 1, len2 + 1), 
+        			recEditDistance(str1, str2, len1, len2 + 1), 
+        			recEditDistance(str1, str2, len1 + 1, len2));
     }
     
     /**
