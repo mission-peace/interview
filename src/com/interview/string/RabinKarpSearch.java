@@ -22,8 +22,9 @@ public class RabinKarpSearch {
         long patternHash = createHash(pattern, m - 1);
         long textHash = createHash(text, m - 1);
         for (int i = 1; i <= n - m + 1; i++) {
-            if(patternHash == textHash && checkEqual(text, i - 1, i + m - 2, pattern, 0, m - 1)) {
-                return i - 1;
+            if(patternHash == textHash){
+                if(checkEqual(text, i - 1, i + m - 2, pattern, 0, m - 1))
+                    return i - 1;
             }
             if(i < n - m + 1) {
                 textHash = recalculateHash(text, i - 1, i + m - 1, textHash, m);
