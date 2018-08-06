@@ -1,7 +1,5 @@
 package com.interview.suffixprefix;
 
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Date 04/25/2016
