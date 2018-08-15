@@ -17,17 +17,17 @@ package com.interview.array;
 public class BuySellStockProfit {
 
     public int oneProfit(int arr[]){
-        int minPrice = arr[0];
         int maxProfit = 0;
-        for(int i=1; i < arr.length; i++){
-            if(arr[i] - minPrice > maxProfit){
-                maxProfit = arr[i] - minPrice;
-            }
-            if(arr[i] < minPrice){
-                minPrice = arr[i];
-            }
-        }
-        return maxProfit;
+		int minPrice = arr[0];
+		for (int i = 1; i < arr.length; i++) {
+			if (arr[i] < minPrice) {
+				minPrice = arr[i];
+				continue;
+			}
+			if (arr[i] - minPrice > maxProfit)
+				maxProfit = arr[i] - minPrice;
+		}
+		return maxProfit;
     }
     
     public int allTimeProfit(int arr[]){
