@@ -105,32 +105,37 @@ public class TreeTraversalLevelByLevel {
      * Use one queue and count to print level by level
      */
     public void levelByLevelOneQueueUsingCount(Node root) {
-        if (root == null) {
-            return;
-        }
-        Queue<Node> q = new LinkedList<Node>();
-        int levelCount = 1;
-        int currentCount = 0;
-        q.offer(root);
-        while (!q.isEmpty()) {
-            while (levelCount > 0) {
-                root = q.poll();
-                System.out.print(root.data + " ");
-                if (root.left != null) {
-                    currentCount++;
-                    q.offer(root.left);
-                }
-                if (root.right != null) {
-                    currentCount++;
-                    q.offer(root.right);
-                }
-                levelCount--;
-            }
-            System.out.println();
-            levelCount = currentCount;
-            currentCount = 0;
-        }
-    }
+		
+		int currentCount = 0;
+		int levelCount = 0;
+		Queue<Node> q = new LinkedList<Node>();
+		
+		q.add(root);
+		levelCount++;
+		
+		while (!q.isEmpty()) {
+			
+			Node current = q.poll();
+			
+			if (current.left!=null) {
+				q.add(current.left);
+				currentCount++;
+			}
+			if (current.right!=null) {
+				q.add(current.right);
+				currentCount++;
+			}
+			
+			System.out.print(current.data +" ");
+			levelCount--;
+			
+			if (levelCount==0) {
+				levelCount = currentCount;
+				currentCount = 0;
+				System.out.println();
+			}
+		}
+	}
 
     public static void main(String args[]) {
         TreeTraversalLevelByLevel tt = new TreeTraversalLevelByLevel();
