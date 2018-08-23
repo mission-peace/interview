@@ -67,9 +67,7 @@ public class RegexMatching {
                     if (pattern[j-2] == '.' || pattern[j - 2] == text[i - 1]) {
                         T[i][j] = T[i][j] | T[i - 1][j];
                     }
-                } else {
-                    T[i][j] = false;
-                }
+                } 
             }
         }
         return T[text.length][pattern.length];
