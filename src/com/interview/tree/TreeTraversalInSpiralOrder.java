@@ -15,7 +15,7 @@ import java.util.Stack;
  *             2           3 
  *        4       5     6      7
  *      8   9  10    11 
- * should print 1 3 2 4 5 6 7 8 9 10 11
+ * should print 1 3 2 4 5 6 7 11 10 9 8
  *
  * Solution 1 : Use two stack. Put root in stack1. While stack1 is not
  * empty take items from stack1 and put its child left,right in stack2.
