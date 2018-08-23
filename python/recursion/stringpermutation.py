@@ -23,12 +23,11 @@ def permute_util(str, count, result, level):
         return
 
     for i in range(len(str)):
-        if count[i] == 0:
-            continue;
-        result[level] = str[i]
-        count[i] -= 1
-        permute_util(str, count, result, level + 1)
-        count[i] += 1
+        if count[i] > 0:
+            result[level] = str[i]
+            count[i] -= 1
+            permute_util(str, count, result, level + 1)
+            count[i] += 1
 
 if __name__ == '__main__':
     input = ['B', 'C', 'A', 'A']
