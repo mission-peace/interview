@@ -21,11 +21,7 @@ enum Color{
 class Node{
     Node left;
     Node right;
-    Node next;
     int data;
-    int lis;
-    int height;
-    int size;
     Color color;
     
     public static Node newNode(int data){
@@ -33,9 +29,6 @@ class Node{
         n.left = null;
         n.right = null;
         n.data = data;
-        n.lis = -1;
-        n.height = 1;
-        n.size = 1;
         n.color = Color.RED;
         return n;
     }
