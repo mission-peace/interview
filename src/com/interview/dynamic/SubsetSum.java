@@ -1,4 +1,7 @@
 package com.interview.dynamic;
+
+import java.util.ArrayList;
+
 /*
  * Date 09/23/2014
  * @author Tushar Roy
@@ -16,12 +19,14 @@ public class SubsetSum {
 
     public boolean subsetSum(int input[], int total) {
 
-        boolean T[][] = new boolean[input.length + 1][total + 1];
-        for (int i = 0; i <= input.length; i++) {
+        int length = input.length;
+
+        boolean T[][] = new boolean[length + 1][total + 1];
+        for (int i = 0; i <= length; i++) {
             T[i][0] = true;
         }
 
-        for (int i = 1; i <= input.length; i++) {
+        for (int i = 1; i <= length; i++) {
             for (int j = 1; j <= total; j++) {
                 if (j - input[i - 1] >= 0) {
                     T[i][j] = T[i - 1][j] || T[i - 1][j - input[i - 1]];
@@ -30,7 +35,27 @@ public class SubsetSum {
                 }
             }
         }
-        return T[input.length][total];
+
+        boolean isSubset = T[length][total];
+        if(isSubset){
+            ArrayList<Integer> subset = new ArrayList<Integer>();
+            while (length != 0) {
+                if(T[length][total]) {
+                    if (!T[length - 1][total]) {
+                        subset.add(input[length - 1]);
+                        total = total - input[length - 1];
+                    }
+                }
+                length--;
+            }
+            System.out.print("Subset: ");
+            for (int sub:subset) {
+                System.out.print(sub + "\t");
+            }
+            System.out.print("\n");
+        }
+
+        return isSubset;
 
     }
 
@@ -65,10 +90,10 @@ public class SubsetSum {
     public static void main(String args[]) {
         SubsetSum ss = new SubsetSum();
         int arr[] = {1, 3, 5, 5, 2, 1, 1, 6};
-        System.out.println(ss.partition(arr));
+        System.out.println("Is Partition: "+ ss.partition(arr));
 
         int arr1[] = {2, 3, 7, 8};
-        System.out.print(ss.subsetSum(arr1, 11));
+        System.out.print("Is Subset: "+ ss.subsetSum(arr1, 11));
 
     }
 }
