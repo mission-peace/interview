@@ -51,8 +51,10 @@ public class LongestIncreasingSubSequenceOlogNMethod {
                 R[T[len]] = T[len-1];
             }else{ //do a binary search to find ceiling of input[i] and put it there.
                 int index = ceilIndex(input, T, len,input[i]);
-                T[index] = i;
-                R[T[index]] = T[index-1];
+                if(index != -1){
+                    T[index] = i;
+                    R[T[index]] = T[index-1];
+                }
             }
         }
 
