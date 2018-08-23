@@ -14,12 +14,14 @@ package com.interview.tree;
 public class LowestCommonAncestoryBinarySearchTree {
 
     public Node lowestCommonAncestor(Node root, int p, int q) {
-        if (root.data > Math.max(p, q)) {
+	if(root == null) {
+		return null;
+	}
+        if (root.data > p && root.data > q) {
             return lowestCommonAncestor(root.left, p, q);
-        } else if (root.data < Math.min(p, q)) {
+        } else if (root.data < p && root.data < q) {
             return lowestCommonAncestor(root.right, p, q);
-        } else {
-            return root;
-        }
+        } 
+        return root;
     }
 }
