@@ -92,7 +92,7 @@ public class BreakMultipleWordsWithNoSpaceIntoSpace {
         //create space separate word from string is possible
         StringBuffer buffer = new StringBuffer();
         int i = 0; int j = word.length() -1;
-        while(i < j){
+        while(i <= j){
             int k = T[i][j];
             if(i == k){
                 buffer.append(word.substring(i, j+1));
