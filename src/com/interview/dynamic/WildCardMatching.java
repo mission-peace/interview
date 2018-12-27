@@ -4,7 +4,7 @@ package com.interview.dynamic;
  * Date 02/11/2016
  * @author Tushar Roy
  *
- * Wild car matching with ? and *
+ * Wild card matching with ? and *
  *
  * Reference
  * https://leetcode.com/problems/wildcard-matching/
