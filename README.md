@@ -20,9 +20,9 @@ Please contribute to this repository to help it make better. Any changes like ne
 * Go to root directory of checked out project <br />
 * Run "./gradlew idea" to generate idea related classes <br />
 * If you're using IntelliJ:<br />
-    + Go to Open. Go to the git repo folder and open "interview.ipr" From the File menu go to Project Structure. Update language level support to 8 <br />
+&nbsp;+ Go to Open. Go to the git repo folder and open "interview.ipr" From the File menu go to Project Structure. Update language level support to 8 <br />
 * If you're using Eclipse:<br />
-    + Run "./gradlew eclipse". This will generate Eclipse related files. Go to Eclipse and open up the folder containing this repo <br />
+&nbsp;+ Run "./gradlew eclipse". This will generate Eclipse related files. Go to Eclipse and open up the folder containing this repo <br />
 * Go to any program and run that program <br />
 * Go to any test and run the junit test <br />
 * Run "./gradlew build" to create classes, run tests and create jar.
