@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class ZAlgorithm {
 
-    private int[] calculateZ(char input[]) {
+    private void calculateZ(char input[], char[] pattern, List<Integer> result) {
         int Z[] = new int[input.length];
         int left = 0;
         int right = 0;
@@ -28,6 +28,11 @@ public class ZAlgorithm {
                     right++;
                 }
                 Z[k] = right - left;
+                
+                if( Z[k] == pattern.length) { //add index of the matched pattern
+                	result.add(k - pattern.length - 1);
+                }
+                
                 right--;
             } else {
                 //we are operating inside box
@@ -41,11 +46,15 @@ public class ZAlgorithm {
                         right++;
                     }
                     Z[k] = right - left;
+                    
+                    if( Z[k] == pattern.length) { //add index of the matched pattern
+	                	result.add(k - pattern.length - 1);
+                    }
+	                
                     right--;
                 }
             }
         }
-        return Z;
     }
 
     /**
@@ -65,13 +74,8 @@ public class ZAlgorithm {
             i++;
         }
         List<Integer> result = new ArrayList<>();
-        int Z[] = calculateZ(newString);
-
-        for(i = 0; i < Z.length ; i++) {
-            if(Z[i] == pattern.length) {
-                result.add(i - pattern.length - 1);
-            }
-        }
+        calculateZ(newString, pattern, result);
+        
         return result;
     }
 
