@@ -1,6 +1,6 @@
 
 <h3>Please visit my Wiki for full list of questions</h3>
-<h4>https://github.com/mission-peace/interview/wiki</h4>
+<h4>https://github.com/mission-peace/interview/wiki/</h4>
 
 <h3> Like my Facebook page for latest updates on my YouTube Channel</h3>
 <h4>https://www.facebook.com/tusharroy25</h4>
@@ -16,13 +16,18 @@ Please contribute to this repository to help it make better. Any changes like ne
 * Install either IntelliJ (https://www.jetbrains.com/idea/download/) or Eclipse (https://eclipse.org/downloads/)
 
 <h3> Set up on your Desktop </h3>
-* Pull the git repository. Go to command line and type git clone https://github.com/mission-peace/interview.git <br />
+* Pull the git repository. Go to command line and run
+ ```
+ $ git clone https://github.com/mission-peace/interview.git
+ ```
 * Go to root directory of checked out project <br />
-* Run "./gradlew idea" to generate idea related classes <br />
+* Run `./gradlew idea` to generate idea related classes <br />
 * If you're using IntelliJ:<br />
-&nbsp;+ Go to Open. Go to the git repo folder and open "interview.ipr" From the File menu go to Project Structure. Update language level support to 8 <br />
+    * Go to Open. Go to the git repo folder and open "interview.ipr" <br/>
+    * From the File menu go to Project Structure, and update language level support to JDK 8 <br />
 * If you're using Eclipse:<br />
-&nbsp;+ Run "./gradlew eclipse". This will generate Eclipse related files. Go to Eclipse and open up the folder containing this repo <br />
+    * Run `./gradlew eclipse`. This will generate Eclipse related files. <br />
+    * Go to Eclipse and open up the folder containing this repo <br />
 * Go to any program and run that program <br />
 * Go to any test and run the junit test <br />
-* Run "./gradlew build" to create classes, run tests and create jar.
+* Run `./gradlew build` to create classes, run tests, and create .jar
