@@ -19,14 +19,14 @@ Please contribute to this repository to help it make better. Any changes like ne
 * Pull the git repository. Go to command line and run
     > ```$ git clone https://github.com/mission-peace/interview.git```
 
-* Go to root directory of checked out project <br />
-* Run `./gradlew idea` to generate idea related classes <br />
+* `cd` into the root directory of repo
+* Run `./gradlew idea` to generate idea related classes
 * If you're using IntelliJ:
-    * Go to Open. Go to the git repo folder and open "interview.ipr"
-    * From the File menu go to Project Structure, and update language level support to JDK 8
+    * Go to Open. Go to the git repo folder and open `interview.ipr`
+    * From the File menu go to Project Structure, and update Language Level Support to JDK 8
 * If you're using Eclipse:
     * Run `./gradlew eclipse`. This will generate Eclipse related files
     * Go to Eclipse and open up the folder containing this repo
-* Go to any program and run that program <br />
-* Go to any test and run the junit test <br />
+* Go to any program and run the program
+* Go to any test and run the jUnit test
 * Run `./gradlew build` to create classes, run tests, and create .jar
