@@ -1,21 +1,21 @@
 
-###**Please visit my Wiki for full list of questions**
-####https://github.com/mission-peace/interview/wiki/
+### **Please visit my Wiki for full list of questions**
+#### https://github.com/mission-peace/interview/wiki/
 
-###**Like my Facebook page for latest updates on my YouTube Channel**
-####https://www.facebook.com/tusharroy25
+### **Like my Facebook page for latest updates on my YouTube Channel**
+#### https://www.facebook.com/tusharroy25
 
-##**Contribution**
+## **Contribution**
 Please contribute to this repository to help it make better. Any changes like new questions, code improvements, doc improvements, etc., are very welcome. Just send a pull request and I will review and approve it if it looks good.
 
-##**How to use this repository**
+## **How to use this repository**
 
-###Softwares to install
+### Softwares to install
 * Install [JDK8](https://docs.oracle.com/javase/8/docs/technotes/guides/install/install_overview.html)
 * Install [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 * Install either [IntelliJ](https://www.jetbrains.com/idea/download/) or [Eclipse](https://eclipse.org/downloads/)
 
-###Set up on your Desktop
+### Set up on your Desktop
 * Pull the git repository. Go to command line and run
     > ```$ git clone https://github.com/mission-peace/interview.git```
 
