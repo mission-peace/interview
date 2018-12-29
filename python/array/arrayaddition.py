@@ -1,5 +1,4 @@
 def add(arr1, arr2):
-
     l = max(len(arr1), len(arr2))
     result = [0 for j in range(l)]
     c = 0
@@ -7,7 +6,7 @@ def add(arr1, arr2):
     j = len(arr2) - 1
     r = 0
     l -= 1
-    
+
     while i >= 0 and j >= 0:
         r = arr1[i] + arr2[j] + c
         i -= 1
