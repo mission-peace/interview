@@ -17,7 +17,7 @@ Please contribute to this repository to help it make better. Any changes like ne
 
 ### Set up on your Desktop
 * Pull the git repository. Go to command line and run
-    > ```$ git clone https://github.com/mission-peace/interview.git```
+> ```$ git clone https://github.com/mission-peace/interview.git```
 
 * `cd` into the root directory of repo
 * Run `./gradlew idea` to generate idea related classes
