@@ -14,8 +14,6 @@ def find_all_triplet(input, total):
                 j = j + 1
     return result
 
-
 if __name__ == '__main__':
     input = [5, 1, 3, 4, 7]
     print(find_all_triplet(input, 12))
-    
