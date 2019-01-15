@@ -31,8 +31,12 @@ public class LargestBSTInBinaryTree {
     private MinMax largest(Node root){
         //if root is null return min as Integer.MAX and max as Integer.MIN 
         if(root == null){
-            return new MinMax();
+            return new MinMax(0, Integer.MAX_VALUE, Integer.MIN_VALUE, true);
         }
+        if(root->left==null && root->right==null){
+            return new MinMax(1, root.data, root.data, true);
+        }
+     
         
         //postorder traversal of tree. First visit left and right then
         //use information of left and right to calculate largest BST.
@@ -59,11 +63,11 @@ public class LargestBSTInBinaryTree {
      
         //if root.left is null then set root.data as min else
         //take min of left side as min
-        m.min = root.left != null ? leftMinMax.min : root.data;
+        m.min = math.min(l.min, math.min(r.min, root->data))
   
         //if root.right is null then set root.data as max else
         //take max of right side as max.
-        m.max = root.right != null ? rightMinMax.max : root.data;
+        m.max =  math.max(l.min, math.max(r.min, root->data))
    
         return m;
     }
@@ -91,10 +95,10 @@ class MinMax{
     boolean isBST;
     int size ;
     
-    MinMax(){
-        min = Integer.MAX_VALUE;
-        max = Integer.MIN_VALUE;
-        isBST = true;
-        size = 0;
+    MinMax(int newSize, in Max_value, int Min_value, bool isBST_status){
+      min = Max_value;
+      max = Min_value;
+      isBST = isBST_status;
+      size = newSize;
     }
 }
