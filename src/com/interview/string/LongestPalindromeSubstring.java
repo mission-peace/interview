@@ -59,7 +59,7 @@ public class LongestPalindromeSubstring {
      */
     public int longestPalindromicSubstringLinear(char input[]) {
         int index = 0;
-        //preprocess the input to convert it into type abc -> $a$b$c$ to handle even length case.
+        //preprocess the input to convert it into type abc -> a$b$c$ to handle even length case.
         //Total size will be 2*n + 1 of this new array.
         char newInput[] = new char[2*input.length + 1];
         for(int i=0; i < newInput.length; i++) {
