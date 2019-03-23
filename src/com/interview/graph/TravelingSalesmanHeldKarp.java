@@ -6,7 +6,7 @@ import java.util.*;
  * Date 11/17/2015
  * @author Tushar Roy
  *
- * Help Karp method of finding tour of traveling salesman.
+ * Held Karp method of finding tour of traveling salesman.
  *
  * Time complexity - O(2^n * n^2)
  * Space complexity - O(2^n)
