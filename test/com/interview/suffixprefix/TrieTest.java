@@ -37,5 +37,9 @@ public class TrieTest {
         trie.delete("lmnpq");
         Assert.assertFalse(trie.search("lmnpq"));
 
+        Assert.assertTrue(trie.isPrefix("ab"));
+        Assert.assertTrue(trie.isPrefixRecursive("cde"));
+        Assert.assertFalse(trie.isPrefix("lo"));
+
     }
 }
