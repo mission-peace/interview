@@ -90,6 +90,24 @@ public class Trie {
     }
 
     /**
+     * Iterative implementation of prefix checking for a string
+     */
+    public boolean isPrefix(String word) {
+        TrieNode current = root;
+        for (int i = 0; i < word.length(); i++) {
+            char ch = word.charAt(i);
+            TrieNode trieNode = current.children.get(ch);
+            //if node does not exist for given char then return false
+            if (trieNode == null) {
+                return false;
+            }
+            current = trieNode;
+        }
+        //if we reach this point and the function hasn't returned false from the check in the loop, then the prefix exists
+        return true;
+    }
+
+    /**
      * Recursive implementation of search into trie.
      */
     public boolean searchRecursive(String word) {
@@ -107,6 +125,26 @@ public class Trie {
             return false;
         }
         return searchRecursive(node, word, index + 1);
+    }
+
+    /**
+     * Recursive implementation of search into trie.
+     */
+    public boolean isPrefixRecursive(String word) {
+        return isPrefixRecursive(root, word, 0);
+    }
+    private boolean isPrefixRecursive(TrieNode current, String word, int index) {
+        if (index == word.length()) {
+            //if we reach this point and the function hasn't returned false from the check in the loop, then the prefix exists
+            return true;
+        }
+        char ch = word.charAt(index);
+        TrieNode node = current.children.get(ch);
+        //if node does not exist for given char then return false
+        if (node == null) {
+            return false;
+        }
+        return isPrefixRecursive(node, word, index + 1);
     }
 
     /**
