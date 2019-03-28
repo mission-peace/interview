@@ -45,7 +45,7 @@ public class ArticulationPoint<T> {
         Map<Vertex<T>, Integer> lowTime = new HashMap<>();
         Map<Vertex<T>, Vertex<T>> parent = new HashMap<>();
 
-        DFS(visited,articulationPoints,startVertex, visitedTime, lowTime, parent);
+        DFS(visited, articulationPoints, startVertex, visitedTime, lowTime, parent);
         return articulationPoints;
     }
 
@@ -57,9 +57,9 @@ public class ArticulationPoint<T> {
         visitedTime.put(vertex, time);
         lowTime.put(vertex, time);
         time++;
-        int childCount =0;
+        int childCount = 0;
         boolean isArticulationPoint = false;
-        for(Vertex<T> adj : vertex.getAdjacentVertexes()){
+        for(Vertex<T> adj : vertex.getAdjacentVertexes()) {
             //if adj is same as parent then just ignore this vertex.
             if(adj.equals(parent.get(vertex))) {
                 continue;
@@ -94,7 +94,7 @@ public class ArticulationPoint<T> {
         
     }
 
-    public static void main(String args[]){
+    public static void main(String args[]) {
         Graph<Integer> graph = new Graph<>(false);
         graph.addEdge(1, 2);
         graph.addEdge(2, 3);
