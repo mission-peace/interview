@@ -20,6 +20,9 @@ public class SubsetSum {
         for (int i = 0; i <= input.length; i++) {
             T[i][0] = true;
         }
+        for (int i = 1; i <= total; i++) {
+            T[0][i] = false;
+        }
 
         for (int i = 1; i <= input.length; i++) {
             for (int j = 1; j <= total; j++) {
