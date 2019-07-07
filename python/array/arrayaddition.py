@@ -31,13 +31,8 @@ def add(arr1, arr2):
         l -= 1
 
     if c != 0:
-        new_result = [0 for j in range(len(result) + 1)]
-        t = len(new_result) - 1
-        while t > 0:
-            new_result[t] = result[t - 1]
-            t -= 1
-        new_result[0] = c
-        return new_result
+        result.insert(0,c)
+
     return result
 
 arr1 = [9, 9, 9, 9, 9, 9, 9]
