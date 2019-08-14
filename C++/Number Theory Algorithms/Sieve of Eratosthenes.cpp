@@ -12,7 +12,7 @@ int seiveEratosthenes(){
     prime[0] = prime[1] = false;
     for(int i = 2; i <= LMT; i++){
         if(prime[i]){
-            for(int j = i + i; j <= MAX ; j += i){
+            for(int j = i * i; j <= MAX ; j += i){
                 prime[j] = false;
             }
         }
