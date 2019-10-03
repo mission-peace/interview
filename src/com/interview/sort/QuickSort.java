@@ -1,86 +1,65 @@
 package com.interview.sort;
+ 
+class QuickSort 
+{ 
 
-public class QuickSort {
+	int partition(int arr[], int low, int high) 
+	{ 
+		int pivot = arr[high]; 
+		int i = (low-1); // index of smaller element 
+		for (int j=low; j<high; j++) 
+		{ 
+			// If current element is smaller than the pivot 
+			if (arr[j] < pivot) 
+			{ 
+				i++; 
 
-    private void swap(int A[],int i,int j)
-    {
-        int temp = A[i];
-        A[i] = A[j];
-        A[j] = temp;
-    }
-    private int split(int A[],int low,int high)
-    {
-        int pivot = low;
-        int i = low +1;
-        int j = high;
-        while(i<j)
-        {
-            while(i<=j && A[pivot]>=A[i])
-            {
-                i++;
-            }
-            while(j>=i && A[pivot]<A[j])
-            {
-                j--;
-            }
-            if(i < j && A[i]>A[j])
-            {
-                swap(A,i++,j--);
-            }
-        }
-        if(A[pivot] > A[j]){
-            swap(A,j,pivot);
-        }
-        return j;
-    }
+				// swap arr[i] and arr[j] 
+				int temp = arr[i]; 
+				arr[i] = arr[j]; 
+				arr[j] = temp; 
+			} 
+		} 
 
-    private int split1(int A[],int low,int high){
-        
-        int pivot = low;
-        int i = low+1;
-        int j = high;
-        while(i <= j){
-            
-            if(A[i] <= A[pivot]){
-                i++;
-                continue;
-            }
-            if(A[j] > A[pivot]){
-                j--;
-                continue;
-            }
-            swap(A,i++,j--);
-        }
-        if(A[pivot] > A[j]){
-            swap(A,pivot,j);
-            return j;
-        }
-        return pivot;
-        
-    }
+		// swap arr[i+1] and arr[high] (or pivot) 
+		int temp = arr[i+1]; 
+		arr[i+1] = arr[high]; 
+		arr[high] = temp; 
 
-    public void sort(int A[],int low,int high)
-    {
-        if(low>=high)
-        {
-            return;
-        }
-        int pos = split1(A,low,high);
-        sort(A,low,pos-1);
-        sort(A,pos+1,high);
-    }   
-    
-    private void printArray(int arr[]){
-        for(int a : arr){
-            System.out.println(a);
-        }
-    }
-    public static void main(String args[]){
-        QuickSort qs = new QuickSort();
-        int A[] = {11,19,0,-1,5,6,16,-3,6,0,14,18,7,21,18,-6,-8};
-//      int A[] = {11,9,0,4,6,-1,13};
-        qs.sort(A, 0, A.length-1);
-        qs.printArray(A);
-        
-    }
+		return i+1; 
+	} 
+
+	void sort(int arr[], int low, int high) 
+	{ 
+		if (low < high) 
+		{ 
+
+			int pi = partition(arr, low, high); 
+			sort(arr, low, pi-1); 
+			sort(arr, pi+1, high); 
+		} 
+	} 
+
+
+	static void printArray(int arr[]) 
+	{ 
+		int n = arr.length; 
+		for (int i=0; i<n; ++i) 
+			System.out.print(arr[i]+" "); 
+		System.out.println(); 
+	} 
+
+
+	public static void main(String args[]) 
+	{ 
+		int arr[] = {10, 7, 8, 9, 1, 5}; 
+		int n = arr.length; 
+
+		QuickSort ob = new QuickSort(); 
+		ob.sort(arr, 0, n-1); 
+
+		System.out.println("sorted array"); 
+		printArray(arr); 
+	} 
+} 
 }
