@@ -83,7 +83,50 @@ public class SubstringSearch {
         }
         return false;
     }
-        
+
+	/**
+	 * Print all occurrences of pattern match
+	 * 
+	 * @param text
+	 * @param pattern
+	 */
+	public void KMPAllOccurrences(char[] text, char[] pattern) {
+
+		int lps[] = computeTemporaryArray(pattern);
+		int i = 0;
+		int j = 0;
+		int occurrences = 0;
+
+		while (i < text.length && j < pattern.length) {
+
+			if (text[i] == pattern[j]) {
+
+				i++;
+				j++;
+			} else {
+
+				if (j != 0) {
+
+					j = lps[j - 1];
+				} else {
+
+					i++;
+				}
+			}
+
+			if (j == pattern.length) {
+
+				System.out.println("Occurrence " + ++occurrences + " at index: " + (i - pattern.length));
+				j = lps[j - 1];
+			}
+		}
+
+		if (occurrences == 0) {
+
+			System.out.println("Not found!");
+		}
+	}
+
     public static void main(String args[]){
         
         String str = "abcxabcdabcdabcy";
