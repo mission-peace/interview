@@ -57,13 +57,7 @@ public class WeightedJobSchedulingMaximumProfit {
                 }
             }
         }
-        int maxVal = Integer.MIN_VALUE;
-        for (int val : T) {
-            if (maxVal < val) {
-                maxVal = val;
-            }
-        }
-        return maxVal;
+        return T[jobs.length - 1];
     }
     
     public static void main(String args[]){
