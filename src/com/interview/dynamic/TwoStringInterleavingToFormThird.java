@@ -37,11 +37,15 @@ public class TwoStringInterleavingToFormThird {
                     if(str3[l] == str2[j-1]){
                         T[i][j] = T[i][j-1];
                     }
+                    else
+                        T[i][j]=false;
                 }
                 else if(j == 0){
                     if(str1[i-1] == str3[l]){
                         T[i][j] = T[i-1][j];
                     }
+                    else
+                        T[i][j]=false;
                 }
                 else{
                     T[i][j] = (str1[i-1] == str3[l] ? T[i-1][j] : false) || (str2[j-1] == str3[l] ? T[i][j-1] : false);
