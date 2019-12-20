@@ -40,6 +40,7 @@ public class SubstringSearch {
      */
     private int[] computeTemporaryArray(char pattern[]){
         int [] lps = new int[pattern.length];
+        lps[0]=0;
         int index =0;
         for(int i=1; i < pattern.length;){
             if(pattern[i] == pattern[index]){
