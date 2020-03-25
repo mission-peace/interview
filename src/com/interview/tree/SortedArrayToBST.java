@@ -7,7 +7,7 @@ package com.interview.tree;
  * Given an array where elements are sorted in ascending order, convert it to a height balanced BST.
  *
  * Time complexity O(n)
- * 
+ *
  * Reference
  * https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree/
  */
@@ -20,7 +20,7 @@ public class SortedArrayToBST {
         if (low > high) {
             return null;
         }
-        int mid = (low + high)/2;
+        int mid = low + (high - low)/2;
         Node n = Node.newNode(nums[mid]);
         n.left = toBST(nums, low, mid - 1);
         n.right = toBST(nums, mid + 1, high);
