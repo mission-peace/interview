@@ -67,3 +67,69 @@ public class CycleInDirectedGraph {
         System.out.println(cdg.hasCycle(graph));
     }
 }
+
+Python Code : 
+
+def moveVertex(current,frm,to):
+    
+    frm.remove(current)
+    to.append(current)
+
+def dfs(current,white,grey,black):
+    
+    moveVertex(current,white,grey)
+    neighbours=graph[current]
+        
+    for vertex in neighbours:
+        
+        if vertex in black:
+            continue
+        
+        if vertex in grey:
+            return True
+        
+        if dfs(vertex,white,grey,black):
+            return True
+        
+    moveVertex(current,grey,black)
+    return False
+    
+def isCyclic(n, graph):
+   
+    black=[]
+    grey=[]
+    white=[i for i in range(n)]
+    
+               
+    while len(white)>0:
+        current=white[-1]
+        
+        if dfs(current,white,grey,black):
+            return True
+    return False
+    
+#driver Code
+#to create graph by taking input from user
+def createGraph(n,arr,graph):
+    i=0
+    while(i<2*e):
+        graph[arr[i]].append(arr[i+1])
+        i+=2
+ 
+from collections import defaultdict
+if __name__ = '__main__':
+    t=int(input())
+    for i in range(t):
+        n,e = list(map(int,input().strip().split()))
+        arr = list(map(int,input().strip().split()))
+        
+        graph(defaultdict(list))
+        
+        createGraph(e,arr,graph)
+        
+        if isCyclic(n, graph):
+            print(1)
+        else:
+            print(0)
+
+
