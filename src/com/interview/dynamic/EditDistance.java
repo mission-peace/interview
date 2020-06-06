@@ -37,11 +37,12 @@ public class EditDistance {
     public int dynamicEditDistance(char[] str1, char[] str2){
         int temp[][] = new int[str1.length+1][str2.length+1];
         
-        for(int i=0; i < temp[0].length; i++){
+        // 0 0 is sacred here. Can you observe and tell why?
+        for(int i=1; i < str1.length; i++){ // first row fill
             temp[0][i] = i;
         }
         
-        for(int i=0; i < temp.length; i++){
+        for(int j=1; i < str2.length; i++){ // first column fill 
             temp[i][0] = i;
         }
         
