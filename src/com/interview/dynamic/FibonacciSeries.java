@@ -28,9 +28,11 @@ public class FibonacciSeries {
      * calculate values
      */
     public int fibonacciSeries(int n){
+	    // in stair case problem n1=1 and n2=1
+	    
         int n1 = 0, n2 = 1;
         int sum;
-
+	// in stair case problem if(n==0 || n==1){return n}
         if (n == n1 || n == n2) {
             return n;
         }
