@@ -11,17 +11,19 @@ Please contribute to this repository to help it make better. Any change like new
 <h2> How to use this repository </h2>
 
 <h3> Softwares to install </h3>
-* Install JDK8 https://docs.oracle.com/javase/8/docs/technotes/guides/install/install_overview.html
-* Install Git https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
-* Install either Intellij https://www.jetbrains.com/idea/download/
-* If you like eclipse instead of intellij install eclipse https://eclipse.org/downloads/
+1. Install JDK8 https://docs.oracle.com/javase/8/docs/technotes/guides/install/install_overview.html
+2. Install Git https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
+3. Install either Intellij https://www.jetbrains.com/idea/download/
+4. If you like eclipse instead of intellij install eclipse https://eclipse.org/downloads/
+
 
 <h3> Set up your desktop </h3>
-* Pull the git repository. Go to command line and type git clone https://github.com/mission-peace/interview.git
-* Go to root directory of checked out project.
-* Run ./gradlew idea to generate idea related classes
-* Fire up intellij. Go to Open. Go to git repo folder and open interview.ipr . On file menu go to project structure. Update language level support to 8
-* If you use eclipse, do ./gradlew eclipse . This will generate eclipse related files. Go to eclipse and open up folder containing this repo.
-* Go to any program and run that program
-* Go to any test and run the junit test.
-* Run ./gradlew build to create classes, run tests and create jar.
+
+1. Pull the git repository. Go to command line and type git clone https://github.com/mission-peace/interview.git
+2. Go to root directory of checked out project.
+3. Run ./gradlew idea to generate idea related classes
+4. Fire up intellij. Go to Open. Go to git repo folder and open interview.ipr . On file menu go to project structure. Update language level support to 8
+5. If you use eclipse, do ./gradlew eclipse . This will generate eclipse related files. Go to eclipse and open up folder containing this repo.
+6. Go to any program and run that program
+7. Go to any test and run the junit test.
+8. Run ./gradlew build to create classes, run tests and create jar.
