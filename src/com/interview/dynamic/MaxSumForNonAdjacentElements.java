@@ -20,8 +20,12 @@ public class MaxSumForNonAdjacentElements {
      * Fast DP solution.
      */
     public int maxSum(int arr[]) {
+        /*Added corner cases based on length of array */
+        if (arr.length == 0) return 0;
+        if (arr.length == 1) return arr[0];
         int excl = 0;
-        int incl = arr[0];
+        /*Find max of arr[0], 0 and assign to inclusive */
+        int incl = Math.max(arr[0],0);
         for (int i = 1; i < arr.length; i++) {
             int temp = incl;
             incl = Math.max(excl + arr[i], incl);
