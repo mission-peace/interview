@@ -2,6 +2,8 @@ package com.interview.dynamic;
 
 /**
  * http://www.geeksforgeeks.org/dynamic-programming-set-11-egg-dropping-puzzle/
+ 
+ Time Complexity for the dynamic approach will be O(e*f*f), where 'e' is the total number of eggs and 'f' is the total number of floors.
  */
 public class EggDropping {
 
