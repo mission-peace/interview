@@ -45,5 +45,5 @@ if __name__ == '__main__':
     graph.add_edge(5,6)
     graph.add_edge(6,4)
 
-    print(has_cycle(graph));
+    print(has_cycle(graph))
      

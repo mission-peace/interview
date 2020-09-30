@@ -1,7 +1,9 @@
+#inclue<bits/stdc++.h>
 #include <iostream>
 using namespace std;
 
-int trapped_water(int array[],int size){
+int trapped_water(int array[],int size)
+{
     int amount = 0;
     int left[size],right[size];
     left[0] = array[0]; right[size-1] = array[size-1];
