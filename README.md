@@ -12,9 +12,9 @@ Please contribute to this repository to help it make better. Any change like new
 
 <h3> Softwares to install </h3>
 * Install JDK8 https://docs.oracle.com/javase/8/docs/technotes/guides/install/install_overview.html
-* Install Git https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
+* Install Git https://git-scm.com/book/en/v2/Getting-Started-Installing-Git  Youtube video for installing Git https://www.youtube.com/watch?v=J_Clau1bYco
 * Install either Intellij https://www.jetbrains.com/idea/download/
-* If you like eclipse instead of intellij install eclipse https://eclipse.org/downloads/
+* If you like eclipse instead of intellij install eclipse https://eclipse.org/downloads/ Youtube video for installing Eclipse https://www.youtube.com/watch?v=N-wXTRpR03U
 
 <h3> Set up your desktop </h3>
 * Pull the git repository. Go to command line and type git clone https://github.com/mission-peace/interview.git
