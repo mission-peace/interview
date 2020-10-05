@@ -14,7 +14,7 @@ public class RegexMatching {
     }
     
     private boolean matchRegexRecursive(char text[], char pattern[], int pos1, int pos2){
-        //if pos2 has reached end of pattern means pos2 should also reach end of text for match
+        //if pos2 has reached end of pattern means pos1 should also reach end of text for match
         //to happen
         if(pos2 == pattern.length) { 
             return pos1 == text.length;
