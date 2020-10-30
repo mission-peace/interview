@@ -1,0 +1,27 @@
+#include <bits/stdc++.h> 
+using namespace std; 
+  
+// Returns count of ways to color k posts 
+long cWays(int n, int k) 
+{ 
+    long d[n + 1]; 
+    memset(d, 0, sizeof(d)); 
+    long long mod = 1000000007; 
+  
+    d[1] = k; 
+    d[2] = k * k; 
+  
+    for (int i = 3; i <= n; i++) { 
+        d[i] = ((k - 1) * (d[i - 1] + d[i - 2])) % mod; 
+    } 
+  
+    return d[n]; 
+} 
+  
+// Driver code 
+int main() 
+{ 
+    int n = 3, k = 2; 
+    cout << cWays(n, k) << endl; 
+    return 0; 
+} 
