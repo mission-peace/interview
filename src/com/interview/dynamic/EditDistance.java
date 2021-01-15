@@ -66,26 +66,39 @@ public class EditDistance {
         int i = T.length - 1;
         int j = T[0].length - 1;
         while(true) {
-            if (i == 0 || j == 0) {
-                break;
+            try {
+                if (str1[i-1] == str2[j-1]) {
+                    i = i-1;
+                    j = j-1;
+                } else if (T[i][j] == T[i-1][j-1] + 1){
+                    System.out.println("Edit " + str2[j-1] + " in string2 to " + str1[i-1] + " in string1");
+                    i = i-1;
+                    j = j-1;
+                } else if (T[i][j] == T[i-1][j] + 1) {
+                    System.out.println("Delete in string1 " + str1[i-1]);
+                    i = i-1;
+                } else if (T[i][j] == T[i][j-1] + 1){
+                    System.out.println("Delete in string2 " + str2[j-1]);
+                    j = j -1;
+                }
             }
-            if (str1[i-1] == str2[j-1]) {
-                i = i-1;
-                j = j-1;
-            } else if (T[i][j] == T[i-1][j-1] + 1){
-                System.out.println("Edit " + str2[j-1] + " in string2 to " + str1[i-1] + " in string1");
-                i = i-1;
-                j = j-1;
-            } else if (T[i][j] == T[i-1][j] + 1) {
-                System.out.println("Delete in string1 " + str1[i-1]);
-                i = i-1;
-            } else if (T[i][j] == T[i][j-1] + 1){
-                System.out.println("Delete in string2 " + str2[j-1]);
-                j = j -1;
-            } else {
-                throw new IllegalArgumentException("Some wrong with given data");
+            catch (Exception e) {
+                if(i==0 && j==0) {
+                    break;
+                }
+                else if(i==0 && j!=0) {
+                    while (j!=0) {
+                        System.out.println("Delete in string2 " + str2[j-1]);
+                        j--;
+                    }
+                }
+                else {
+                    while(i!=0) {
+                        System.out.println("Delete in string1 " + str1[i-1]);
+                        i--;
+                    }
+                }
             }
-
         }
     }
 
