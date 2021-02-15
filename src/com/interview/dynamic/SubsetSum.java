@@ -61,6 +61,33 @@ public class SubsetSum {
         }
         return T[arr.length][sum];
     }
+    public static void printTheSubset(boolean dp[][], int arr[],int total) {
+		List<Integer> ansIntegers = new ArrayList<>();
+		int x = arr.length, y = total;
+		if (dp[x][y])
+			while (x != 0 || y != 0) {
+				if (x == 0 & y != 0) {
+					ansIntegers.add(arr[x-1]);
+					break;
+				}
+				if (x != 0 && y == 0) {
+					if (dp[x][y] == dp[x - 1][y]) {
+						x = x - 1;
+					}
+					continue;
+				}
+				if (dp[x][y] == dp[x - 1][y]) {
+					x = x - 1;
+
+				} else {
+					ansIntegers.add(arr[x-1]);
+					y = y - arr[x-1];
+					x = x - 1;
+				}
+			}
+
+		System.out.println(ansIntegers);
+	}
 
     public static void main(String args[]) {
         SubsetSum ss = new SubsetSum();
