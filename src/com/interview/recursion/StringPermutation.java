@@ -17,13 +17,7 @@ public class StringPermutation {
     public List<String> permute(char input[]) {
         Map<Character, Integer> countMap = new TreeMap<>();
         for (char ch : input) {
-            countMap.compute(ch, (key, val) -> {
-                if (val == null) {
-                    return 1;
-                } else {
-                    return val + 1;
-                }
-            });
+            countMap.put(ch, countMap.getOrDefault(ch, 0)+1);
         }
         char str[] = new char[countMap.size()];
         int count[] = new int[countMap.size()];
