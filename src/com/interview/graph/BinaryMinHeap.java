@@ -121,7 +121,7 @@ public class BinaryMinHeap<T> {
         allNodes.get(0).weight = lastNodeWeight;
         allNodes.get(0).key = allNodes.get(size).key;
         nodePosition.remove(minNode.key);
-        nodePosition.remove(allNodes.get(0));
+        nodePosition.remove(allNodes.get(0).key);
         nodePosition.put(allNodes.get(0).key, 0);
         allNodes.remove(size);
 
