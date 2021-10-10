@@ -140,7 +140,7 @@ public class Trie {
         if (shouldDeleteCurrentNode) {
             current.children.remove(ch);
             //return true if no mappings are left in the map.
-            return current.children.size() == 0;
+            return (current.children.size() == 0 && !current.endOfWord);
         }
         return false;
     }
