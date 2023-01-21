@@ -1,0 +1,11 @@
+What is a technical interview?
+
+A technical interview is a job interview that is usually conducted by a company in the tech industry. These interviews will test your problem solving skills to see how you might fit in regards to a specific company.
+
+What questions can you expect?
+
+Although there are many types of technical interviews, the most basic and seen interviews are those that ask you to write code. Typically, you would be given 2-4 questions and a certain time limit to answer them. Note that you are expeceted to not finish all the problems, especially if you are given 4 questions. 
+
+What programming topics are usually tested?
+
+Most of the companies that you might test for only require an intermediate understanding of a programming language of your choosing. Although there are manydifferent languages, these languages share common traits, and it will be these common traits that will be tested. This includes everything from strings and arrays to recursion and sorting algorithms. Again, the thing that companies are looking for isn't your coding knowledge, it's your ability to think and work your way through challenging obstacles in your path. 
