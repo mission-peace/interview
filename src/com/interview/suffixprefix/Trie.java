@@ -134,7 +134,7 @@ public class Trie {
         if (node == null) {
             return false;
         }
-        boolean shouldDeleteCurrentNode = delete(node, word, index + 1);
+        boolean shouldDeleteCurrentNode = delete(node, word, index + 1) && !node.endOfWord;
 
         //if true is returned then delete the mapping of character and trienode reference from map.
         if (shouldDeleteCurrentNode) {
