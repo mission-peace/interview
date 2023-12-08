@@ -23,4 +23,4 @@ int main(){
     cout << trapped_water(array,size);
     return  0;
 }
-//Trapping Rain water
+//Trapping Rain water on Array
