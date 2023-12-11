@@ -46,3 +46,6 @@ public class AdditiveNumber {
         return num.startsWith(x3.toString(), start) && isValid(num, start + x3.toString().length(), x2, x3);
     }
 }
+
+
+
