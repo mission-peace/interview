@@ -1,6 +1,6 @@
 # http://www.geeksforgeeks.org/count-inversions-of-size-three-in-a-give-array/
 
-def find_inversions(input):
+def find_inversions(input): 
     inversion = 0
     for i in range(1, len(input) - 1):
         larger = 0
