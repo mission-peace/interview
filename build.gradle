@@ -3,15 +3,13 @@ apply plugin: 'idea'
 apply plugin: 'eclipse'
 apply plugin: "jacoco"
 
-sourceCompatibility = '1.8'
-targetCompatibility = '1.8'
-
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    testCompile 'junit:junit:4.12'
+    implementation 'com.google.guava:guava:11.0.2'
+    testImplementation 'junit:junit:4.12'
 }
 
 sourceSets {
@@ -30,8 +28,8 @@ sourceSets {
 
 jacocoTestReport {
     reports {
-        xml.enabled false
-        csv.enabled false
-        html.destination "${buildDir}/jacocoHtml"
+        xml.required = false
+        csv.required = false
+        html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
     }
 }
