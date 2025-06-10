@@ -11,7 +11,8 @@ repositories {
 }
 
 dependencies {
-    testCompile 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.12'
+    implementation 'com.google.guava:guava:33.4.8-jre'
 }
 
 sourceSets {
@@ -30,8 +31,9 @@ sourceSets {
 
 jacocoTestReport {
     reports {
-        xml.enabled false
-        csv.enabled false
-        html.destination "${buildDir}/jacocoHtml"
+        xml.required.set(false)
+        csv.required.set(false)
+        html.required.set(true)
+        html.outputLocation.set(file("${buildDir}/jacocoHtml"))
     }
 }
